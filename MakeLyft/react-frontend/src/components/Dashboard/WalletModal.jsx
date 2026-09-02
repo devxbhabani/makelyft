@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import {
 	Wallet,
 	Plus,
@@ -106,7 +106,7 @@ export default function WalletModal({ isOpen, onClose }) {
 		e?.preventDefault();
 		const amountNum = parseFloat(addAmount);
 		if (isNaN(amountNum) || amountNum <= 0) {
-			setErrorMsg("Please enter a valid amount (minimum ₹10).");
+			setErrorMsg("Please enter a valid amount (minimum â‚¹10).");
 			return;
 		}
 
@@ -125,7 +125,7 @@ export default function WalletModal({ isOpen, onClose }) {
 				setWallet(updated);
 			}
 			setSuccessMsg(
-				`Initiated transaction of ₹${amountNum.toLocaleString("en-IN")}. Complete it in the gateway!`,
+				`Initiated transaction of â‚¹${amountNum.toLocaleString("en-IN")}. Complete it in the gateway!`,
 			);
 			setAddAmount("");
 			setActiveTab("overview");
@@ -149,29 +149,29 @@ export default function WalletModal({ isOpen, onClose }) {
 
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-			<div className="bg-white rounded-3xl shadow-2xl border border-gray-100 w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh] text-left transform transition-all">
+			<div className="bg-[var(--bg-card)] rounded-xl shadow-none border border-[var(--border)] w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh] text-left transform transition-all">
 				{/* Modal Top Bar */}
-				<div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-[#714B67]/10 via-white to-[#00A09D]/10">
+				<div className="px-6 py-4 border-b border-[var(--border)] flex items-center justify-between bg-[var(--bg-hover)] from-[#714B67]/10  to-[#00A09D]/10">
 					<div className="flex items-center gap-3">
-						<div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#714B67] to-[#5c3c54] flex items-center justify-center shadow-md shadow-[#714B67]/20 text-white">
+						<div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#714B67] to-[#5c3c54] flex items-center justify-center shadow-none shadow-[#714B67]/20 text-white">
 							<Wallet className="w-5 h-5" />
 						</div>
 						<div>
-							<h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+							<h3 className="text-lg font-bold text-[var(--text)] flex items-center gap-2">
 								MakeLyft Commute Wallet
-								<span className="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[#00A09D]/15 text-[#00A09D] border border-[#00A09D]/30">
+								<span className="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] border border-[var(--border-focus)]/30">
 									Active
 								</span>
 							</h3>
-							<p className="text-xs text-gray-500 font-medium">
-								{user.name || "Employee"} • {empId}
+							<p className="text-xs text-[var(--text-3)] font-medium">
+								{user.name || "Employee"} â€¢ {empId}
 							</p>
 						</div>
 					</div>
 
 					<button
 						onClick={onClose}
-						className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+						className="w-8 h-8 rounded-full bg-[var(--bg-hover)] hover:bg-[var(--bg-hover)] flex items-center justify-center text-[var(--text-3)] hover:text-[var(--text)] transition-colors cursor-pointer"
 					>
 						<X className="w-4 h-4" />
 					</button>
@@ -179,32 +179,32 @@ export default function WalletModal({ isOpen, onClose }) {
 
 				{/* Toast Alerts */}
 				{successMsg && (
-					<div className="mx-6 mt-4 p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-3 text-emerald-800 text-sm font-medium animate-in slide-in-from-top-2">
+					<div className="mx-6 mt-4 p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3 text-emerald-800 text-sm font-medium animate-in slide-in-from-top-2">
 						<CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
 						<div className="flex-1">{successMsg}</div>
 					</div>
 				)}
 
 				{errorMsg && (
-					<div className="mx-6 mt-4 p-3.5 bg-rose-50 border border-rose-200 rounded-2xl flex items-center gap-3 text-rose-800 text-sm font-medium animate-in slide-in-from-top-2">
+					<div className="mx-6 mt-4 p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-3 text-rose-800 text-sm font-medium animate-in slide-in-from-top-2">
 						<AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
 						<div className="flex-1">{errorMsg}</div>
 					</div>
 				)}
 
 				{/* Navigation Tabs */}
-				<div className="flex px-6 pt-3 border-b border-gray-100 gap-6">
+				<div className="flex px-6 pt-3 border-b border-[var(--border)] gap-6">
 					<button
 						onClick={() => setActiveTab("overview")}
 						className={`pb-2.5 text-xs font-bold transition-all relative cursor-pointer ${
 							activeTab === "overview"
-								? "text-[#714B67]"
-								: "text-gray-500 hover:text-gray-800"
+								? "text-[var(--primary)]"
+								: "text-[var(--text-3)] hover:text-[var(--text)]"
 						}`}
 					>
 						Balance & Cards
 						{activeTab === "overview" && (
-							<span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#714B67] rounded-full"></span>
+							<span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--primary)] rounded-full"></span>
 						)}
 					</button>
 
@@ -212,14 +212,14 @@ export default function WalletModal({ isOpen, onClose }) {
 						onClick={() => setActiveTab("add_money")}
 						className={`pb-2.5 text-xs font-bold transition-all relative cursor-pointer flex items-center gap-1 ${
 							activeTab === "add_money"
-								? "text-[#714B67]"
-								: "text-gray-500 hover:text-gray-800"
+								? "text-[var(--primary)]"
+								: "text-[var(--text-3)] hover:text-[var(--text)]"
 						}`}
 					>
 						<Plus className="w-3.5 h-3.5" />
 						Add Money
 						{activeTab === "add_money" && (
-							<span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#714B67] rounded-full"></span>
+							<span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--primary)] rounded-full"></span>
 						)}
 					</button>
 
@@ -227,14 +227,14 @@ export default function WalletModal({ isOpen, onClose }) {
 						onClick={() => setActiveTab("history")}
 						className={`pb-2.5 text-xs font-bold transition-all relative cursor-pointer flex items-center gap-1 ${
 							activeTab === "history"
-								? "text-[#714B67]"
-								: "text-gray-500 hover:text-gray-800"
+								? "text-[var(--primary)]"
+								: "text-[var(--text-3)] hover:text-[var(--text)]"
 						}`}
 					>
 						<History className="w-3.5 h-3.5" />
 						Transactions
 						{activeTab === "history" && (
-							<span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#714B67] rounded-full"></span>
+							<span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--primary)] rounded-full"></span>
 						)}
 					</button>
 				</div>
@@ -246,18 +246,18 @@ export default function WalletModal({ isOpen, onClose }) {
 				>
 					{loading ? (
 						<div className="py-16 text-center">
-							<RefreshCw className="w-8 h-8 text-[#714B67] animate-spin mx-auto mb-3" />
-							<p className="text-sm font-semibold text-gray-600">
+							<RefreshCw className="w-8 h-8 text-[var(--primary)] animate-spin mx-auto mb-3" />
+							<p className="text-sm font-semibold text-[var(--text-2)]">
 								Loading wallet information...
 							</p>
 						</div>
 					) : activeTab === "overview" ? (
 						<>
 							{/* Hero Balance Card */}
-							<div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#714B67] via-[#5c3c54] to-[#392433] text-white p-6 shadow-xl shadow-[#714B67]/25">
+							<div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#714B67] via-[#5c3c54] to-[#392433] text-white p-6 shadow-none shadow-[#714B67]/25">
 								{/* Background Pattern Deco */}
-								<div className="absolute -right-8 -bottom-8 w-44 h-44 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-								{/* <div className="absolute top-0 right-0 w-32 h-32 bg-[#00A09D]/20 rounded-full blur-xl pointer-events-none"></div> */}
+								<div className="absolute -right-8 -bottom-8 w-44 h-44 bg-[var(--bg-card)]/10 rounded-full blur-2xl pointer-events-none"></div>
+								{/* <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--accent)]/20 rounded-full blur-xl pointer-events-none"></div> */}
 
 								<div className="relative z-10 flex flex-col justify-between h-full">
 									<div className="flex items-start justify-between">
@@ -267,7 +267,7 @@ export default function WalletModal({ isOpen, onClose }) {
 											</span>
 											<div className="flex items-baseline gap-1 mt-1">
 												<span className="text-2xl font-bold text-teal-300">
-													₹
+													â‚¹
 												</span>
 												<span className="text-4xl font-extrabold tracking-tight text-white">
 													{(wallet?.balance || 0).toLocaleString(
@@ -281,7 +281,7 @@ export default function WalletModal({ isOpen, onClose }) {
 											</div>
 										</div>
 
-										<div className="px-3 py-1 bg-white/15 backdrop-blur-md rounded-xl text-xs font-semibold text-purple-100 flex items-center gap-1.5 border border-white/10">
+										<div className="px-3 py-1 bg-[var(--bg-card)]/15 backdrop-blur-md rounded-xl text-xs font-semibold text-purple-100 flex items-center gap-1.5 border border-white/10">
 											<Sparkles className="w-3.5 h-3.5 text-teal-300" />
 											Auto-Refill On
 										</div>
@@ -302,7 +302,7 @@ export default function WalletModal({ isOpen, onClose }) {
 											</p>
 											<p className="font-medium text-white mt-0.5">
 												{wallet?.bank_connection ||
-													"HDFC Bank (•••• 4821)"}
+													"HDFC Bank (â€¢â€¢â€¢â€¢ 4821)"}
 											</p>
 										</div>
 									</div>
@@ -313,16 +313,16 @@ export default function WalletModal({ isOpen, onClose }) {
 							<div className="grid grid-cols-2 gap-3">
 								<button
 									onClick={() => setActiveTab("add_money")}
-									className="py-3 px-4 bg-[#714B67] hover:bg-[#5c3c54] text-white font-bold text-sm rounded-2xl shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+									className="py-3 px-4 bg-[var(--primary)] hover:bg-[var(--primary)] text-white font-bold text-sm rounded-xl shadow-none hover:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer"
 								>
 									<Plus className="w-4 h-4" />
 									<span>Add Money</span>
 								</button>
 								<button
 									onClick={() => setActiveTab("history")}
-									className="py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-sm rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer border border-gray-200"
+									className="py-3 px-4 bg-[var(--bg-hover)] hover:bg-[var(--bg-hover)] text-[var(--text)] font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer border border-[var(--border)]"
 								>
-									<History className="w-4 h-4 text-gray-600" />
+									<History className="w-4 h-4 text-[var(--text-2)]" />
 									<span>View History</span>
 								</button>
 							</div>
@@ -330,12 +330,12 @@ export default function WalletModal({ isOpen, onClose }) {
 							{/* Recent Activity Snippet */}
 							<div className="space-y-3">
 								<div className="flex items-center justify-between">
-									<h4 className="text-xs font-bold uppercase tracking-wider text-gray-500">
+									<h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-3)]">
 										Recent Commute Activity
 									</h4>
 									<button
 										onClick={() => setActiveTab("history")}
-										className="text-xs font-bold text-[#714B67] hover:underline flex items-center gap-0.5 cursor-pointer"
+										className="text-xs font-bold text-[var(--primary)] hover:underline flex items-center gap-0.5 cursor-pointer"
 									>
 										View All <ChevronRight className="w-3 h-3" />
 									</button>
@@ -347,14 +347,14 @@ export default function WalletModal({ isOpen, onClose }) {
 										.map((tx) => (
 											<div
 												key={tx.id}
-												className="p-3.5 bg-gray-50/80 hover:bg-gray-100/80 rounded-2xl border border-gray-100 transition-colors flex items-center justify-between"
+												className="p-3.5 bg-[var(--bg-hover)]/80 hover:bg-[var(--bg-hover)]/80 rounded-xl border border-[var(--border)] transition-colors flex items-center justify-between"
 											>
 												<div className="flex items-center gap-3">
 													<div
 														className={`w-9 h-9 rounded-xl flex items-center justify-center ${
 															tx.type === "credit"
 																? "bg-emerald-100 text-emerald-700"
-																: "bg-purple-100 text-[#714B67]"
+																: "bg-[var(--bg-hover)] text-[var(--primary)]"
 														}`}
 													>
 														{tx.type === "credit" ? (
@@ -364,10 +364,10 @@ export default function WalletModal({ isOpen, onClose }) {
 														)}
 													</div>
 													<div>
-														<p className="text-xs font-bold text-gray-900 leading-tight">
+														<p className="text-xs font-bold text-[var(--text)] leading-tight">
 															{tx.title}
 														</p>
-														<p className="text-[11px] text-gray-500 mt-0.5">
+														<p className="text-[11px] text-[var(--text-3)] mt-0.5">
 															{new Date(
 																tx.date,
 															).toLocaleDateString("en-IN", {
@@ -385,13 +385,13 @@ export default function WalletModal({ isOpen, onClose }) {
 														className={`text-sm font-extrabold ${
 															tx.type === "credit"
 																? "text-emerald-600"
-																: "text-gray-900"
+																: "text-[var(--text)]"
 														}`}
 													>
-														{tx.type === "credit" ? "+" : "-"}₹
+														{tx.type === "credit" ? "+" : "-"}â‚¹
 														{tx.amount.toFixed(2)}
 													</p>
-													<span className="text-[10px] text-gray-400 font-mono">
+													<span className="text-[10px] text-[var(--text-3)] font-mono">
 														{tx.id}
 													</span>
 												</div>
@@ -401,8 +401,8 @@ export default function WalletModal({ isOpen, onClose }) {
 							</div>
 
 							{/* Security Tag */}
-							<div className="p-3.5 bg-teal-50/60 border border-teal-100 rounded-2xl flex items-center gap-3 text-xs text-teal-800">
-								<ShieldCheck className="w-4 h-4 text-[#00A09D] shrink-0" />
+							<div className="p-3.5 bg-[var(--bg-hover)]/60 border border-[var(--border)] rounded-xl flex items-center gap-3 text-xs text-[var(--accent)]">
+								<ShieldCheck className="w-4 h-4 text-[var(--accent)] shrink-0" />
 								<span>
 									MakeLyft uses 256-bit encrypted corporate banking
 									routes. Fares are automatically synced with drivers
@@ -414,12 +414,12 @@ export default function WalletModal({ isOpen, onClose }) {
 						/* ADD MONEY TAB */
 						<form onSubmit={handleAddMoney} className="space-y-5">
 							{/* Current Balance Reminder */}
-							<div className="p-3.5 bg-purple-50/60 rounded-2xl border border-purple-100 flex items-center justify-between">
+							<div className="p-3.5 bg-[var(--bg-hover)]/60 rounded-xl border border-[var(--border)] flex items-center justify-between">
 								<span className="text-xs text-purple-900 font-semibold">
 									Current Wallet Balance:
 								</span>
-								<span className="text-sm font-extrabold text-[#714B67]">
-									₹
+								<span className="text-sm font-extrabold text-[var(--primary)]">
+									â‚¹
 									{(wallet?.balance || 0).toLocaleString("en-IN", {
 										minimumFractionDigits: 2,
 										maximumFractionDigits: 2,
@@ -429,12 +429,12 @@ export default function WalletModal({ isOpen, onClose }) {
 
 							{/* Amount Input */}
 							<div>
-								<label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-									Enter Amount to Add (₹)
+								<label className="block text-xs font-bold text-[var(--text-2)] uppercase tracking-wider mb-2">
+									Enter Amount to Add (â‚¹)
 								</label>
 								<div className="relative">
-									<span className="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-bold text-gray-400">
-										₹
+									<span className="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-bold text-[var(--text-3)]">
+										â‚¹
 									</span>
 									<input
 										type="number"
@@ -443,7 +443,7 @@ export default function WalletModal({ isOpen, onClose }) {
 										placeholder="500"
 										value={addAmount}
 										onChange={(e) => setAddAmount(e.target.value)}
-										className="w-full pl-10 pr-4 py-3 text-2xl font-extrabold text-gray-900 bg-gray-50 focus:bg-white border-2 border-gray-200 focus:border-[#714B67] rounded-2xl outline-none transition-all"
+										className="w-full pl-10 pr-4 py-3 text-2xl font-extrabold text-[var(--text)] bg-[var(--bg-hover)] focus:bg-[var(--bg-card)] border-2 border-[var(--border)] focus:border-[var(--border-focus)] rounded-xl outline-none transition-all"
 										required
 										autoFocus
 									/>
@@ -458,11 +458,11 @@ export default function WalletModal({ isOpen, onClose }) {
 											onClick={() => setAddAmount(amt.toString())}
 											className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
 												addAmount === amt.toString()
-													? "bg-[#714B67] text-white border-[#714B67] shadow-xs"
-													: "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200"
+													? "bg-[var(--primary)] text-white border-[var(--border-focus)] shadow-xs"
+													: "bg-[var(--bg-hover)] text-[var(--text-2)] border-[var(--border)] hover:bg-[var(--bg-hover)]"
 											}`}
 										>
-											+₹{amt.toLocaleString("en-IN")}
+											+â‚¹{amt.toLocaleString("en-IN")}
 										</button>
 									))}
 								</div>
@@ -470,7 +470,7 @@ export default function WalletModal({ isOpen, onClose }) {
 
 							{/* Payment Method Selector */}
 							<div>
-								<label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+								<label className="block text-xs font-bold text-[var(--text-2)] uppercase tracking-wider mb-2">
 									Select Payment Mode
 								</label>
 								<div className="space-y-2">
@@ -481,25 +481,25 @@ export default function WalletModal({ isOpen, onClose }) {
 											<label
 												key={method.id}
 												onClick={() => setPaymentMethod(method.id)}
-												className={`flex items-center justify-between p-3.5 rounded-2xl border-2 transition-all cursor-pointer ${
+												className={`flex items-center justify-between p-3.5 rounded-xl border-2 transition-all cursor-pointer ${
 													isSelected
-														? "border-[#714B67] bg-purple-50/30 shadow-2xs"
-														: "border-gray-200 hover:border-gray-300 bg-white"
+														? "border-[var(--border-focus)] bg-[var(--bg-hover)]/30 shadow-none"
+														: "border-[var(--border)] hover:border-[var(--border)] bg-[var(--bg-card)]"
 												}`}
 											>
 												<div className="flex items-center gap-3">
 													<div
 														className={`w-9 h-9 rounded-xl flex items-center justify-center ${
 															isSelected
-																? "bg-[#714B67] text-white"
-																: "bg-gray-100 text-gray-600"
+																? "bg-[var(--primary)] text-white"
+																: "bg-[var(--bg-hover)] text-[var(--text-2)]"
 														}`}
 													>
 														<Icon className="w-4 h-4" />
 													</div>
 													<div>
 														<div className="flex items-center gap-2">
-															<p className="text-xs font-bold text-gray-900">
+															<p className="text-xs font-bold text-[var(--text)]">
 																{method.name}
 															</p>
 															{method.badge && (
@@ -508,7 +508,7 @@ export default function WalletModal({ isOpen, onClose }) {
 																</span>
 															)}
 														</div>
-														<p className="text-[11px] text-gray-500">
+														<p className="text-[11px] text-[var(--text-3)]">
 															{method.desc}
 														</p>
 													</div>
@@ -534,14 +534,14 @@ export default function WalletModal({ isOpen, onClose }) {
 								<button
 									type="button"
 									onClick={() => setActiveTab("overview")}
-									className="flex-1 py-3 px-4 rounded-2xl border border-gray-300 text-gray-700 font-bold text-xs hover:bg-gray-100 transition-colors cursor-pointer"
+									className="flex-1 py-3 px-4 rounded-xl border border-[var(--border)] text-[var(--text-2)] font-bold text-xs hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
 								>
 									Cancel
 								</button>
 								<button
 									type="submit"
 									disabled={processingPayment}
-									className="flex-2 py-3 px-4 bg-[#714B67] hover:bg-[#5c3c54] text-white font-bold text-xs rounded-2xl shadow-md shadow-[#714B67]/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+									className="flex-2 py-3 px-4 bg-[var(--primary)] hover:bg-[var(--primary)] text-white font-bold text-xs rounded-xl shadow-none shadow-[#714B67]/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
 								>
 									{processingPayment ? (
 										<>
@@ -552,7 +552,7 @@ export default function WalletModal({ isOpen, onClose }) {
 										<>
 											<Plus className="w-4 h-4" />
 											<span>
-												Add ₹
+												Add â‚¹
 												{addAmount
 													? parseFloat(addAmount).toLocaleString(
 															"en-IN",
@@ -577,8 +577,8 @@ export default function WalletModal({ isOpen, onClose }) {
 											onClick={() => setHistoryFilter(type)}
 											className={`px-3 py-1 rounded-xl text-xs font-bold capitalize transition-all cursor-pointer ${
 												historyFilter === type
-													? "bg-[#714B67] text-white shadow-xs"
-													: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+													? "bg-[var(--primary)] text-white shadow-xs"
+													: "bg-[var(--bg-hover)] text-[var(--text-2)] hover:bg-[var(--bg-hover)]"
 											}`}
 										>
 											{type === "all"
@@ -590,13 +590,13 @@ export default function WalletModal({ isOpen, onClose }) {
 									))}
 								</div>
 
-								<span className="text-xs font-bold text-gray-500">
+								<span className="text-xs font-bold text-[var(--text-3)]">
 									{filteredTransactions.length} records
 								</span>
 							</div>
 
 							{filteredTransactions.length === 0 ? (
-								<div className="py-12 text-center text-gray-400">
+								<div className="py-12 text-center text-[var(--text-3)]">
 									<History className="w-8 h-8 mx-auto mb-2 opacity-40" />
 									<p className="text-xs font-semibold">
 										No transactions found
@@ -607,14 +607,14 @@ export default function WalletModal({ isOpen, onClose }) {
 									{filteredTransactions.map((tx) => (
 										<div
 											key={tx.id}
-											className="p-3.5 bg-gray-50 hover:bg-gray-100 rounded-2xl border border-gray-100 transition-colors flex items-center justify-between"
+											className="p-3.5 bg-[var(--bg-hover)] hover:bg-[var(--bg-hover)] rounded-xl border border-[var(--border)] transition-colors flex items-center justify-between"
 										>
 											<div className="flex items-center gap-3">
 												<div
 													className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
 														tx.type === "credit"
 															? "bg-emerald-100 text-emerald-700"
-															: "bg-purple-100 text-[#714B67]"
+															: "bg-[var(--bg-hover)] text-[var(--primary)]"
 													}`}
 												>
 													{tx.type === "credit" ? (
@@ -624,10 +624,10 @@ export default function WalletModal({ isOpen, onClose }) {
 													)}
 												</div>
 												<div>
-													<p className="text-xs font-bold text-gray-900 leading-tight">
+													<p className="text-xs font-bold text-[var(--text)] leading-tight">
 														{tx.title}
 													</p>
-													<div className="flex items-center gap-2 mt-0.5 text-[11px] text-gray-500">
+													<div className="flex items-center gap-2 mt-0.5 text-[11px] text-[var(--text-3)]">
 														<span>
 															{new Date(
 																tx.date,
@@ -637,7 +637,7 @@ export default function WalletModal({ isOpen, onClose }) {
 																year: "numeric",
 															})}
 														</span>
-														<span>•</span>
+														<span>â€¢</span>
 														<span className="font-mono">
 															{tx.id}
 														</span>
@@ -650,10 +650,10 @@ export default function WalletModal({ isOpen, onClose }) {
 													className={`text-sm font-extrabold ${
 														tx.type === "credit"
 															? "text-emerald-600"
-															: "text-gray-900"
+															: "text-[var(--text)]"
 													}`}
 												>
-													{tx.type === "credit" ? "+" : "-"}₹
+													{tx.type === "credit" ? "+" : "-"}â‚¹
 													{tx.amount.toFixed(2)}
 												</p>
 												<span className="inline-block text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
@@ -669,14 +669,14 @@ export default function WalletModal({ isOpen, onClose }) {
 				</div>
 
 				{/* Modal Footer */}
-				<div className="px-6 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+				<div className="px-6 py-3 bg-[var(--bg-hover)] border-t border-[var(--border)] flex items-center justify-between text-xs text-[var(--text-3)]">
 					<div className="flex items-center gap-1.5">
-						<ShieldCheck className="w-4 h-4 text-[#00A09D]" />
+						<ShieldCheck className="w-4 h-4 text-[var(--accent)]" />
 						<span>100% Secure Commute Billing</span>
 					</div>
 					<button
 						onClick={onClose}
-						className="text-xs font-bold text-gray-600 hover:text-gray-900 cursor-pointer"
+						className="text-xs font-bold text-[var(--text-2)] hover:text-[var(--text)] cursor-pointer"
 					>
 						Close
 					</button>

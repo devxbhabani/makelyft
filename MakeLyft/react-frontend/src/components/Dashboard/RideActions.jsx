@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { showAlert } from "../../utils/alertService";
+
 import {
 	Search,
 	MapPin,
@@ -280,242 +281,152 @@ function RideActions({
 		}
 	};
 
+
+
+	const iStyle = {
+		width: "100%",
+		padding: "8px 10px 8px 32px",
+		background: "transparent",
+		border: "1px solid var(--border)",
+		borderRadius: "7px",
+		color: "var(--text)",
+		fontFamily: "inherit",
+		fontSize: "0.8rem",
+		outline: "none",
+		transition: "border-color 0.15s ease, box-shadow 0.15s ease",
+	};
+	const iFocus = (e) => { e.target.style.borderColor = "var(--border-focus)"; e.target.style.boxShadow = "0 0 0 3px rgba(255,255,255,0.04)"; };
+	const iBlur  = (e) => { e.target.style.borderColor = "var(--border)"; e.target.style.boxShadow = "none"; };
+
+
 	return (
-		<div className="flex flex-col h-full gap-4 text-left overflow-y-auto pr-0.5">
-			{/* Publish Ride Card */}
-			<div className="bg-white rounded-2xl shadow-2xs border border-gray-200 p-4 shrink-0">
-				<div className="flex items-center justify-between mb-1.5">
-					<h3 className="text-sm font-bold text-gray-900 flex items-center gap-1.5">
-						<Compass className="w-4 h-4 text-[#714B67]" />
-						<span>Publish a Ride</span>
-					</h3>
-					<span className="text-[10px] font-bold text-[#714B67] bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
+		<div className="flex flex-col h-full gap-3 text-left overflow-y-auto">
+
+			{/* Publish card */}
+			<div className="card p-4">
+				<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+					<span style={{ fontSize: "0.82rem", fontWeight: 600, color: "var(--text)", display: "flex", alignItems: "center", gap: 6 }}>
+						<Compass style={{ width: 14, height: 14, color: "var(--text-3)" }} /> Publish a ride
+					</span>
+					<span style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--primary)", background: "var(--primary-dim)", padding: "2px 8px", borderRadius: "9999px", border: "1px solid rgba(124,106,255,0.2)" }}>
 						Driver
 					</span>
 				</div>
-				<p className="text-xs text-gray-500 mb-3">
-					Driving to office or returning home? Share empty seats & earn.
+				<p style={{ fontSize: "0.8rem", color: "var(--text-2)", margin: "0 0 16px", lineHeight: 1.5 }}>
+					Going to office or heading home? Share empty seats and earn.
 				</p>
 				<button
 					onClick={onPublishRide}
-					className="w-full py-2.5 px-4 bg-[#714B67] hover:bg-[#5c3c54] text-white text-xs font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-2xs cursor-pointer"
+					style={{ width: "100%", padding: "10px", borderRadius: 8, fontSize: "0.85rem", fontWeight: 500, background: "var(--primary)", color: "#fff", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, transition: "opacity 0.15s", fontFamily: "inherit" }}
+					onMouseEnter={(e) => e.currentTarget.style.opacity = "0.85"}
+					onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
 				>
-					<Plus className="w-4 h-4" /> Publish Ride
+					<Plus style={{ width: 14, height: 14 }} /> Publish Ride
 				</button>
 			</div>
 
-			{/* Find Rides Card */}
-			<div className="bg-white rounded-2xl shadow-2xs border border-gray-200 p-4 flex-1 flex flex-col justify-between">
-				<div>
-					<div className="flex items-center justify-between mb-1">
-						<h3 className="text-sm font-bold text-gray-900 flex items-center gap-1.5">
-							<Navigation className="w-4 h-4 text-[#00A09D]" />
-							<span>Find Rides & Plan Route</span>
-						</h3>
-						<span className="text-[10px] font-bold text-[#00A09D] bg-teal-50 px-2 py-0.5 rounded-full border border-teal-100">
-							Passenger
-						</span>
-					</div>
-					<p className="text-xs text-gray-500 mb-3.5">
-						Search your route or explore nearby carpools.
-					</p>
+			{/* Find rides card */}
+			<div className="card p-4 flex-1 flex flex-col">
+				<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+					<span style={{ fontSize: "0.82rem", fontWeight: 600, color: "var(--text)", display: "flex", alignItems: "center", gap: 6 }}>
+						<Navigation style={{ width: 14, height: 14, color: "var(--text-3)" }} /> Find a ride
+					</span>
+					<span style={{ fontSize: "0.65rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent)", background: "var(--accent-dim)", padding: "2px 8px", borderRadius: "9999px", border: "1px solid rgba(45,212,191,0.2)" }}>
+						Passenger
+					</span>
+				</div>
+				<p style={{ fontSize: "0.8rem", color: "var(--text-2)", margin: "0 0 16px", lineHeight: 1.5 }}>
+					Search your route or browse nearby carpools.
+				</p>
 
-					<div className="space-y-3">
-						{/* Source Input & Suggestions */}
-						<div className="space-y-1 relative" ref={sourceRef}>
-							<div className="flex items-center justify-between">
-								<label className="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider">
-									Source
-								</label>
-								<button
-									type="button"
-									onClick={handleUseCurrentLocation}
-									className="text-[11px] text-[#00A09D] hover:text-[#008f8c] font-semibold flex items-center gap-1 cursor-pointer transition-colors"
-									title="Use Current Location"
-								>
-									<LocateFixed className="w-3 h-3" />
-									<span>My Location</span>
-								</button>
-							</div>
+				<div style={{ display: "flex", flexDirection: "column", gap: 16, flex: 1 }}>
 
-							<div className="relative">
-								<input
-									type="text"
-									value={source}
-									onChange={(e) => {
-										setSource(e.target.value);
-										if (pickupCoords) onLocationUpdate("source", null);
-										setTripSummary(null);
-									}}
-									onFocus={() => {
-										if (sourceSuggestions.length > 0)
-											setShowSourceDropdown(true);
-									}}
-									placeholder="e.g. Current Location or Adamas University"
-									className="w-full pl-8 pr-8 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#00A09D]/20 focus:border-[#00A09D] transition-all"
-								/>
-								<MapPin className="w-4 h-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#00A09D]" />
-								{loadingSource && (
-									<Loader2 className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 animate-spin text-gray-400" />
-								)}
-							</div>
-
-							{/* Source Suggestions Dropdown */}
-							{showSourceDropdown && (
-								<div className="absolute top-full left-0 right-0 z-[1000] bg-white border border-gray-200 rounded-xl shadow-2xl mt-1 max-h-52 overflow-y-auto divide-y divide-gray-100">
-									{sourceSuggestions.length > 0
-										? sourceSuggestions.map((item, idx) => (
-												<div
-													key={idx}
-													onMouseDown={(e) => {
-														e.preventDefault();
-														handleSelectSource(item);
-													}}
-													className="p-2.5 hover:bg-teal-50/60 cursor-pointer flex items-start gap-2 transition-colors text-left"
-												>
-													<MapPin className="w-3.5 h-3.5 text-[#00A09D] shrink-0 mt-0.5" />
-													<div className="flex-1 min-w-0">
-														<p className="text-xs font-semibold text-gray-900 truncate">
-															{item.title}
-														</p>
-														{item.subtitle && (
-															<p className="text-[10px] text-gray-500 truncate">
-																{item.subtitle}
-															</p>
-														)}
-													</div>
-												</div>
-											))
-										: !loadingSource && (
-												<div className="p-2.5 text-xs text-gray-500 text-center">
-													No matching locations found
-												</div>
-											)}
-								</div>
-							)}
+					{/* Source */}
+					<div ref={sourceRef} style={{ position: "relative" }}>
+						<div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+							<label style={{ fontSize: "0.72rem", fontWeight: 500, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.06em" }}>From</label>
+							<button type="button" onClick={handleUseCurrentLocation} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "0.72rem", color: "var(--accent)", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 4, padding: 0 }}>
+								<LocateFixed style={{ width: 11, height: 11 }} /> My location
+							</button>
 						</div>
-
-						{/* Destination Input & Suggestions */}
-						<div className="space-y-1 relative" ref={destRef}>
-							<label className="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider">
-								Destination
-							</label>
-							<div className="relative">
-								<input
-									type="text"
-									value={destination}
-									onChange={(e) => {
-										setDestination(e.target.value);
-										if (dropoffCoords)
-											onLocationUpdate("destination", null);
-										setTripSummary(null);
-									}}
-									onFocus={() => {
-										if (destSuggestions.length > 0)
-											setShowDestDropdown(true);
-									}}
-									placeholder="e.g. Barrackpore or Howrah Station"
-									className="w-full pl-8 pr-8 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#00A09D]/20 focus:border-[#00A09D] transition-all"
-								/>
-								<MapPin className="w-4 h-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#EF4444]" />
-								{loadingDest && (
-									<Loader2 className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 animate-spin text-gray-400" />
-								)}
-							</div>
-
-							{/* Destination Suggestions Dropdown */}
-							{showDestDropdown && (
-								<div className="absolute top-full left-0 right-0 z-[1000] bg-white border border-gray-200 rounded-xl shadow-2xl mt-1 max-h-52 overflow-y-auto divide-y divide-gray-100">
-									{destSuggestions.length > 0
-										? destSuggestions.map((item, idx) => (
-												<div
-													key={idx}
-													onMouseDown={(e) => {
-														e.preventDefault();
-														handleSelectDest(item);
-													}}
-													className="p-2.5 hover:bg-rose-50/60 cursor-pointer flex items-start gap-2 transition-colors text-left"
-												>
-													<MapPin className="w-3.5 h-3.5 text-[#EF4444] shrink-0 mt-0.5" />
-													<div className="flex-1 min-w-0">
-														<p className="text-xs font-semibold text-gray-900 truncate">
-															{item.title}
-														</p>
-														{item.subtitle && (
-															<p className="text-[10px] text-gray-500 truncate">
-																{item.subtitle}
-															</p>
-														)}
-													</div>
-												</div>
-											))
-										: !loadingDest && (
-												<div className="p-2.5 text-xs text-gray-500 text-center">
-													No matching locations found
-												</div>
-											)}
-								</div>
-							)}
+						<div style={{ position: "relative" }}>
+							<input type="text" value={source}
+								onChange={(e) => { setSource(e.target.value); if (pickupCoords) onLocationUpdate("source", null); setTripSummary(null); }}
+								onFocus={(e) => { iFocus(e); if (sourceSuggestions.length > 0) setShowSourceDropdown(true); }}
+								onBlur={iBlur} placeholder="Search pickup location..." style={iStyle} />
+							<MapPin style={{ position: "absolute", left: 9, top: "50%", transform: "translateY(-50%)", width: 13, height: 13, color: "var(--accent)" }} />
+							{loadingSource && <Loader2 style={{ position: "absolute", right: 9, top: "50%", transform: "translateY(-50%)", width: 13, height: 13, color: "var(--text-3)" }} className="animate-spin" />}
 						</div>
-
-						{/* Search Button */}
-						<button
-							onClick={handleSearch}
-							disabled={searchingRoute}
-							className="w-full py-2.5 px-4 bg-[#00A09D] hover:bg-[#008f8c] disabled:bg-[#00A09D]/60 text-white font-bold text-xs rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-2xs cursor-pointer"
-						>
-							{searchingRoute ? (
-								<>
-									<Loader2 className="w-4 h-4 animate-spin" />
-									Calculating Road Route...
-								</>
-							) : (
-								<>
-									<Search className="w-4 h-4" />
-									Calculate Route on Map
-								</>
-							)}
-						</button>
-
-						{/* Trip Summary Card */}
-						{tripSummary && (
-							<div className="bg-teal-50/80 border border-teal-100 rounded-xl p-3 flex items-center justify-between shadow-2xs">
-								<div className="flex flex-col">
-									<span className="text-[10px] text-teal-700 font-extrabold uppercase tracking-wider flex items-center gap-1">
-										<Clock className="w-3 h-3" /> Est. Time
-									</span>
-									<span className="text-base font-extrabold text-teal-950">
-										{tripSummary.duration} mins
-									</span>
-								</div>
-								<div className="h-6 w-px bg-teal-200"></div>
-								<div className="flex flex-col items-end">
-									<span className="text-[10px] text-teal-700 font-extrabold uppercase tracking-wider flex items-center gap-1">
-										<Navigation className="w-3 h-3" /> Distance
-									</span>
-									<span className="text-base font-extrabold text-teal-950">
-										{tripSummary.distance} km
-									</span>
-								</div>
+						{showSourceDropdown && (
+							<div style={{ position: "absolute", top: "100%", left: 0, right: 0, zIndex: 1000, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8, boxShadow: "var(--shadow)", marginTop: 4, maxHeight: 200, overflowY: "auto" }} className="animate-fade-up">
+								{sourceSuggestions.length > 0 ? sourceSuggestions.map((item, idx) => (
+									<div key={idx} onMouseDown={(e) => { e.preventDefault(); handleSelectSource(item); }}
+										style={{ padding: "8px 12px", cursor: "pointer", display: "flex", alignItems: "flex-start", gap: 8, borderBottom: "1px solid var(--border)" }}
+										onMouseEnter={(e) => e.currentTarget.style.background = "var(--bg-hover)"}
+										onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>
+										<MapPin style={{ width: 12, height: 12, color: "var(--text-3)", flexShrink: 0, marginTop: 2 }} />
+										<div><p style={{ margin: 0, fontSize: "0.8rem", color: "var(--text)", fontWeight: 500 }}>{item.title}</p>
+										{item.subtitle && <p style={{ margin: 0, fontSize: "0.72rem", color: "var(--text-3)" }}>{item.subtitle}</p>}</div>
+									</div>
+								)) : !loadingSource && <p style={{ padding: "10px 12px", fontSize: "0.78rem", color: "var(--text-3)", margin: 0 }}>No results</p>}
 							</div>
 						)}
 					</div>
-				</div>
 
-				{/* Quick Browse Button */}
-				<div className="pt-3 mt-3 border-t border-gray-100">
-					<button
-						onClick={onBrowseRides}
-						className="w-full py-2.5 px-3 bg-gradient-to-r from-teal-50/80 via-white to-purple-50/80 hover:from-teal-100 hover:to-purple-100 text-gray-800 font-bold text-xs rounded-xl border border-gray-200 hover:border-[#00A09D]/40 transition-all duration-200 flex items-center justify-between shadow-2xs cursor-pointer group"
-					>
-						<div className="flex items-center gap-2">
-							<Navigation className="w-4 h-4 text-[#00A09D] group-hover:scale-110 transition-transform" />
-							<span>Browse Nearby Carpools (10 km)</span>
+					{/* Destination */}
+					<div ref={destRef} style={{ position: "relative" }}>
+						<label style={{ display: "block", fontSize: "0.72rem", fontWeight: 500, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 5 }}>To</label>
+						<div style={{ position: "relative" }}>
+							<input type="text" value={destination}
+								onChange={(e) => { setDestination(e.target.value); if (dropoffCoords) onLocationUpdate("destination", null); setTripSummary(null); }}
+								onFocus={(e) => { iFocus(e); if (destSuggestions.length > 0) setShowDestDropdown(true); }}
+								onBlur={iBlur} placeholder="Search drop-off location..." style={iStyle} />
+							<MapPin style={{ position: "absolute", left: 9, top: "50%", transform: "translateY(-50%)", width: 13, height: 13, color: "var(--danger)" }} />
+							{loadingDest && <Loader2 style={{ position: "absolute", right: 9, top: "50%", transform: "translateY(-50%)", width: 13, height: 13, color: "var(--text-3)" }} className="animate-spin" />}
 						</div>
-						<span className="px-2 py-0.5 text-[10px] font-bold bg-[#00A09D] text-white rounded-full">
-							Explore →
-						</span>
+						{showDestDropdown && (
+							<div style={{ position: "absolute", top: "100%", left: 0, right: 0, zIndex: 1000, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8, boxShadow: "var(--shadow)", marginTop: 4, maxHeight: 200, overflowY: "auto" }} className="animate-fade-up">
+								{destSuggestions.length > 0 ? destSuggestions.map((item, idx) => (
+									<div key={idx} onMouseDown={(e) => { e.preventDefault(); handleSelectDest(item); }}
+										style={{ padding: "8px 12px", cursor: "pointer", display: "flex", alignItems: "flex-start", gap: 8, borderBottom: "1px solid var(--border)" }}
+										onMouseEnter={(e) => e.currentTarget.style.background = "var(--bg-hover)"}
+										onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>
+										<MapPin style={{ width: 12, height: 12, color: "var(--text-3)", flexShrink: 0, marginTop: 2 }} />
+										<div><p style={{ margin: 0, fontSize: "0.8rem", color: "var(--text)", fontWeight: 500 }}>{item.title}</p>
+										{item.subtitle && <p style={{ margin: 0, fontSize: "0.72rem", color: "var(--text-3)" }}>{item.subtitle}</p>}</div>
+									</div>
+								)) : !loadingDest && <p style={{ padding: "10px 12px", fontSize: "0.78rem", color: "var(--text-3)", margin: 0 }}>No results</p>}
+							</div>
+						)}
+					</div>
+
+					{/* Search button */}
+					<button onClick={handleSearch} disabled={searchingRoute}
+						style={{ width: "100%", padding: "10px", borderRadius: 8, fontSize: "0.85rem", fontWeight: 500, background: "var(--bg-hover)", color: "var(--text)", border: "1px solid var(--border)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, transition: "all 0.15s", fontFamily: "inherit" }}
+						onMouseEnter={(e) => { e.currentTarget.style.background = "var(--border)"; e.currentTarget.style.borderColor = "var(--border-focus)"; }}
+						onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-hover)"; e.currentTarget.style.borderColor = "var(--border)"; }}>
+						{searchingRoute ? <><Loader2 style={{ width: 14, height: 14 }} className="animate-spin" /> Calculating...</> : <><Search style={{ width: 14, height: 14 }} /> Calculate route</>}
 					</button>
+
+					{/* Trip summary */}
+					{tripSummary && (
+						<div style={{ display: "flex", gap: 12, padding: "10px 12px", background: "var(--bg-hover)", border: "1px solid var(--border)", borderRadius: 8 }} className="animate-fade-up">
+							<div><p style={{ margin: 0, fontSize: "0.68rem", color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.06em", display: "flex", alignItems: "center", gap: 4 }}><Clock style={{ width: 10, height: 10 }} /> Duration</p><p style={{ margin: 0, fontSize: "1rem", fontWeight: 600, color: "var(--text)" }}>{tripSummary.duration} min</p></div>
+							<div style={{ width: 1, background: "var(--border)" }} />
+							<div><p style={{ margin: 0, fontSize: "0.68rem", color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.06em", display: "flex", alignItems: "center", gap: 4 }}><Navigation style={{ width: 10, height: 10 }} /> Distance</p><p style={{ margin: 0, fontSize: "1rem", fontWeight: 600, color: "var(--text)" }}>{tripSummary.distance} km</p></div>
+						</div>
+					)}
+
+					{/* Browse */}
+					<div style={{ marginTop: "auto", paddingTop: 16, borderTop: "1px solid var(--border)" }}>
+						<button onClick={onBrowseRides}
+							style={{ width: "100%", padding: "10px 12px", borderRadius: 8, fontSize: "0.85rem", fontWeight: 500, background: "transparent", color: "var(--text-2)", border: "1px solid var(--border)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.15s", fontFamily: "inherit" }}
+							onMouseEnter={(e) => { e.currentTarget.style.background = "var(--bg-hover)"; e.currentTarget.style.color = "var(--text)"; e.currentTarget.style.borderColor = "var(--border-focus)"; }}
+							onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--text-2)"; e.currentTarget.style.borderColor = "var(--border)"; }}>
+							<span style={{ display: "flex", alignItems: "center", gap: 7 }}><Navigation style={{ width: 14, height: 14 }} /> Browse nearby carpools</span>
+							<span style={{ fontSize: "0.75rem", color: "var(--text-3)" }}>10 km →</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

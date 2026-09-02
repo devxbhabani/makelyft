@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 
 import {
 	PhoneOff,
@@ -103,13 +103,13 @@ export default function VoiceCallModal({
 
 	return (
 		<div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xl animate-in fade-in duration-300">
-			<div className="bg-white w-full max-w-sm rounded-3xl shadow-2xl flex flex-col transform transition-all relative overflow-hidden border border-gray-100">
+			<div className="bg-[var(--bg-card)] w-full max-w-sm rounded-xl shadow-none flex flex-col transform transition-all relative overflow-hidden border border-[var(--border)]">
 				{/* Header - Elaborate Odoo Branding */}
 				<div
-					className={`p-10 flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-500 ${callState === "failed" ? "bg-red-500" : "bg-gradient-to-br from-[#714B67] to-[#8C5D80]"}`}
+					className={`p-10 flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-500 ${callState === "failed" ? "bg-[var(--bg-hover)]0" : "bg-gradient-to-br from-[#714B67] to-[#8C5D80]"}`}
 				>
 					{/* Abstract Background Design */}
-					<div className="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+					<div className="absolute right-0 top-0 w-64 h-64 bg-[var(--bg-card)]/5 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
 					<div className="absolute left-0 bottom-0 w-40 h-40 bg-black/10 rounded-full blur-2xl -ml-10 -mb-10 pointer-events-none"></div>
 
 					{/* Encrypted Badge */}
@@ -121,7 +121,7 @@ export default function VoiceCallModal({
 					{/* Avatar Profile */}
 					<div className="relative mb-6 z-10">
 						<div
-							className={`w-28 h-28 rounded-full bg-white flex items-center justify-center text-[#714B67] shadow-2xl text-5xl font-black uppercase border-4 border-white/20 ${callState === "connecting" ? "animate-pulse" : ""}`}
+							className={`w-28 h-28 rounded-full bg-[var(--bg-card)] flex items-center justify-center text-[var(--primary)] shadow-none text-5xl font-black uppercase border-4 border-white/20 ${callState === "connecting" ? "animate-pulse" : ""}`}
 						>
 							{targetName.charAt(0)}
 						</div>
@@ -131,7 +131,7 @@ export default function VoiceCallModal({
 						)}
 					</div>
 
-					<h2 className="text-2xl font-bold text-white text-center z-10 leading-tight drop-shadow-md">
+					<h2 className="text-2xl font-bold text-white text-center z-10 leading-tight drop-shadow-none">
 						{targetName}
 					</h2>
 					<p className="text-white/80 text-sm font-semibold mt-1 z-10 tracking-wider uppercase flex items-center gap-2">
@@ -154,17 +154,17 @@ export default function VoiceCallModal({
 				</div>
 
 				{/* Controls */}
-				<div className="px-8 py-8 flex items-center justify-center gap-8 bg-gray-50/50">
+				<div className="px-8 py-8 flex items-center justify-center gap-8 bg-[var(--bg-hover)]/50">
 					{/* Mute Button */}
 					<button
 						onClick={handleToggleMute}
 						disabled={callState !== "connected"}
-						className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all cursor-pointer ${
+						className={`w-14 h-14 rounded-full flex items-center justify-center shadow-none transition-all cursor-pointer ${
 							callState !== "connected"
-								? "opacity-50 cursor-not-allowed bg-gray-200 text-gray-400"
+								? "opacity-50 cursor-not-allowed bg-[var(--bg-hover)] text-[var(--text-3)]"
 								: isMuted
-									? "bg-white text-gray-800 border-2 border-gray-200"
-									: "bg-[#00A09D] text-white hover:bg-[#008f8c]"
+									? "bg-[var(--bg-card)] text-[var(--text)] border-2 border-[var(--border)]"
+									: "bg-[var(--accent)] text-white hover:bg-[var(--accent)]"
 						}`}
 					>
 						{isMuted ? (
@@ -177,7 +177,7 @@ export default function VoiceCallModal({
 					{/* End Call Button */}
 					<button
 						onClick={handleEndCall}
-						className="w-16 h-16 rounded-full flex items-center justify-center bg-red-500 hover:bg-red-600 text-white shadow-xl shadow-red-500/30 transition-transform hover:scale-105 cursor-pointer"
+						className="w-16 h-16 rounded-full flex items-center justify-center bg-[var(--bg-hover)]0 hover:bg-red-600 text-white shadow-none shadow-red-500/30 transition-transform hover:scale-105 cursor-pointer"
 					>
 						<PhoneOff className="w-7 h-7" />
 					</button>

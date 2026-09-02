@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import {
 	MapContainer,
 	TileLayer,
@@ -112,9 +112,9 @@ const createCarIcon = (isSelected, name, fare) => {
           align-items: center;
           gap: 4px;
         ">
-          <span>🚗</span>
+          <span>ðŸš—</span>
           <span>${name || "Carpool"}</span>
-          <span style="background: rgba(255,255,255,0.25); padding: 1px 4px; border-radius: 6px; font-size: 10px;">₹${fare || 45}</span>
+          <span style="background: rgba(255,255,255,0.25); padding: 1px 4px; border-radius: 6px; font-size: 10px;">â‚¹${fare || 45}</span>
         </div>
         <div style="
           width: 0;
@@ -445,8 +445,8 @@ export default function Map({
 						}}
 					>
 						<Popup>
-							<div className="text-xs font-bold text-[#00A09D]">
-								📍 10km Radius Carpool Zone
+							<div className="text-xs font-bold text-[var(--accent)]">
+								ðŸ“ 10km Radius Carpool Zone
 							</div>
 						</Popup>
 					</Circle>
@@ -456,8 +456,8 @@ export default function Map({
 				{userLocation && (
 					<Marker position={userLocation} icon={createUserLocationIcon()}>
 						<Popup>
-							<div className="font-bold text-xs text-[#00A09D] p-1">
-								📍 You are here
+							<div className="font-bold text-xs text-[var(--accent)] p-1">
+								ðŸ“ You are here
 							</div>
 						</Popup>
 					</Marker>
@@ -485,33 +485,33 @@ export default function Map({
 							>
 								<Popup>
 									<div className="text-xs space-y-1.5 p-1 text-left min-w-[170px]">
-										<div className="flex items-center justify-between border-b border-gray-100 pb-1">
-											<span className="font-bold text-gray-900">
+										<div className="flex items-center justify-between border-b border-[var(--border)] pb-1">
+											<span className="font-bold text-[var(--text)]">
 												{ride.driver_name}
 											</span>
-											<span className="text-[#00A09D] font-extrabold">
-												₹{ride.fare_per_seat}
+											<span className="text-[var(--accent)] font-extrabold">
+												â‚¹{ride.fare_per_seat}
 											</span>
 										</div>
-										<p className="text-gray-600">
+										<p className="text-[var(--text-2)]">
 											<strong>Vehicle:</strong> {ride.vehicle_model}
 										</p>
-										<p className="text-gray-600">
+										<p className="text-[var(--text-2)]">
 											<strong>Destination:</strong>{" "}
 											{ride.destination?.name ||
 												(typeof ride.destination === "string"
 													? ride.destination
 													: "Destination")}
 										</p>
-										<p className="text-[#00A09D] font-semibold">
-											{ride.distance_km || 1.2} km away •{" "}
+										<p className="text-[var(--accent)] font-semibold">
+											{ride.distance_km || 1.2} km away â€¢{" "}
 											{ride.available_seats} seats left
 										</p>
 										<button
 											onClick={() =>
 												onSelectRide && onSelectRide(ride)
 											}
-											className="w-full mt-1.5 py-1.5 px-2 bg-[#00A09D] hover:bg-[#008f8c] text-white font-bold rounded-lg text-xs cursor-pointer shadow-xs transition-colors"
+											className="w-full mt-1.5 py-1.5 px-2 bg-[var(--accent)] hover:bg-[var(--accent)] text-white font-bold rounded-lg text-xs cursor-pointer shadow-xs transition-colors"
 										>
 											Select Carpool
 										</button>
@@ -527,11 +527,11 @@ export default function Map({
 						{getPointCoords(selectedRide.destination) && (
 							<Marker
 								position={getPointCoords(selectedRide.destination)}
-								icon={createLocationPinIcon("#EF4444", "🏁 Dest")}
+								icon={createLocationPinIcon("#EF4444", "ðŸ Dest")}
 							>
 								<Popup>
 									<div className="text-xs font-bold text-[#EF4444]">
-										🏁 Destination:{" "}
+										ðŸ Destination:{" "}
 										{selectedRide.destination?.name ||
 											"Dropoff Point"}
 									</div>
@@ -568,11 +568,11 @@ export default function Map({
 				{pickupCoords && (
 					<Marker
 						position={pickupCoords}
-						icon={createLocationPinIcon("#00A09D", "🟢 Pickup")}
+						icon={createLocationPinIcon("#00A09D", "ðŸŸ¢ Pickup")}
 					>
 						<Popup>
-							<div className="font-semibold text-sm text-[#00A09D]">
-								🟢 Pickup Location (Source)
+							<div className="font-semibold text-sm text-[var(--accent)]">
+								ðŸŸ¢ Pickup Location (Source)
 							</div>
 						</Popup>
 					</Marker>
@@ -582,11 +582,11 @@ export default function Map({
 				{dropoffCoords && (
 					<Marker
 						position={dropoffCoords}
-						icon={createLocationPinIcon("#EF4444", "🔴 Dropoff")}
+						icon={createLocationPinIcon("#EF4444", "ðŸ”´ Dropoff")}
 					>
 						<Popup>
 							<div className="font-semibold text-sm text-[#EF4444]">
-								🔴 Dropoff Location (Destination)
+								ðŸ”´ Dropoff Location (Destination)
 							</div>
 						</Popup>
 					</Marker>
@@ -599,11 +599,11 @@ export default function Map({
 						{activeOriginCoords && (
 							<Marker
 								position={activeOriginCoords}
-								icon={createLocationPinIcon("#00A09D", "🟢 Pickup")}
+								icon={createLocationPinIcon("#00A09D", "ðŸŸ¢ Pickup")}
 							>
 								<Popup>
-									<div className="font-semibold text-sm text-[#00A09D]">
-										🟢 Pickup:{" "}
+									<div className="font-semibold text-sm text-[var(--accent)]">
+										ðŸŸ¢ Pickup:{" "}
 										{typeof activeOrigin === "string"
 											? activeOrigin
 											: activeOrigin?.name ||
@@ -617,11 +617,11 @@ export default function Map({
 						{activeDestCoords && (
 							<Marker
 								position={activeDestCoords}
-								icon={createLocationPinIcon("#EF4444", "🔴 Dropoff")}
+								icon={createLocationPinIcon("#EF4444", "ðŸ”´ Dropoff")}
 							>
 								<Popup>
 									<div className="font-semibold text-sm text-[#EF4444]">
-										🔴 Dropoff:{" "}
+										ðŸ”´ Dropoff:{" "}
 										{typeof activeDest === "string"
 											? activeDest
 											: activeDest?.name ||

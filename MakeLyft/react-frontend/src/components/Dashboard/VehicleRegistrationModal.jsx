@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { X, Car } from "lucide-react";
 import carModels from "../../data/car_models.json";
 
@@ -24,19 +24,19 @@ function VehicleRegistrationModal({ onClose, onRegister }) {
 
 	return (
 		<div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
-			<div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]">
-				<div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50/50 shrink-0">
+			<div className="bg-[var(--bg-card)] rounded-xl shadow-none w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]">
+				<div className="flex items-center justify-between p-6 border-b border-[var(--border)] bg-[var(--bg-hover)]/50 shrink-0">
 					<div className="flex items-center gap-3">
-						<div className="w-10 h-10 bg-[#714B67]/10 rounded-full flex items-center justify-center text-[#714B67]">
+						<div className="w-10 h-10 bg-[var(--primary)]/10 rounded-full flex items-center justify-center text-[var(--primary)]">
 							<Car className="w-5 h-5" />
 						</div>
-						<h2 className="text-xl font-bold text-gray-900">
+						<h2 className="text-xl font-bold text-[var(--text)]">
 							Register Vehicle
 						</h2>
 					</div>
 					<button
 						onClick={onClose}
-						className="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+						className="text-[var(--text-3)] hover:text-[var(--text-2)] transition-colors cursor-pointer"
 					>
 						<X className="w-6 h-6" />
 					</button>
@@ -46,14 +46,14 @@ function VehicleRegistrationModal({ onClose, onRegister }) {
 					<form onSubmit={handleSubmit} className="space-y-4">
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							<div className="space-y-1.5">
-								<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+								<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider">
 									Vehicle Make & Model
 								</label>
 								<select
 									required
 									value={vehicle_model}
 									onChange={(e) => setVehicleModel(e.target.value)}
-									className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+									className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all"
 								>
 									<option value="" disabled>Select a vehicle model</option>
 									{carModels.map(model => (
@@ -63,7 +63,7 @@ function VehicleRegistrationModal({ onClose, onRegister }) {
 							</div>
 
 							<div className="space-y-1.5">
-								<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+								<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider">
 									Vehicle No (License Plate)
 								</label>
 								<input
@@ -72,12 +72,12 @@ function VehicleRegistrationModal({ onClose, onRegister }) {
 									value={vehicle_no}
 									onChange={(e) => setVehicleNo(e.target.value)}
 									placeholder="ABC-1234"
-									className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all uppercase"
+									className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all uppercase"
 								/>
 							</div>
 
 							<div className="space-y-1.5">
-								<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+								<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider">
 									Max Seating Capacity
 								</label>
 								<input
@@ -87,12 +87,12 @@ function VehicleRegistrationModal({ onClose, onRegister }) {
 									max="8"
 									value={max_seating_cap}
 									onChange={(e) => setCapacity(e.target.value)}
-									className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+									className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all"
 								/>
 							</div>
 
 							<div className="space-y-1.5">
-								<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+								<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider">
 									Driver's License No
 								</label>
 								<input
@@ -101,12 +101,12 @@ function VehicleRegistrationModal({ onClose, onRegister }) {
 									value={DL_no}
 									onChange={(e) => setDlNo(e.target.value)}
 									placeholder="DL-XXXXX"
-									className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all uppercase"
+									className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all uppercase"
 								/>
 							</div>
 
 							<div className="space-y-1.5">
-								<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+								<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider">
 									Insurance No
 								</label>
 								<input
@@ -115,12 +115,12 @@ function VehicleRegistrationModal({ onClose, onRegister }) {
 									value={insurance_no}
 									onChange={(e) => setInsuranceNo(e.target.value)}
 									placeholder="INS-XXXXX"
-									className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all uppercase"
+									className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all uppercase"
 								/>
 							</div>
 
 							<div className="space-y-1.5">
-								<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
+								<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider">
 									Fuel Consumption Ratio (km/l)
 								</label>
 								<input
@@ -131,7 +131,7 @@ function VehicleRegistrationModal({ onClose, onRegister }) {
 									value={fuel_consumption_ratio}
 									onChange={(e) => setFuelConsumption(e.target.value)}
 									placeholder="e.g. 15.5"
-									className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+									className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all"
 								/>
 							</div>
 						</div>
@@ -139,7 +139,7 @@ function VehicleRegistrationModal({ onClose, onRegister }) {
 						<div className="pt-4">
 							<button
 								type="submit"
-								className="w-full py-3 px-4 bg-[#714B67] hover:bg-[#5c3c54] text-white font-semibold rounded-xl transition-all shadow-sm"
+								className="w-full py-3 px-4 bg-[var(--primary)] hover:bg-[var(--primary)] text-white font-semibold rounded-xl transition-all shadow-none"
 							>
 								Complete Registration
 							</button>

@@ -47,7 +47,7 @@ function AppRoutes() {
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50 w-full page-transition">
+      <div className="min-h-screen w-full page-transition" style={{background: 'var(--bg-base)'}}>
         <AppRoutes />
       </div>
       <AlertModal />

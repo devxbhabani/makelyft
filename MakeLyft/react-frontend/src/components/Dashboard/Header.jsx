@@ -1,304 +1,284 @@
 import React, { useState, useEffect } from "react";
 import {
-	Bell,
-	//eslint-disable-next-line
-	ChevronDown,
-	LogOut,
-	Wallet,
-	Car,
-	//eslint-disable-next-line
-	Settings,
-	User,
-	Clock,
-	Phone,
-	MessageSquare,
-	MessageSquareHeart,
-	Plus,
-	//eslint-disable-next-line
-	Calendar,
-	//eslint-disable-next-line
-	MapPin,
+  Bell, LogOut, Wallet, Car,
+  User, Clock, Phone, MessageSquare,
+  MessageSquareHeart, Plus,
+  //eslint-disable-next-line
+  ChevronDown, Settings, Calendar, MapPin,
 } from "lucide-react";
 import WalletModal from "./WalletModal";
 import { getWalletData, subscribeToWallet } from "../../utils/walletService";
 
-function Header({
-	socket,
-	onOpenVehicleModal,
-	onOpenChat,
-	onOpenVoiceCall,
-	onOpenHistory,
-	onOpenFeedback,
-	onOpenProfile,
-}) {
-	const [dropdownOpen, setDropdownOpen] = useState(false);
-	const [notificationsOpen, setNotificationsOpen] = useState(false);
-	const [walletModalOpen, setWalletModalOpen] = useState(false);
-	const [walletBalance, setWalletBalance] = useState(650.0);
-	const [notifications, setNotifications] = useState([]);
+function Header({ socket, onOpenVehicleModal, onOpenChat, onOpenVoiceCall, onOpenHistory, onOpenFeedback, onOpenProfile }) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [walletModalOpen, setWalletModalOpen] = useState(false);
+  const [walletBalance, setWalletBalance] = useState(650.0);
+  const [notifications, setNotifications] = useState([]);
 
-	const user = JSON.parse(localStorage.getItem("user") || "{}");
-	const empId = user.emp_id || "EMP-DEFAULT";
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const empId = user.emp_id || "EMP-DEFAULT";
+  const initials = (user.name || "U").split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
 
-	useEffect(() => {
-		if (!socket) return;
-		const handleNotif = (data) => {
-			if (data.target_emp_id === empId || data.target_emp_id === "all") {
-				setNotifications((prev) => [data, ...prev]);
-			}
-		};
-		socket.on("new_notification", handleNotif);
-		return () => socket.off("new_notification", handleNotif);
-	}, [socket, empId]);
+  useEffect(() => {
+    if (!socket) return;
+    const fn = (data) => {
+      if (data.target_emp_id === empId || data.target_emp_id === "all") setNotifications((p) => [data, ...p]);
+    };
+    socket.on("new_notification", fn);
+    return () => socket.off("new_notification", fn);
+  }, [socket, empId]);
 
-	useEffect(() => {
-		getWalletData(empId).then((data) => {
-			if (data && typeof data.balance === "number") {
-				setWalletBalance(data.balance);
-			}
-		});
+  useEffect(() => {
+    getWalletData(empId).then((d) => { if (d && typeof d.balance === "number") setWalletBalance(d.balance); });
+    const unsub = subscribeToWallet((d) => { if (d && typeof d.balance === "number") setWalletBalance(d.balance); });
+    return unsub;
+  }, [empId]);
 
-		const unsubscribe = subscribeToWallet((updatedWallet) => {
-			if (updatedWallet && typeof updatedWallet.balance === "number") {
-				setWalletBalance(updatedWallet.balance);
-			}
-		});
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  };
 
-		return () => unsubscribe();
-	}, [empId]);
+  const iconBtnStyle = {
+    width: 36, height: 36, borderRadius: 8,
+    background: "transparent",
+    border: "1px solid var(--border)",
+    color: "var(--text-2)",
+    cursor: "pointer",
+    display: "flex", alignItems: "center", justifyContent: "center",
+    transition: "background 0.15s ease, color 0.15s ease, border-color 0.15s ease",
+    position: "relative",
+    flexShrink: 0,
+  };
 
-	const handleLogout = () => {
-		localStorage.removeItem("token");
-		localStorage.removeItem("user");
-		window.location.href = "/";
-	};
+  const dropdownStyle = {
+    position: "absolute",
+    right: 0,
+    top: "calc(100% + 8px)",
+    zIndex: 50,
+    background: "var(--bg-card)",
+    border: "1px solid var(--border)",
+    borderRadius: 10,
+    boxShadow: "var(--shadow)",
+    overflow: "hidden",
+    minWidth: 210,
+  };
 
-	return (
-		<>
-			<header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-				{/* Brand */}
-				<div className="flex items-center gap-2">
-					<div className="w-8 h-8 bg-[#714B67] rounded-lg flex items-center justify-center shadow-xs">
-						<Car className="w-5 h-5 text-white" />
-					</div>
-					<span className="text-xl font-bold text-gray-900 tracking-tight">
-						MakeLyft
-					</span>
-				</div>
+  const menuItemStyle = {
+    display: "flex", alignItems: "center", justifyContent: "space-between",
+    width: "100%", padding: "9px 14px",
+    background: "none", border: "none",
+    cursor: "pointer", fontFamily: "inherit", fontSize: "0.85rem",
+    color: "var(--text-2)", textAlign: "left",
+    transition: "background 0.12s ease, color 0.12s ease",
+  };
 
-				{/* Right Navbar Elements: Wallet, Notifications & User Profile */}
-				<div className="flex items-center gap-3 md:gap-4 relative">
-					{/* Wallet Pill Button */}
-					<button
-						onClick={() => {
-							setWalletModalOpen(true);
-							setDropdownOpen(false);
-							setNotificationsOpen(false);
-						}}
-						className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-gradient-to-r from-purple-50 via-teal-50/40 to-white hover:from-purple-100/70 hover:to-teal-100/50 text-[#714B67] border border-[#714B67]/20 hover:border-[#714B67]/40 shadow-2xs hover:shadow-xs transition-all duration-200 cursor-pointer group"
-						title="Open MakeLyft Commute Wallet"
-					>
-						<div className="w-6 h-6 rounded-lg bg-[#714B67] text-white flex items-center justify-center group-hover:scale-105 transition-transform">
-							<Wallet className="w-3.5 h-3.5" />
-						</div>
-						<div className="text-left flex flex-col leading-tight">
-							<span className="text-[10px] uppercase font-bold text-gray-500 tracking-wider">
-								Wallet
-							</span>
-							<span className="text-xs font-extrabold text-gray-900 font-mono">
-								₹
-								{walletBalance.toLocaleString("en-IN", {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2,
-								})}
-							</span>
-						</div>
-						<span className="hidden sm:flex w-5 h-5 rounded-full bg-[#00A09D]/15 text-[#00A09D] items-center justify-center ml-0.5">
-							<Plus className="w-3 h-3" />
-						</span>
-					</button>
+  return (
+    <>
+      <header
+        style={{
+          background: "var(--bg)",
+          borderBottom: "1px solid var(--border)",
+          padding: "0 24px",
+          height: 56,
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          position: "sticky", top: 0, zIndex: 50,
+        }}
+      >
+        {/* Brand */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div
+            style={{
+              width: 30, height: 30, borderRadius: 7,
+              background: "var(--bg-hover)",
+              border: "1px solid var(--border-focus)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >
+            <Car style={{ width: 15, height: 15, color: "var(--primary)" }} />
+          </div>
+          <span style={{ fontWeight: 600, fontSize: "0.975rem", color: "var(--text)", letterSpacing: "-0.02em" }}>
+            MakeLyft
+          </span>
+        </div>
 
-					{/* Notifications Bell */}
-					<div className="relative">
-						<button
-							onClick={() => {
-								setNotificationsOpen(!notificationsOpen);
-								setDropdownOpen(false);
-							}}
-							className="flex items-center justify-center w-10 h-10 rounded-2xl bg-gray-100 hover:bg-gray-200 transition-colors border border-gray-200 cursor-pointer relative"
-						>
-							<Bell className="w-5 h-5 text-gray-600" />
-							{/* Notification Badge */}
-							<span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
-						</button>
+        {/* Right */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
 
-						{notificationsOpen && (
-							<div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden py-2 z-50">
-								<div className="px-4 py-2 border-b border-gray-100 flex justify-between items-center">
-									<h4 className="font-bold text-gray-900">
-										Notifications
-									</h4>
-									{notifications.length > 0 && (
-										<span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-bold">
-											{notifications.length}
-										</span>
-									)}
-								</div>
+          {/* Wallet */}
+          <button
+            onClick={() => { setWalletModalOpen(true); setDropdownOpen(false); setNotificationsOpen(false); }}
+            style={{
+              display: "flex", alignItems: "center", gap: 8,
+              padding: "6px 12px 6px 8px",
+              borderRadius: 8,
+              background: "transparent",
+              border: "1px solid var(--border)",
+              cursor: "pointer",
+              transition: "background 0.15s ease, border-color 0.15s ease",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--bg-hover)"; e.currentTarget.style.borderColor = "var(--border-focus)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "var(--border)"; }}
+          >
+            <div style={{ width: 24, height: 24, borderRadius: 6, background: "var(--primary-dim)", border: "1px solid rgba(124,106,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Wallet style={{ width: 12, height: 12, color: "var(--primary)" }} />
+            </div>
+            <div style={{ textAlign: "left", lineHeight: 1.2 }}>
+              <p style={{ fontSize: "0.65rem", color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>Wallet</p>
+              <p style={{ fontSize: "0.82rem", fontWeight: 600, color: "var(--text)", fontVariantNumeric: "tabular-nums", margin: 0 }}>
+                ₹{walletBalance.toLocaleString("en-IN", { minimumFractionDigits: 0 })}
+              </p>
+            </div>
+            <Plus style={{ width: 13, height: 13, color: "var(--text-3)" }} />
+          </button>
 
-								{notifications.length === 0 ? (
-									<div className="p-6 text-center text-gray-500 text-sm font-semibold">
-										No new notifications
-									</div>
-								) : (
-									<div className="max-h-[350px] overflow-y-auto">
-										{notifications.map((notif, idx) => (
-											<div
-												key={idx}
-												className="p-4 bg-teal-50/30 hover:bg-teal-50/60 transition-colors border-b border-gray-50 text-left"
-											>
-												<div className="flex justify-between items-start mb-2">
-													<span
-														className={`text-[10px] font-bold px-2 py-1 text-white rounded-md uppercase tracking-wide ${notif.type === "request" ? "bg-[#714B67]" : "bg-[#00A09D]"}`}
-													>
-														{notif.title}
-													</span>
-													<span className="text-xs text-gray-500">
-														{new Date(
-															notif.timestamp,
-														).toLocaleTimeString([], {
-															hour: "2-digit",
-															minute: "2-digit",
-														})}
-													</span>
-												</div>
-												<p className="text-sm text-gray-800 mb-3">
-													{notif.message}
-												</p>
+          {/* Notifications */}
+          <div style={{ position: "relative" }}>
+            <button
+              onClick={() => { setNotificationsOpen(!notificationsOpen); setDropdownOpen(false); }}
+              style={iconBtnStyle}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--bg-hover)"; e.currentTarget.style.color = "var(--text)"; e.currentTarget.style.borderColor = "var(--border-focus)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--text-2)"; e.currentTarget.style.borderColor = "var(--border)"; }}
+            >
+              <Bell style={{ width: 15, height: 15 }} />
+              {notifications.length > 0 && (
+                <span style={{
+                  position: "absolute", top: 7, right: 7,
+                  width: 6, height: 6, borderRadius: "50%",
+                  background: "var(--danger)",
+                  border: "1.5px solid var(--bg)",
+                }} />
+              )}
+            </button>
 
-												<div className="flex gap-2">
-													<button
-														onClick={() => {
-															setNotificationsOpen(false);
-															if (onOpenVoiceCall)
-																onOpenVoiceCall();
-														}}
-														className="flex-1 py-1.5 flex items-center justify-center gap-1.5 bg-[#714B67] hover:bg-[#5c3c54] text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
-													>
-														<Phone className="w-3.5 h-3.5" /> Call
-													</button>
-													<button
-														onClick={() => {
-															setNotificationsOpen(false);
-															if (onOpenChat) onOpenChat();
-														}}
-														className="flex-1 py-1.5 flex items-center justify-center gap-1.5 bg-[#00A09D] hover:bg-[#008f8c] text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
-													>
-														<MessageSquare className="w-3.5 h-3.5" />{" "}
-														Chat
-													</button>
-												</div>
-											</div>
-										))}
-									</div>
-								)}
-							</div>
-						)}
-					</div>
+            {notificationsOpen && (
+              <div style={{ ...dropdownStyle, width: 300 }} className="animate-fade-up">
+                <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: "0.82rem", fontWeight: 600, color: "var(--text)" }}>Notifications</span>
+                  {notifications.length > 0 && (
+                    <span style={{ fontSize: "0.7rem", background: "rgba(248,113,113,0.1)", color: "var(--danger)", padding: "2px 7px", borderRadius: "9999px", border: "1px solid rgba(248,113,113,0.2)" }}>
+                      {notifications.length}
+                    </span>
+                  )}
+                </div>
 
-					{/* User Profile */}
-					<div className="relative">
-						<button
-							onClick={() => {
-								setDropdownOpen(!dropdownOpen);
-								setNotificationsOpen(false);
-							}}
-							className="flex items-center justify-center w-10 h-10 rounded-2xl bg-gray-100 hover:bg-gray-200 transition-colors border border-gray-200 cursor-pointer"
-						>
-							<User className="w-5 h-5 text-gray-600" />
-						</button>
+                {notifications.length === 0 ? (
+                  <p style={{ padding: "24px", textAlign: "center", fontSize: "0.82rem", color: "var(--text-3)", margin: 0 }}>No notifications</p>
+                ) : (
+                  <div style={{ maxHeight: 320, overflowY: "auto" }}>
+                    {notifications.map((n, i) => (
+                      <div key={i} style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                          <span style={{ fontSize: "0.7rem", fontWeight: 600, color: n.type === "request" ? "var(--primary)" : "var(--accent)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{n.title}</span>
+                          <span style={{ fontSize: "0.7rem", color: "var(--text-3)" }}>{new Date(n.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+                        </div>
+                        <p style={{ fontSize: "0.82rem", color: "var(--text-2)", margin: "0 0 10px" }}>{n.message}</p>
+                        <div style={{ display: "flex", gap: 6 }}>
+                          {[
+                            { icon: Phone, label: "Call", onClick: () => { setNotificationsOpen(false); onOpenVoiceCall?.(); } },
+                            { icon: MessageSquare, label: "Chat", onClick: () => { setNotificationsOpen(false); onOpenChat?.(); } },
+                          ].map(({ icon: Icon, label, onClick }) => (
+                            <button
+                              key={label}
+                              onClick={onClick}
+                              style={{
+                                flex: 1, padding: "5px", borderRadius: 6, fontSize: "0.78rem", fontWeight: 500,
+                                background: "var(--bg-hover)", border: "1px solid var(--border)",
+                                color: "var(--text-2)", cursor: "pointer", fontFamily: "inherit",
+                                display: "flex", alignItems: "center", justifyContent: "center", gap: 5,
+                                transition: "background 0.12s, color 0.12s",
+                              }}
+                              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = "var(--text)"; }}
+                              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-hover)"; e.currentTarget.style.color = "var(--text-2)"; }}
+                            >
+                              <Icon style={{ width: 12, height: 12 }} /> {label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
-						{dropdownOpen && (
-							<div className="absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden py-1.5 z-50 text-left">
-								<div className="px-4 py-2 border-b border-gray-100 bg-gray-50/50">
-									<p className="text-xs font-bold text-gray-900 truncate">
-										{user.name || "Employee"}
-									</p>
-									<p className="text-[10px] text-gray-500 font-mono">
-										{empId}
-									</p>
-								</div>
-								<button
-									onClick={() => {
-										setDropdownOpen(false);
-										setWalletModalOpen(true);
-									}}
-									className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-purple-50/50 hover:text-[#714B67] flex items-center justify-between cursor-pointer transition-colors"
-								>
-									<span className="flex items-center gap-2">
-										<Wallet className="w-4 h-4 text-[#714B67]" />{" "}
-										Commute Wallet
-									</span>
-									<span className="text-xs font-bold text-emerald-600 font-mono">
-										₹{walletBalance.toFixed(0)}
-									</span>
-								</button>
-								<button
-									onClick={() => {
-										setDropdownOpen(false);
-										onOpenVehicleModal();
-									}}
-									className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 cursor-pointer transition-colors"
-								>
-									<Car className="w-4 h-4 text-gray-400" /> Register
-									Vehicle
-								</button>
-								<button
-									onClick={() => {
-										setDropdownOpen(false);
-										if (onOpenProfile) onOpenProfile();
-									}}
-									className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer transition-colors font-medium"
-								>
-									<User className="w-4 h-4" /> Profile Details
-								</button>
-								<button
-									onClick={() => {
-										setDropdownOpen(false);
-										if (onOpenHistory) onOpenHistory();
-									}}
-									className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer transition-colors font-medium"
-								>
-									<Clock className="w-4 h-4" /> View History
-								</button>
-								<button
-									onClick={() => {
-										setDropdownOpen(false);
-										if (onOpenFeedback) onOpenFeedback();
-									}}
-									className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer transition-colors font-medium"
-								>
-									<MessageSquareHeart className="w-4 h-4" /> Send
-									Feedback
-								</button>
-								<button
-									onClick={handleLogout}
-									className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 cursor-pointer transition-colors font-medium mt-1 border-t border-gray-100"
-								>
-									<LogOut className="w-4 h-4 text-red-400" /> Logout
-								</button>
-							</div>
-						)}
-					</div>
-				</div>
-			</header>
+          {/* Profile */}
+          <div style={{ position: "relative" }}>
+            <button
+              onClick={() => { setDropdownOpen(!dropdownOpen); setNotificationsOpen(false); }}
+              style={{
+                ...iconBtnStyle,
+                fontWeight: 600,
+                fontSize: "0.75rem",
+                color: "var(--text)",
+                background: "var(--bg-hover)",
+                border: "1px solid var(--border-focus)",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--bg-card)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-hover)"; }}
+            >
+              {initials}
+            </button>
 
-			{/* Render Interactive Wallet Modal */}
-			<WalletModal
-				isOpen={walletModalOpen}
-				onClose={() => setWalletModalOpen(false)}
-			/>
-		</>
-	);
+            {dropdownOpen && (
+              <div style={dropdownStyle} className="animate-fade-up">
+                {/* User info */}
+                <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 6, background: "var(--primary-dim)", border: "1px solid rgba(124,106,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.7rem", fontWeight: 600, color: "var(--primary)" }}>
+                    {initials}
+                  </div>
+                  <div>
+                    <p style={{ margin: 0, fontSize: "0.82rem", fontWeight: 600, color: "var(--text)" }}>{user.name || "Employee"}</p>
+                    <p style={{ margin: 0, fontSize: "0.7rem", color: "var(--text-3)", fontFamily: "monospace" }}>{empId}</p>
+                  </div>
+                </div>
+
+                {/* Menu items */}
+                {[
+                  { icon: Wallet, label: "Commute Wallet", badge: `₹${walletBalance.toFixed(0)}`, fn: () => { setDropdownOpen(false); setWalletModalOpen(true); } },
+                  { icon: Car, label: "Register Vehicle", fn: () => { setDropdownOpen(false); onOpenVehicleModal(); } },
+                  { icon: User, label: "Profile", fn: () => { setDropdownOpen(false); onOpenProfile?.(); } },
+                  { icon: Clock, label: "History", fn: () => { setDropdownOpen(false); onOpenHistory?.(); } },
+                  { icon: MessageSquareHeart, label: "Feedback", fn: () => { setDropdownOpen(false); onOpenFeedback?.(); } },
+                ].map(({ icon: Icon, label, badge, fn }) => (
+                  <button
+                    key={label}
+                    onClick={fn}
+                    style={menuItemStyle}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "var(--bg-hover)"; e.currentTarget.style.color = "var(--text)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "none"; e.currentTarget.style.color = "var(--text-2)"; }}
+                  >
+                    <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <Icon style={{ width: 14, height: 14, flexShrink: 0 }} />
+                      {label}
+                    </span>
+                    {badge && <span style={{ fontSize: "0.75rem", color: "var(--accent)", fontVariantNumeric: "tabular-nums" }}>{badge}</span>}
+                  </button>
+                ))}
+
+                <button
+                  onClick={handleLogout}
+                  style={{ ...menuItemStyle, color: "var(--danger)", borderTop: "1px solid var(--border)" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(248,113,113,0.06)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "none"; }}
+                >
+                  <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <LogOut style={{ width: 14, height: 14 }} />
+                    Sign out
+                  </span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      <WalletModal isOpen={walletModalOpen} onClose={() => setWalletModalOpen(false)} />
+    </>
+  );
 }
 
 export default Header;

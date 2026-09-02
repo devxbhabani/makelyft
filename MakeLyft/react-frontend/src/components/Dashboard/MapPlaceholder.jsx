@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import Map from "./Map.jsx";
 
 function MapPlaceholder({
@@ -13,7 +13,7 @@ function MapPlaceholder({
 	activeTrip = null,
 }) {
 	return (
-		<div className="w-full h-full min-h-[580px] bg-gray-100 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-gray-400 relative overflow-hidden transition-all duration-300">
+		<div className="w-full h-full min-h-[580px] bg-[var(--bg-hover)] rounded-xl border border-[var(--border)] shadow-none flex flex-col items-center justify-center text-[var(--text-3)] relative overflow-hidden transition-all duration-300">
 			<Map 
 				pickupCoords={pickupCoords} 
 				dropoffCoords={dropoffCoords} 

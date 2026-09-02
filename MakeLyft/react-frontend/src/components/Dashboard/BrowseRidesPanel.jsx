@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { showAlert } from "../../utils/alertService";
 import {
 	ArrowLeft,
@@ -112,34 +112,34 @@ export default function BrowseRidesPanel({
 	};
 
 	return (
-		<div className="flex flex-col h-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-left">
+		<div className="flex flex-col h-full bg-[var(--bg-card)] rounded-xl shadow-none border border-[var(--border)] overflow-hidden text-left">
 			{/* Header */}
-			<div className="p-5 border-b border-gray-100 bg-gradient-to-r from-teal-50/40 via-white to-purple-50/30">
+			<div className="p-5 border-b border-[var(--border)] bg-[var(--bg-hover)] from-teal-50/40  to-purple-50/30">
 				<div className="flex items-center justify-between gap-3 mb-3">
 					<button
 						onClick={onBack}
-						className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-[#714B67] bg-white border border-[#714B67]/20 hover:bg-[#714B67] hover:text-white rounded-xl shadow-2xs transition-all duration-200 cursor-pointer group"
+						className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-[var(--primary)] bg-[var(--bg-card)] border border-[var(--border-focus)]/20 hover:bg-[var(--primary)] hover:text-white rounded-xl shadow-none transition-all duration-200 cursor-pointer group"
 					>
 						<ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
 						<span>Back to Search</span>
 					</button>
 
 					<div className="flex items-center gap-2">
-						<span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#00A09D]/10 text-[#00A09D] border border-[#00A09D]/20">
-							<span className="w-2 h-2 rounded-full bg-[#00A09D] animate-pulse"></span>
+						<span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--border-focus)]/20">
+							<span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></span>
 							10 km Radius
 						</span>
-						<span className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded-lg text-xs font-bold">
+						<span className="px-2 py-0.5 bg-[var(--bg-hover)] text-[var(--text-2)] rounded-lg text-xs font-bold">
 							{filteredRides.length} Found
 						</span>
 					</div>
 				</div>
 
 				<div>
-					<h2 className="text-lg font-extrabold text-gray-900 tracking-tight">
+					<h2 className="text-lg font-extrabold text-[var(--text)] tracking-tight">
 						Available Carpools Nearby
 					</h2>
-					<p className="text-xs text-gray-500 mt-0.5">
+					<p className="text-xs text-[var(--text-3)] mt-0.5">
 						Verified colleagues travelling within 10 km of your location.
 					</p>
 				</div>
@@ -147,18 +147,18 @@ export default function BrowseRidesPanel({
 				{/* Search & Filter Bar */}
 				<div className="mt-3.5 space-y-2">
 					<div className="relative">
-						<Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+						<Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-3)]" />
 						<input
 							type="text"
 							value={searchTerm}
 							onChange={(e) => setSearchTerm(e.target.value)}
 							placeholder="Search by driver, department, destination..."
-							className="w-full pl-8 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#00A09D]/20 focus:border-[#00A09D] transition-all"
+							className="w-full pl-8 pr-3 py-2 bg-[var(--bg-hover)] border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-transparent/20 focus:border-[var(--border-focus)] transition-all"
 						/>
 						{searchTerm && (
 							<button
 								onClick={() => setSearchTerm("")}
-								className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+								className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--text-3)] hover:text-[var(--text-2)]"
 							>
 								<X className="w-3.5 h-3.5" />
 							</button>
@@ -171,8 +171,8 @@ export default function BrowseRidesPanel({
 							onClick={() => setFilterType("all")}
 							className={`px-3 py-1 rounded-lg font-bold whitespace-nowrap transition-all cursor-pointer ${
 								filterType === "all"
-									? "bg-[#714B67] text-white shadow-xs"
-									: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+									? "bg-[var(--primary)] text-white shadow-xs"
+									: "bg-[var(--bg-hover)] text-[var(--text-2)] hover:bg-[var(--bg-hover)]"
 							}`}
 						>
 							All Rides
@@ -182,33 +182,33 @@ export default function BrowseRidesPanel({
 							onClick={() => setFilterType("under5km")}
 							className={`px-3 py-1 rounded-lg font-bold whitespace-nowrap transition-all cursor-pointer ${
 								filterType === "under5km"
-									? "bg-[#00A09D] text-white shadow-xs"
-									: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+									? "bg-[var(--accent)] text-white shadow-xs"
+									: "bg-[var(--bg-hover)] text-[var(--text-2)] hover:bg-[var(--bg-hover)]"
 							}`}
 						>
-							⚡ Under 5 km
+							âš¡ Under 5 km
 						</button>
 
 						<button
 							onClick={() => setFilterType("seats")}
 							className={`px-3 py-1 rounded-lg font-bold whitespace-nowrap transition-all cursor-pointer ${
 								filterType === "seats"
-									? "bg-[#00A09D] text-white shadow-xs"
-									: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+									? "bg-[var(--accent)] text-white shadow-xs"
+									: "bg-[var(--bg-hover)] text-[var(--text-2)] hover:bg-[var(--bg-hover)]"
 							}`}
 						>
-							👥 3+ Seats
+							ðŸ‘¥ 3+ Seats
 						</button>
 
 						<button
 							onClick={() => setFilterType("fare")}
 							className={`px-3 py-1 rounded-lg font-bold whitespace-nowrap transition-all cursor-pointer ${
 								filterType === "fare"
-									? "bg-[#00A09D] text-white shadow-xs"
-									: "bg-gray-100 text-gray-600 hover:bg-gray-200"
+									? "bg-[var(--accent)] text-white shadow-xs"
+									: "bg-[var(--bg-hover)] text-[var(--text-2)] hover:bg-[var(--bg-hover)]"
 							}`}
 						>
-							₹ Lowest Fare
+							â‚¹ Lowest Fare
 						</button>
 					</div>
 				</div>
@@ -217,8 +217,8 @@ export default function BrowseRidesPanel({
 			{/* Rides List Container */}
 			<div className="flex-1 overflow-y-auto p-4 space-y-3.5 divide-y divide-transparent">
 				{loading ? (
-					<div className="py-12 flex flex-col items-center justify-center text-gray-400 space-y-2">
-						<div className="w-8 h-8 border-3 border-[#00A09D] border-t-transparent rounded-full animate-spin"></div>
+					<div className="py-12 flex flex-col items-center justify-center text-[var(--text-3)] space-y-2">
+						<div className="w-8 h-8 border-3 border-[var(--border-focus)] border-t-transparent rounded-full animate-spin"></div>
 						<p className="text-xs font-semibold">
 							Scanning 10km radius...
 						</p>
@@ -240,33 +240,33 @@ export default function BrowseRidesPanel({
 								onClick={() => onSelectRide(ride)}
 								className={`p-4 rounded-xl border transition-all duration-200 cursor-pointer text-left ${
 									isSelected
-										? "bg-[#00A09D]/5 border-[#00A09D] ring-2 ring-[#00A09D]/20 shadow-sm"
-										: "bg-white border-gray-200/90 hover:border-gray-300 hover:shadow-2xs"
+										? "bg-[var(--accent)]/5 border-[var(--border-focus)] ring-2 ring-[#00A09D]/20 shadow-none"
+										: "bg-[var(--bg-card)] border-[var(--border)]/90 hover:border-[var(--border)] hover:shadow-none"
 								}`}
 							>
 								{/* Driver & Vehicle Header */}
 								<div className="flex items-start justify-between gap-2 mb-2.5">
 									<div className="flex items-center gap-3">
-										<div className="w-10 h-10 rounded-xl bg-[#714B67]/10 text-[#714B67] flex items-center justify-center font-bold text-sm border border-[#714B67]/20 shrink-0 shadow-2xs">
+										<div className="w-10 h-10 rounded-xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center font-bold text-sm border border-[var(--border-focus)]/20 shrink-0 shadow-none">
 											{ride.driver_name
 												? ride.driver_name.charAt(0).toUpperCase()
 												: "D"}
 										</div>
 										<div>
 											<div className="flex items-center gap-1.5">
-												<span className="font-bold text-sm text-gray-900">
+												<span className="font-bold text-sm text-[var(--text)]">
 													{ride.driver_name}
 												</span>
 												<ShieldCheck
-													className="w-4 h-4 text-[#00A09D]"
+													className="w-4 h-4 text-[var(--accent)]"
 													title="Verified Colleague"
 												/>
 											</div>
-											<p className="text-[11px] text-gray-500 flex items-center gap-1">
+											<p className="text-[11px] text-[var(--text-3)] flex items-center gap-1">
 												<span>
 													{ride.driver_dept || "Engineering"}
 												</span>
-												<span>•</span>
+												<span>â€¢</span>
 												<span className="text-amber-500 font-bold flex items-center gap-0.5">
 													<Star className="w-3 h-3 fill-amber-400" />
 													{ride.driving_rating || 4.9}
@@ -276,40 +276,40 @@ export default function BrowseRidesPanel({
 									</div>
 
 									<div className="text-right">
-										<div className="text-base font-extrabold text-[#00A09D] tracking-tight">
-											₹{ride.fare_per_seat || 45}
+										<div className="text-base font-extrabold text-[var(--accent)] tracking-tight">
+											â‚¹{ride.fare_per_seat || 45}
 										</div>
-										<span className="text-[10px] text-gray-400 uppercase font-semibold">
+										<span className="text-[10px] text-[var(--text-3)] uppercase font-semibold">
 											per seat
 										</span>
 									</div>
 								</div>
 
 								{/* Car Details Badge */}
-								<div className="mb-3 flex items-center justify-between text-xs py-1.5 px-2.5 bg-gray-50 rounded-lg border border-gray-100">
-									<div className="flex items-center gap-1.5 text-gray-700 font-semibold">
-										<Car className="w-3.5 h-3.5 text-[#714B67]" />
+								<div className="mb-3 flex items-center justify-between text-xs py-1.5 px-2.5 bg-[var(--bg-hover)] rounded-lg border border-[var(--border)]">
+									<div className="flex items-center gap-1.5 text-[var(--text-2)] font-semibold">
+										<Car className="w-3.5 h-3.5 text-[var(--primary)]" />
 										<span>{ride.vehicle_model || "Swift Dzire"}</span>
 									</div>
-									<span className="font-mono text-[11px] text-gray-500 uppercase font-bold">
+									<span className="font-mono text-[11px] text-[var(--text-3)] uppercase font-bold">
 										{ride.veh_no || "WB 02 AB 1234"}
 									</span>
 								</div>
 
 								{/* Route Points */}
-								<div className="space-y-1.5 text-xs text-gray-600 mb-3.5">
+								<div className="space-y-1.5 text-xs text-[var(--text-2)] mb-3.5">
 									<div className="flex items-start gap-2">
-										<div className="w-2 h-2 rounded-full bg-[#00A09D] mt-1 shrink-0"></div>
+										<div className="w-2 h-2 rounded-full bg-[var(--accent)] mt-1 shrink-0"></div>
 										<div className="flex-1 min-w-0">
-											<span className="text-[10px] uppercase font-bold text-gray-400 block">
+											<span className="text-[10px] uppercase font-bold text-[var(--text-3)] block">
 												Pickup (Near You)
 											</span>
-											<p className="font-semibold text-gray-800 truncate">
+											<p className="font-semibold text-[var(--text)] truncate">
 												{ride.origin?.name ||
 													"1.2km from your spot"}
 											</p>
 										</div>
-										<span className="text-[11px] font-bold text-[#00A09D] bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100 shrink-0">
+										<span className="text-[11px] font-bold text-[var(--accent)] bg-[var(--bg-hover)] px-1.5 py-0.5 rounded border border-[var(--border)] shrink-0">
 											{ride.distance_km || 1.2} km away
 										</span>
 									</div>
@@ -317,10 +317,10 @@ export default function BrowseRidesPanel({
 									<div className="flex items-start gap-2">
 										<div className="w-2 h-2 rounded-full bg-[#EF4444] mt-1 shrink-0"></div>
 										<div className="flex-1 min-w-0">
-											<span className="text-[10px] uppercase font-bold text-gray-400 block">
+											<span className="text-[10px] uppercase font-bold text-[var(--text-3)] block">
 												Destination
 											</span>
-											<p className="font-semibold text-gray-800 truncate">
+											<p className="font-semibold text-[var(--text)] truncate">
 												{ride.destination?.name ||
 													"Tech Hub Sector V"}
 											</p>
@@ -329,13 +329,13 @@ export default function BrowseRidesPanel({
 								</div>
 
 								{/* Footer Info & Actions */}
-								<div className="pt-2.5 border-t border-gray-100 flex items-center justify-between gap-2">
-									<div className="flex items-center gap-3 text-xs text-gray-500">
-										<span className="flex items-center gap-1 font-semibold text-gray-700">
-											<Clock className="w-3.5 h-3.5 text-gray-400" />
+								<div className="pt-2.5 border-t border-[var(--border)] flex items-center justify-between gap-2">
+									<div className="flex items-center gap-3 text-xs text-[var(--text-3)]">
+										<span className="flex items-center gap-1 font-semibold text-[var(--text-2)]">
+											<Clock className="w-3.5 h-3.5 text-[var(--text-3)]" />
 											{timeStr}
 										</span>
-										<span className="flex items-center gap-1 font-semibold text-[#00A09D]">
+										<span className="flex items-center gap-1 font-semibold text-[var(--accent)]">
 											<Users className="w-3.5 h-3.5" />
 											{ride.available_seats || 3} seats left
 										</span>
@@ -347,7 +347,7 @@ export default function BrowseRidesPanel({
 												e.stopPropagation();
 												onSelectRide(ride);
 											}}
-											className="px-2.5 py-1.5 text-xs font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+											className="px-2.5 py-1.5 text-xs font-semibold text-[var(--text-2)] hover:text-[var(--text)] hover:bg-[var(--bg-hover)] rounded-lg transition-colors cursor-pointer"
 										>
 											Map View
 										</button>
@@ -360,12 +360,12 @@ export default function BrowseRidesPanel({
 												}}
 												className="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-extrabold rounded-lg shadow-xs transition-all flex items-center gap-1 cursor-pointer"
 											>
-												⏳ Seat Requested (View Request)
+												â³ Seat Requested (View Request)
 											</button>
 										) : activeTrip ? (
 											<button
 												disabled
-												className="px-3.5 py-1.5 bg-gray-100 border border-gray-200 text-gray-400 text-xs font-bold rounded-lg cursor-not-allowed flex items-center gap-1"
+												className="px-3.5 py-1.5 bg-[var(--bg-hover)] border border-[var(--border)] text-[var(--text-3)] text-xs font-bold rounded-lg cursor-not-allowed flex items-center gap-1"
 												title="You already have an active seat request in this time slot!"
 											>
 												Slot Requested
@@ -376,7 +376,7 @@ export default function BrowseRidesPanel({
 													e.stopPropagation();
 													setBookingModalRide(ride);
 												}}
-												className="px-3.5 py-1.5 bg-[#00A09D] hover:bg-[#008f8c] text-white text-xs font-bold rounded-lg shadow-xs transition-all flex items-center gap-1 cursor-pointer"
+												className="px-3.5 py-1.5 bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-bold rounded-lg shadow-xs transition-all flex items-center gap-1 cursor-pointer"
 											>
 												Request Seat
 											</button>
@@ -387,15 +387,15 @@ export default function BrowseRidesPanel({
 						);
 					})
 				) : (
-					<div className="py-12 px-6 text-center space-y-3 bg-gray-50/60 rounded-2xl border border-dashed border-gray-200">
-						<div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto text-gray-400">
+					<div className="py-12 px-6 text-center space-y-3 bg-[var(--bg-hover)]/60 rounded-xl border border-dashed border-[var(--border)]">
+						<div className="w-12 h-12 rounded-full bg-[var(--bg-hover)] flex items-center justify-center mx-auto text-[var(--text-3)]">
 							<Car className="w-6 h-6" />
 						</div>
 						<div>
-							<p className="text-sm font-bold text-gray-800">
+							<p className="text-sm font-bold text-[var(--text)]">
 								No Carpools In This Filter
 							</p>
-							<p className="text-xs text-gray-500 mt-0.5">
+							<p className="text-xs text-[var(--text-3)] mt-0.5">
 								Try switching filter tabs or clearing your search term.
 							</p>
 						</div>
@@ -404,7 +404,7 @@ export default function BrowseRidesPanel({
 								setSearchTerm("");
 								setFilterType("all");
 							}}
-							className="px-4 py-2 bg-white border border-gray-200 rounded-xl text-xs font-bold text-[#714B67] hover:bg-gray-50 shadow-2xs cursor-pointer"
+							className="px-4 py-2 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-xs font-bold text-[var(--primary)] hover:bg-[var(--bg-hover)] shadow-none cursor-pointer"
 						>
 							Reset Filters
 						</button>
@@ -415,76 +415,76 @@ export default function BrowseRidesPanel({
 			{/* MODAL: CONFIRM BOOKING */}
 			{bookingModalRide && (
 				<div className="fixed inset-0 bg-gray-900/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-					<div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-150 text-left">
-						<div className="flex items-center justify-between p-5 border-b border-gray-100 bg-gray-50/50">
+					<div className="bg-[var(--bg-card)] rounded-xl shadow-none w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-150 text-left">
+						<div className="flex items-center justify-between p-5 border-b border-[var(--border)] bg-[var(--bg-hover)]/50">
 							<div className="flex items-center gap-2">
-								<div className="w-8 h-8 bg-[#00A09D]/10 rounded-lg flex items-center justify-center text-[#00A09D]">
+								<div className="w-8 h-8 bg-[var(--accent)]/10 rounded-lg flex items-center justify-center text-[var(--accent)]">
 									<Car className="w-4 h-4" />
 								</div>
-								<h3 className="text-base font-bold text-gray-900">
+								<h3 className="text-base font-bold text-[var(--text)]">
 									Request a Seat
 								</h3>
 							</div>
 							<button
 								onClick={() => setBookingModalRide(null)}
-								className="text-gray-400 hover:text-gray-600 cursor-pointer"
+								className="text-[var(--text-3)] hover:text-[var(--text-2)] cursor-pointer"
 							>
 								<X className="w-5 h-5" />
 							</button>
 						</div>
 
 						<div className="p-5 space-y-4">
-							<div className="p-3.5 bg-teal-50/60 border border-teal-100 rounded-xl space-y-2 text-xs">
+							<div className="p-3.5 bg-[var(--bg-hover)]/60 border border-[var(--border)] rounded-xl space-y-2 text-xs">
 								<div className="flex justify-between items-center">
-									<span className="text-gray-600 font-semibold">
+									<span className="text-[var(--text-2)] font-semibold">
 										Driver
 									</span>
-									<span className="font-bold text-gray-900">
+									<span className="font-bold text-[var(--text)]">
 										{bookingModalRide.driver_name} (
 										{bookingModalRide.driver_dept})
 									</span>
 								</div>
 								<div className="flex justify-between items-center">
-									<span className="text-gray-600 font-semibold">
+									<span className="text-[var(--text-2)] font-semibold">
 										Vehicle
 									</span>
-									<span className="font-bold text-gray-900">
-										{bookingModalRide.vehicle_model} •{" "}
+									<span className="font-bold text-[var(--text)]">
+										{bookingModalRide.vehicle_model} â€¢{" "}
 										{bookingModalRide.veh_no}
 									</span>
 								</div>
 								<div className="flex justify-between items-center">
-									<span className="text-gray-600 font-semibold">
+									<span className="text-[var(--text-2)] font-semibold">
 										Destination
 									</span>
-									<span className="font-bold text-gray-900 truncate max-w-[200px]">
+									<span className="font-bold text-[var(--text)] truncate max-w-[200px]">
 										{bookingModalRide.destination?.name}
 									</span>
 								</div>
-								<div className="flex justify-between items-center pt-2 border-t border-teal-200">
-									<div className="flex items-center gap-1.5 text-teal-900 font-bold">
-										<Wallet className="w-3.5 h-3.5 text-[#714B67]" />
+								<div className="flex justify-between items-center pt-2 border-t border-[var(--border)]">
+									<div className="flex items-center gap-1.5 text-[var(--text)] font-bold">
+										<Wallet className="w-3.5 h-3.5 text-[var(--primary)]" />
 										<span>Commute Contribution</span>
 									</div>
 									<div className="text-right">
-										<span className="text-base font-extrabold text-[#00A09D]">
-											₹{bookingModalRide.fare_per_seat || 45}
+										<span className="text-base font-extrabold text-[var(--accent)]">
+											â‚¹{bookingModalRide.fare_per_seat || 45}
 										</span>
-										<span className="block text-[10px] text-gray-500 font-medium">
+										<span className="block text-[10px] text-[var(--text-3)] font-medium">
 											from MakeLyft Wallet
 										</span>
 									</div>
 								</div>
 
-								{/* Seat Selection — Dynamic based on available seats */}
-								<div className="pt-2 border-t border-teal-100">
-									<label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+								{/* Seat Selection â€” Dynamic based on available seats */}
+								<div className="pt-2 border-t border-[var(--border)]">
+									<label className="block text-xs font-bold text-[var(--text-2)] uppercase tracking-wider mb-1.5">
 										Choose Preferred Seat ({bookingModalRide.available_seats} available)
 									</label>
 									<select
 										value={selectedSeatPref}
 										onChange={(e) => setSelectedSeatPref(e.target.value)}
-										className="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 text-xs font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#00A09D]"
+										className="w-full bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3 py-2 text-xs font-semibold text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-transparent"
 									>
 										{(() => {
 											const seatLabels = ["Seat 1 (Front Window)", "Seat 2 (Rear Left Window)", "Seat 3 (Rear Right Window)", "Seat 4 (Rear Middle)"];
@@ -500,14 +500,14 @@ export default function BrowseRidesPanel({
 								</div>
 							</div>
 
-							<p className="text-xs text-gray-500">
+							<p className="text-xs text-[var(--text-3)]">
 								Requesting this seat notifies the driver for approval. Once confirmed by the driver, your seat is locked!
 							</p>
 
 							<div className="flex items-center gap-3 pt-2">
 								<button
 									onClick={() => setBookingModalRide(null)}
-									className="flex-1 py-2.5 border border-gray-200 text-gray-700 text-xs font-bold rounded-xl hover:bg-gray-50 cursor-pointer transition-colors"
+									className="flex-1 py-2.5 border border-[var(--border)] text-[var(--text-2)] text-xs font-bold rounded-xl hover:bg-[var(--bg-hover)] cursor-pointer transition-colors"
 								>
 									Cancel
 								</button>
@@ -517,7 +517,7 @@ export default function BrowseRidesPanel({
 										setBookingModalRide(null);
 									}}
 									disabled={bookingLoading}
-									className="flex-1 py-2.5 bg-[#00A09D] hover:bg-[#008f8c] text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
+									className="flex-1 py-2.5 bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
 								>
 									{bookingLoading ? "Sending..." : "Send Seat Request"}
 								</button>
@@ -530,49 +530,49 @@ export default function BrowseRidesPanel({
 			{/* MODAL: BOOKING SUCCESS WITH OTP */}
 			{bookingSuccess && (
 				<div className="fixed inset-0 bg-gray-900/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-					<div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-center p-6 space-y-4">
+					<div className="bg-[var(--bg-card)] rounded-xl shadow-none w-full max-w-sm overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-center p-6 space-y-4">
 						<div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
 							<CheckCircle2 className="w-8 h-8" />
 						</div>
 
 						<div>
-							<h3 className="text-lg font-extrabold text-gray-900">
+							<h3 className="text-lg font-extrabold text-[var(--text)]">
 								Ride Booked Successfully!
 							</h3>
-							<p className="text-xs text-gray-500 mt-1">
+							<p className="text-xs text-[var(--text-3)] mt-1">
 								Share this 4-digit OTP with your driver at pickup.
 							</p>
 						</div>
 
 						{/* Large OTP Display */}
-						<div className="bg-gray-50 border-2 border-dashed border-[#00A09D] rounded-2xl p-4 my-2">
-							<span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">
+						<div className="bg-[var(--bg-hover)] border-2 border-dashed border-[var(--border-focus)] rounded-xl p-4 my-2">
+							<span className="text-xs font-bold text-[var(--text-3)] uppercase tracking-widest block mb-1">
 								Pickup Verification OTP
 							</span>
-							<div className="text-3xl font-mono font-black text-[#00A09D] tracking-widest">
+							<div className="text-3xl font-mono font-black text-[var(--accent)] tracking-widest">
 								{bookingSuccess.otp}
 							</div>
-							<span className="text-[11px] text-gray-500 mt-1 block">
+							<span className="text-[11px] text-[var(--text-3)] mt-1 block">
 								Booking ID: {bookingSuccess.booking_id}
 							</span>
-							<div className="mt-2 inline-block px-3 py-1 bg-teal-50 border border-teal-200 text-[#00A09D] text-xs font-extrabold rounded-lg">
-								💺 {bookingSuccess.seat_no || "Seat #2 (Front Left)"}
+							<div className="mt-2 inline-block px-3 py-1 bg-[var(--bg-hover)] border border-[var(--border)] text-[var(--accent)] text-xs font-extrabold rounded-lg">
+								ðŸ’º {bookingSuccess.seat_no || "Seat #2 (Front Left)"}
 							</div>
 						</div>
 
 						{/* Wallet Payment confirmation tag */}
-						<div className="p-2.5 bg-purple-50 rounded-xl border border-purple-100 flex items-center justify-between text-xs">
-							<span className="text-gray-600 font-medium flex items-center gap-1.5">
-								<Wallet className="w-3.5 h-3.5 text-[#714B67]" /> MakeLyft Wallet
+						<div className="p-2.5 bg-[var(--bg-hover)] rounded-xl border border-[var(--border)] flex items-center justify-between text-xs">
+							<span className="text-[var(--text-2)] font-medium flex items-center gap-1.5">
+								<Wallet className="w-3.5 h-3.5 text-[var(--primary)]" /> MakeLyft Wallet
 							</span>
-							<span className="font-bold text-[#714B67]">
-								-₹{bookingSuccess.fare || 45}.00 Deducted
+							<span className="font-bold text-[var(--primary)]">
+								-â‚¹{bookingSuccess.fare || 45}.00 Deducted
 							</span>
 						</div>
 
 						<button
 							onClick={() => setBookingSuccess(null)}
-							className="w-full py-2.5 bg-[#714B67] hover:bg-[#5c3c54] text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
+							className="w-full py-2.5 bg-[var(--primary)] hover:bg-[var(--primary)] text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
 						>
 							Great, Got It!
 						</button>

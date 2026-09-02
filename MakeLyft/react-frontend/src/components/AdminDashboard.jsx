@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { showAlert } from "../utils/alertService";
 import {
 	Users,
@@ -377,19 +377,19 @@ function AdminDashboard() {
 	});
 
 	return (
-		<div className="flex h-screen bg-[#F4F6F9] font-sans antialiased text-gray-900 overflow-hidden text-left page-transition">
+		<div className="flex h-screen bg-[#F4F6F9] font-sans antialiased text-[var(--text)] overflow-hidden text-left page-transition">
 			{/* 1. ODOO DARK SIDEBAR */}
-			<aside className="w-64 bg-[#714B67] text-white flex flex-col justify-between shadow-xl z-30 transition-all">
+			<aside className="w-64 bg-[var(--primary)] text-white flex flex-col justify-between shadow-none z-30 transition-all">
 				<div>
 					{/* Brand header */}
 					<div className="p-5 border-b border-white/10 flex items-center gap-3">
-						<div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center backdrop-blur-xs border border-white/20 shadow-inner">
+						<div className="w-10 h-10 bg-[var(--bg-card)]/15 rounded-xl flex items-center justify-center backdrop-blur-xs border border-white/20 shadow-inner">
 							<Car className="w-6 h-6 text-[#E8D07A]" />
 						</div>
 						<div>
 							<div className="font-extrabold text-lg tracking-tight flex items-center gap-1.5">
 								MakeLyft
-								<span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 bg-[#00A09D] text-white rounded font-black">
+								<span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 bg-[var(--accent)] text-white rounded font-black">
 									Admin
 								</span>
 							</div>
@@ -409,8 +409,8 @@ function AdminDashboard() {
 							onClick={() => setActiveTab("overview")}
 							className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
 								activeTab === "overview"
-									? "bg-white text-[#714B67] shadow-sm font-black"
-									: "text-white/80 hover:bg-white/10 hover:text-white"
+									? "bg-[var(--bg-card)] text-[var(--primary)] shadow-none font-black"
+									: "text-white/80 hover:bg-[var(--bg-card)]/10 hover:text-white"
 							}`}
 						>
 							<LayoutDashboard className="w-4 h-4" />
@@ -421,8 +421,8 @@ function AdminDashboard() {
 							onClick={() => setActiveTab("employees")}
 							className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
 								activeTab === "employees"
-									? "bg-white text-[#714B67] shadow-sm font-black"
-									: "text-white/80 hover:bg-white/10 hover:text-white"
+									? "bg-[var(--bg-card)] text-[var(--primary)] shadow-none font-black"
+									: "text-white/80 hover:bg-[var(--bg-card)]/10 hover:text-white"
 							}`}
 						>
 							<Users className="w-4 h-4" />
@@ -433,8 +433,8 @@ function AdminDashboard() {
 							onClick={() => setActiveTab("vehicles")}
 							className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
 								activeTab === "vehicles"
-									? "bg-white text-[#714B67] shadow-sm font-black"
-									: "text-white/80 hover:bg-white/10 hover:text-white"
+									? "bg-[var(--bg-card)] text-[var(--primary)] shadow-none font-black"
+									: "text-white/80 hover:bg-[var(--bg-card)]/10 hover:text-white"
 							}`}
 						>
 							<Car className="w-4 h-4" />
@@ -445,8 +445,8 @@ function AdminDashboard() {
 							onClick={() => setActiveTab("settings")}
 							className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
 								activeTab === "settings"
-									? "bg-white text-[#714B67] shadow-sm font-black"
-									: "text-white/80 hover:bg-white/10 hover:text-white"
+									? "bg-[var(--bg-card)] text-[var(--primary)] shadow-none font-black"
+									: "text-white/80 hover:bg-[var(--bg-card)]/10 hover:text-white"
 							}`}
 						>
 							<Settings className="w-4 h-4" />
@@ -475,7 +475,7 @@ function AdminDashboard() {
 						<button
 							onClick={handleLogout}
 							title="Logout"
-							className="p-1.5 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+							className="p-1.5 text-white/70 hover:text-white hover:bg-[var(--bg-card)]/10 rounded-lg transition-colors cursor-pointer"
 						>
 							<LogOut className="w-4 h-4" />
 						</button>
@@ -486,13 +486,13 @@ function AdminDashboard() {
 			{/* 2. MAIN WORKSPACE */}
 			<div className="flex-1 flex flex-col h-full overflow-hidden">
 				{/* Top Navbar */}
-				<header className="bg-white border-b border-gray-200/90 px-8 py-3.5 flex items-center justify-between sticky top-0 z-20 shadow-2xs">
+				<header className="bg-[var(--bg-card)] border-b border-[var(--border)]/90 px-8 py-3.5 flex items-center justify-between sticky top-0 z-20 shadow-none">
 					{/* Left: Breadcrumbs and Search */}
 					<div className="flex items-center gap-4">
 						<div className="flex items-center gap-2 text-xs font-bold">
-							<span className="text-gray-400">MakeLyft</span>
+							<span className="text-[var(--text-3)]">MakeLyft</span>
 							<ChevronRight className="w-3.5 h-3.5 text-gray-300" />
-							<span className="text-[#00A09D] uppercase tracking-wider">
+							<span className="text-[var(--accent)] uppercase tracking-wider">
 								{activeTab === "overview"
 									? "Activity & Overview"
 									: activeTab === "employees"
@@ -506,13 +506,13 @@ function AdminDashboard() {
 						{/* Quick search input */}
 						{(activeTab === "employees" || activeTab === "vehicles") && (
 							<div className="relative w-64 ml-4 hidden sm:block">
-								<Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+								<Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-3)]" />
 								<input
 									type="text"
 									value={searchTerm}
 									onChange={(e) => setSearchTerm(e.target.value)}
 									placeholder={`Search ${activeTab}...`}
-									className="w-full pl-8 pr-3 py-1.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+									className="w-full pl-8 pr-3 py-1.5 bg-[var(--bg-hover)] border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all"
 								/>
 							</div>
 						)}
@@ -527,16 +527,16 @@ function AdminDashboard() {
 								setDropdownOpen(false);
 								setNotificationsOpen(false);
 							}}
-							className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-purple-50/70 hover:bg-purple-100/70 text-[#714B67] border border-[#714B67]/20 transition-all cursor-pointer group"
+							className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--bg-hover)]/70 hover:bg-[var(--bg-hover)]/70 text-[var(--primary)] border border-[var(--border-focus)]/20 transition-all cursor-pointer group"
 							title="Open MakeLyft Commute Wallet"
 						>
-							<div className="w-5 h-5 rounded-lg bg-[#714B67] text-white flex items-center justify-center group-hover:scale-105 transition-transform">
+							<div className="w-5 h-5 rounded-lg bg-[var(--primary)] text-white flex items-center justify-center group-hover:scale-105 transition-transform">
 								<Wallet className="w-3 h-3" />
 							</div>
 							<div className="text-left flex flex-col leading-tight">
-								<span className="text-[9px] uppercase font-bold text-gray-500 tracking-wider">Wallet</span>
-								<span className="text-xs font-extrabold text-gray-900 font-mono">
-									₹{walletBalance.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+								<span className="text-[9px] uppercase font-bold text-[var(--text-3)] tracking-wider">Wallet</span>
+								<span className="text-xs font-extrabold text-[var(--text)] font-mono">
+									â‚¹{walletBalance.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
 								</span>
 							</div>
 						</button>
@@ -544,7 +544,7 @@ function AdminDashboard() {
 						<button
 							onClick={fetchData}
 							title="Refresh Data"
-							className="flex items-center justify-center w-8 h-8 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors cursor-pointer"
+							className="flex items-center justify-center w-8 h-8 rounded-lg text-[var(--text-3)] hover:text-[var(--text)] hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
 						>
 							<RefreshCw
 								className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`}
@@ -558,41 +558,41 @@ function AdminDashboard() {
 									setNotificationsOpen(!notificationsOpen);
 									setDropdownOpen(false);
 								}}
-								className="flex items-center justify-center w-8 h-8 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors cursor-pointer relative"
+								className="flex items-center justify-center w-8 h-8 rounded-lg text-[var(--text-3)] hover:text-[var(--text)] hover:bg-[var(--bg-hover)] transition-colors cursor-pointer relative"
 							>
 								<Bell className="w-4 h-4" />
-								<span className="absolute top-1 right-1 w-2 h-2 bg-[#00A09D] rounded-full ring-2 ring-white"></span>
+								<span className="absolute top-1 right-1 w-2 h-2 bg-[var(--accent)] rounded-full ring-2 ring-white"></span>
 							</button>
 
 							{notificationsOpen && (
-								<div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
-									<div className="px-4 py-2 border-b border-gray-100 flex items-center justify-between">
-										<p className="text-xs font-bold text-gray-900">
+								<div className="absolute right-0 mt-2 w-72 bg-[var(--bg-card)] rounded-xl shadow-none border border-[var(--border)] overflow-hidden py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+									<div className="px-4 py-2 border-b border-[var(--border)] flex items-center justify-between">
+										<p className="text-xs font-bold text-[var(--text)]">
 											System Alerts
 										</p>
-										<span className="text-[10px] text-[#00A09D] font-bold">
+										<span className="text-[10px] text-[var(--accent)] font-bold">
 											2 New
 										</span>
 									</div>
 									<div className="divide-y divide-gray-50 text-xs">
-										<div className="p-3 hover:bg-gray-50 flex items-start gap-2.5">
+										<div className="p-3 hover:bg-[var(--bg-hover)] flex items-start gap-2.5">
 											<CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
 											<div>
-												<p className="font-semibold text-gray-800">
+												<p className="font-semibold text-[var(--text)]">
 													Database connected
 												</p>
-												<p className="text-[11px] text-gray-400">
+												<p className="text-[11px] text-[var(--text-3)]">
 													PostgreSQL active
 												</p>
 											</div>
 										</div>
-										<div className="p-3 hover:bg-gray-50 flex items-start gap-2.5">
-											<Car className="w-4 h-4 text-[#714B67] shrink-0 mt-0.5" />
+										<div className="p-3 hover:bg-[var(--bg-hover)] flex items-start gap-2.5">
+											<Car className="w-4 h-4 text-[var(--primary)] shrink-0 mt-0.5" />
 											<div>
-												<p className="font-semibold text-gray-800">
+												<p className="font-semibold text-[var(--text)]">
 													Vehicles synchronized
 												</p>
-												<p className="text-[11px] text-gray-400">
+												<p className="text-[11px] text-[var(--text-3)]">
 													Ready for rides
 												</p>
 											</div>
@@ -609,9 +609,9 @@ function AdminDashboard() {
 									setDropdownOpen(!dropdownOpen);
 									setNotificationsOpen(false);
 								}}
-								className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-200 cursor-pointer"
+								className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[var(--bg-hover)] hover:bg-[var(--bg-hover)] transition-colors border border-[var(--border)] cursor-pointer"
 							>
-								<span className="text-xs font-bold text-gray-800">
+								<span className="text-xs font-bold text-[var(--text)]">
 									Admin
 								</span>
 								<div className="w-6 h-6 rounded-full bg-[#E27D60] text-white flex items-center justify-center font-bold text-xs shadow-xs">
@@ -620,12 +620,12 @@ function AdminDashboard() {
 							</button>
 
 							{dropdownOpen && (
-								<div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden py-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
-									<div className="px-4 py-2.5 border-b border-gray-100">
-										<p className="text-xs font-bold text-gray-900 truncate">
+								<div className="absolute right-0 mt-2 w-56 bg-[var(--bg-card)] rounded-xl shadow-none border border-[var(--border)] overflow-hidden py-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+									<div className="px-4 py-2.5 border-b border-[var(--border)]">
+										<p className="text-xs font-bold text-[var(--text)] truncate">
 											{user.name || "System Admin"}
 										</p>
-										<p className="text-[11px] text-gray-500 truncate">
+										<p className="text-[11px] text-[var(--text-3)] truncate">
 											{user.email || ""}
 										</p>
 									</div>
@@ -635,19 +635,19 @@ function AdminDashboard() {
 											setDropdownOpen(false);
 											navigate("/dashboard");
 										}}
-										className="w-full px-4 py-2.5 text-left text-xs font-semibold text-gray-700 hover:bg-[#714B67]/5 hover:text-[#714B67] flex items-center gap-2.5 cursor-pointer transition-colors"
+										className="w-full px-4 py-2.5 text-left text-xs font-semibold text-[var(--text-2)] hover:bg-[var(--primary)]/5 hover:text-[var(--primary)] flex items-center gap-2.5 cursor-pointer transition-colors"
 									>
-										<ArrowRightLeft className="w-4 h-4 text-[#714B67]" />
+										<ArrowRightLeft className="w-4 h-4 text-[var(--primary)]" />
 										Switch to Employee Dashboard
 									</button>
 
-									<div className="h-px bg-gray-100 my-1"></div>
+									<div className="h-px bg-[var(--bg-hover)] my-1"></div>
 
 									<button
 										onClick={handleLogout}
-										className="w-full px-4 py-2.5 text-left text-xs font-semibold text-red-600 hover:bg-red-50 flex items-center gap-2.5 cursor-pointer transition-colors"
+										className="w-full px-4 py-2.5 text-left text-xs font-semibold text-[var(--danger)] hover:bg-[var(--bg-hover)] flex items-center gap-2.5 cursor-pointer transition-colors"
 									>
-										<LogOut className="w-4 h-4 text-red-500" />
+										<LogOut className="w-4 h-4 text-[var(--danger)]" />
 										Logout
 									</button>
 								</div>
@@ -671,43 +671,43 @@ function AdminDashboard() {
 						<div className="space-y-6 animate-in fade-in duration-150">
 							{/* Top KPI Metrics Banner */}
 							<div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-								<div className="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-2xs hover:shadow-xs transition-shadow">
+								<div className="bg-[var(--bg-card)] border border-[var(--border)]/90 rounded-xl p-5 shadow-none hover:shadow-xs transition-shadow">
 									<div className="flex items-center justify-between mb-3">
-										<span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+										<span className="text-xs font-bold text-[var(--text-3)] uppercase tracking-wider">
 											Total Employees
 										</span>
-										<div className="w-8 h-8 rounded-lg bg-[#00A09D]/10 text-[#00A09D] flex items-center justify-center">
+										<div className="w-8 h-8 rounded-lg bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center">
 											<Users className="w-4 h-4" />
 										</div>
 									</div>
-									<div className="text-3xl font-extrabold text-[#00A09D] tracking-tight">
+									<div className="text-3xl font-extrabold text-[var(--accent)] tracking-tight">
 										{metrics.total_employees}
 									</div>
-									<p className="text-[11px] text-gray-500 mt-1">
+									<p className="text-[11px] text-[var(--text-3)] mt-1">
 										Verified organization workforce
 									</p>
 								</div>
 
-								<div className="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-2xs hover:shadow-xs transition-shadow">
+								<div className="bg-[var(--bg-card)] border border-[var(--border)]/90 rounded-xl p-5 shadow-none hover:shadow-xs transition-shadow">
 									<div className="flex items-center justify-between mb-3">
-										<span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+										<span className="text-xs font-bold text-[var(--text-3)] uppercase tracking-wider">
 											Registered Vehicles
 										</span>
-										<div className="w-8 h-8 rounded-lg bg-[#714B67]/10 text-[#714B67] flex items-center justify-center">
+										<div className="w-8 h-8 rounded-lg bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center">
 											<Car className="w-4 h-4" />
 										</div>
 									</div>
-									<div className="text-3xl font-extrabold text-[#714B67] tracking-tight">
+									<div className="text-3xl font-extrabold text-[var(--primary)] tracking-tight">
 										{metrics.total_vehicles}
 									</div>
-									<p className="text-[11px] text-gray-500 mt-1">
+									<p className="text-[11px] text-[var(--text-3)] mt-1">
 										Active carpooling fleet
 									</p>
 								</div>
 
-								<div className="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-2xs hover:shadow-xs transition-shadow">
+								<div className="bg-[var(--bg-card)] border border-[var(--border)]/90 rounded-xl p-5 shadow-none hover:shadow-xs transition-shadow">
 									<div className="flex items-center justify-between mb-3">
-										<span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+										<span className="text-xs font-bold text-[var(--text-3)] uppercase tracking-wider">
 											Rides This Month
 										</span>
 										<div className="w-8 h-8 rounded-lg bg-[#E27D60]/10 text-[#E27D60] flex items-center justify-center">
@@ -717,14 +717,14 @@ function AdminDashboard() {
 									<div className="text-3xl font-extrabold text-[#E27D60] tracking-tight">
 										{metrics.rides_this_month}
 									</div>
-									<p className="text-[11px] text-gray-500 mt-1">
+									<p className="text-[11px] text-[var(--text-3)] mt-1">
 										Completed commute trips
 									</p>
 								</div>
 
-								<div className="bg-white border border-gray-200/90 rounded-2xl p-5 shadow-2xs hover:shadow-xs transition-shadow">
+								<div className="bg-[var(--bg-card)] border border-[var(--border)]/90 rounded-xl p-5 shadow-none hover:shadow-xs transition-shadow">
 									<div className="flex items-center justify-between mb-3">
-										<span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+										<span className="text-xs font-bold text-[var(--text-3)] uppercase tracking-wider">
 											Active Carpools
 										</span>
 										<div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -734,7 +734,7 @@ function AdminDashboard() {
 									<div className="text-3xl font-extrabold text-emerald-600 tracking-tight">
 										{metrics.active_rides}
 									</div>
-									<p className="text-[11px] text-gray-500 mt-1">
+									<p className="text-[11px] text-[var(--text-3)] mt-1">
 										Live or scheduled on route
 									</p>
 								</div>
@@ -743,19 +743,19 @@ function AdminDashboard() {
 							{/* Quick Actions & Overview Cards */}
 							<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 								{/* Recent Registered Vehicles */}
-								<div className="lg:col-span-2 bg-white border border-gray-200/90 rounded-2xl p-6 shadow-2xs space-y-4">
-									<div className="flex items-center justify-between border-b border-gray-100 pb-4">
+								<div className="lg:col-span-2 bg-[var(--bg-card)] border border-[var(--border)]/90 rounded-xl p-6 shadow-none space-y-4">
+									<div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
 										<div>
-											<h3 className="text-base font-bold text-gray-900">
+											<h3 className="text-base font-bold text-[var(--text)]">
 												Fleet Highlights
 											</h3>
-											<p className="text-xs text-gray-500">
+											<p className="text-xs text-[var(--text-3)]">
 												Recently added employee vehicles
 											</p>
 										</div>
 										<button
 											onClick={() => setActiveTab("vehicles")}
-											className="text-xs font-bold text-[#00A09D] hover:underline flex items-center gap-1 cursor-pointer"
+											className="text-xs font-bold text-[var(--accent)] hover:underline flex items-center gap-1 cursor-pointer"
 										>
 											View All{" "}
 											<ChevronRight className="w-3.5 h-3.5" />
@@ -766,21 +766,21 @@ function AdminDashboard() {
 										{vehicles.slice(0, 4).map((v) => (
 											<div
 												key={v.veh_id}
-												className="p-4 bg-gray-50/80 rounded-xl border border-gray-200/80 flex items-center justify-between"
+												className="p-4 bg-[var(--bg-hover)]/80 rounded-xl border border-[var(--border)]/80 flex items-center justify-between"
 											>
 												<div className="flex items-center gap-3">
-													<div className="w-9 h-9 rounded-lg bg-[#714B67]/10 text-[#714B67] flex items-center justify-center">
+													<div className="w-9 h-9 rounded-lg bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center">
 														<Car className="w-5 h-5" />
 													</div>
 													<div>
-														<p className="text-xs font-bold text-gray-900 uppercase">
+														<p className="text-xs font-bold text-[var(--text)] uppercase">
 															{v.veh_no}
 														</p>
-														<p className="text-[11px] text-gray-600">
-															{v.vehicle_model} •{" "}
+														<p className="text-[11px] text-[var(--text-2)]">
+															{v.vehicle_model} â€¢{" "}
 															{v.seating_capacity} seats
 														</p>
-														<p className="text-[10px] text-gray-400">
+														<p className="text-[10px] text-[var(--text-3)]">
 															Owner:{" "}
 															{v.driver_name || "Assigned"}
 														</p>
@@ -792,7 +792,7 @@ function AdminDashboard() {
 															v.status || "Active"
 														).toLowerCase() === "active"
 															? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-															: "bg-red-50 text-red-700 border border-red-200"
+															: "bg-[var(--bg-hover)] text-red-700 border border-[var(--border)]"
 													}`}
 												>
 													{v.status || "Active"}
@@ -803,8 +803,8 @@ function AdminDashboard() {
 								</div>
 
 								{/* Quick Admin Actions Box */}
-								<div className="bg-white border border-gray-200/90 rounded-2xl p-6 shadow-2xs space-y-4">
-									<h3 className="text-base font-bold text-gray-900 border-b border-gray-100 pb-4">
+								<div className="bg-[var(--bg-card)] border border-[var(--border)]/90 rounded-xl p-6 shadow-none space-y-4">
+									<h3 className="text-base font-bold text-[var(--text)] border-b border-[var(--border)] pb-4">
 										Quick Operations
 									</h3>
 									<div className="space-y-2.5">
@@ -813,7 +813,7 @@ function AdminDashboard() {
 												setActiveTab("employees");
 												setShowAddEmployeeModal(true);
 											}}
-											className="w-full p-3 bg-[#00A09D]/10 hover:bg-[#00A09D]/20 text-[#00A09D] rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer"
+											className="w-full p-3 bg-[var(--accent)]/10 hover:bg-[var(--accent)]/20 text-[var(--accent)] rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer"
 										>
 											<Plus className="w-4 h-4" />
 											Add New Employee
@@ -824,7 +824,7 @@ function AdminDashboard() {
 												setActiveTab("vehicles");
 												setShowAddVehicleModal(true);
 											}}
-											className="w-full p-3 bg-[#714B67]/10 hover:bg-[#714B67]/20 text-[#714B67] rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer"
+											className="w-full p-3 bg-[var(--primary)]/10 hover:bg-[var(--primary)]/20 text-[var(--primary)] rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer"
 										>
 											<Plus className="w-4 h-4" />
 											Register New Vehicle
@@ -832,9 +832,9 @@ function AdminDashboard() {
 
 										<button
 											onClick={() => setActiveTab("settings")}
-											className="w-full p-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer"
+											className="w-full p-3 bg-[var(--bg-hover)] hover:bg-[var(--bg-hover)] text-[var(--text)] rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer"
 										>
-											<Settings className="w-4 h-4 text-gray-600" />
+											<Settings className="w-4 h-4 text-[var(--text-2)]" />
 											Adjust Commute Subsidy
 										</button>
 									</div>
@@ -849,10 +849,10 @@ function AdminDashboard() {
 							{/* Header + Action */}
 							<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 								<div>
-									<h2 className="text-xl font-extrabold text-gray-900">
+									<h2 className="text-xl font-extrabold text-[var(--text)]">
 										Employee Directory & Access
 									</h2>
-									<p className="text-xs text-gray-500">
+									<p className="text-xs text-[var(--text-3)]">
 										Manage company members, platform access
 										permissions, and driver statuses.
 									</p>
@@ -860,8 +860,8 @@ function AdminDashboard() {
 
 								<div className="flex items-center gap-3">
 									{/* Department Filter */}
-									<div className="flex items-center gap-1.5 bg-white border border-gray-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-2xs">
-										<Filter className="w-3.5 h-3.5 text-gray-400" />
+									<div className="flex items-center gap-1.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl px-3 py-1.5 text-xs font-semibold text-[var(--text-2)] shadow-none">
+										<Filter className="w-3.5 h-3.5 text-[var(--text-3)]" />
 										<select
 											value={filterDepartment}
 											onChange={(e) =>
@@ -883,7 +883,7 @@ function AdminDashboard() {
 									{/* + Add Employee Button */}
 									<button
 										onClick={() => setShowAddEmployeeModal(true)}
-										className="px-4 py-2 bg-[#00A09D] hover:bg-[#008f8c] text-white text-xs font-bold rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+										className="px-4 py-2 bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-bold rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
 									>
 										<Plus className="w-4 h-4" /> Add Employee
 									</button>
@@ -891,11 +891,11 @@ function AdminDashboard() {
 							</div>
 
 							{/* Employees Table */}
-							<div className="bg-white border border-gray-200/90 rounded-2xl overflow-hidden shadow-2xs">
+							<div className="bg-[var(--bg-card)] border border-[var(--border)]/90 rounded-xl overflow-hidden shadow-none">
 								<div className="overflow-x-auto">
 									<table className="w-full text-left border-collapse">
 										<thead>
-											<tr className="border-b border-gray-200 bg-gray-50/70 text-xs font-bold text-[#00A09D]">
+											<tr className="border-b border-[var(--border)] bg-[var(--bg-hover)]/70 text-xs font-bold text-[var(--accent)]">
 												<th className="py-3.5 px-6">Name</th>
 												<th className="py-3.5 px-6">Email</th>
 												<th className="py-3.5 px-6">Department</th>
@@ -906,7 +906,7 @@ function AdminDashboard() {
 												</th>
 											</tr>
 										</thead>
-										<tbody className="divide-y divide-gray-100 text-xs">
+										<tbody className="divide-y divide-[var(--border)] text-xs">
 											{filteredEmployees.length > 0 ? (
 												filteredEmployees.map((emp) => {
 													const isGranted =
@@ -916,22 +916,22 @@ function AdminDashboard() {
 													return (
 														<tr
 															key={emp.emp_id}
-															className="hover:bg-gray-50/60 transition-colors"
+															className="hover:bg-[var(--bg-hover)]/60 transition-colors"
 														>
-															<td className="py-4 px-6 font-bold text-gray-900">
+															<td className="py-4 px-6 font-bold text-[var(--text)]">
 																{emp.name}
 															</td>
-															<td className="py-4 px-6 font-mono text-gray-600">
+															<td className="py-4 px-6 font-mono text-[var(--text-2)]">
 																{emp.email}
 															</td>
-															<td className="py-4 px-6 text-gray-700">
+															<td className="py-4 px-6 text-[var(--text-2)]">
 																{emp.department ||
 																	"Engineering"}
 															</td>
-															<td className="py-4 px-6 text-gray-700">
+															<td className="py-4 px-6 text-[var(--text-2)]">
 																{emp.manager || "A. Shah"}
 															</td>
-															<td className="py-4 px-6 text-gray-700">
+															<td className="py-4 px-6 text-[var(--text-2)]">
 																{emp.location || "Ahmedabad"}
 															</td>
 															<td className="py-4 px-6 text-right">
@@ -945,7 +945,7 @@ function AdminDashboard() {
 																	className={`px-3 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${
 																		isGranted
 																			? "text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200"
-																			: "text-red-700 bg-red-50 hover:bg-red-100 border border-red-200"
+																			: "text-red-700 bg-[var(--bg-hover)] hover:bg-red-100 border border-[var(--border)]"
 																	}`}
 																>
 																	{isGranted
@@ -960,7 +960,7 @@ function AdminDashboard() {
 												<tr>
 													<td
 														colSpan={6}
-														className="py-8 text-center text-gray-400"
+														className="py-8 text-center text-[var(--text-3)]"
 													>
 														No employees found matching criteria.
 													</td>
@@ -979,10 +979,10 @@ function AdminDashboard() {
 							{/* Header + Action */}
 							<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 								<div>
-									<h2 className="text-xl font-extrabold text-gray-900">
+									<h2 className="text-xl font-extrabold text-[var(--text)]">
 										Carpooling Fleet & Vehicles
 									</h2>
-									<p className="text-xs text-gray-500">
+									<p className="text-xs text-[var(--text-3)]">
 										View registered employee vehicles, seating limits,
 										and verification status.
 									</p>
@@ -991,7 +991,7 @@ function AdminDashboard() {
 								<div className="flex items-center gap-3">
 									<button
 										onClick={() => setShowAddVehicleModal(true)}
-										className="px-4 py-2 bg-[#00A09D] hover:bg-[#008f8c] text-white text-xs font-bold rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+										className="px-4 py-2 bg-[var(--accent)] hover:bg-[var(--accent)] text-white text-xs font-bold rounded-xl transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
 									>
 										<Plus className="w-4 h-4" /> Add Vehicle
 									</button>
@@ -999,11 +999,11 @@ function AdminDashboard() {
 							</div>
 
 							{/* Vehicles Table */}
-							<div className="bg-white border border-gray-200/90 rounded-2xl overflow-hidden shadow-2xs">
+							<div className="bg-[var(--bg-card)] border border-[var(--border)]/90 rounded-xl overflow-hidden shadow-none">
 								<div className="overflow-x-auto">
 									<table className="w-full text-left border-collapse">
 										<thead>
-											<tr className="border-b border-gray-200 bg-gray-50/70 text-xs font-bold text-[#00A09D]">
+											<tr className="border-b border-[var(--border)] bg-[var(--bg-hover)]/70 text-xs font-bold text-[var(--accent)]">
 												<th className="py-3.5 px-6">
 													Registration Number
 												</th>
@@ -1017,7 +1017,7 @@ function AdminDashboard() {
 												</th>
 											</tr>
 										</thead>
-										<tbody className="divide-y divide-gray-100 text-xs">
+										<tbody className="divide-y divide-[var(--border)] text-xs">
 											{filteredVehicles.length > 0 ? (
 												filteredVehicles.map((v) => {
 													const isActive =
@@ -1027,18 +1027,18 @@ function AdminDashboard() {
 													return (
 														<tr
 															key={v.veh_id}
-															className="hover:bg-gray-50/60 transition-colors"
+															className="hover:bg-[var(--bg-hover)]/60 transition-colors"
 														>
-															<td className="py-4 px-6 font-mono font-bold text-gray-900 uppercase">
+															<td className="py-4 px-6 font-mono font-bold text-[var(--text)] uppercase">
 																{v.veh_no}
 															</td>
-															<td className="py-4 px-6 font-semibold text-gray-800">
+															<td className="py-4 px-6 font-semibold text-[var(--text)]">
 																{v.vehicle_model}
 															</td>
-															<td className="py-4 px-6 text-gray-700">
+															<td className="py-4 px-6 text-[var(--text-2)]">
 																{v.seating_capacity}
 															</td>
-															<td className="py-4 px-6 font-medium text-gray-900">
+															<td className="py-4 px-6 font-medium text-[var(--text)]">
 																{v.driver_name || "Unassigned"}
 															</td>
 															<td className="py-4 px-6 text-right">
@@ -1056,7 +1056,7 @@ function AdminDashboard() {
 																		className={`px-3 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${
 																			isActive
 																				? "text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200"
-																				: "text-red-700 bg-red-50 hover:bg-red-100 border border-red-200"
+																				: "text-red-700 bg-[var(--bg-hover)] hover:bg-red-100 border border-[var(--border)]"
 																		}`}
 																	>
 																		{isActive ? "[Active]" : "[Inactive]"}
@@ -1070,7 +1070,7 @@ function AdminDashboard() {
 												<tr>
 													<td
 														colSpan={5}
-														className="py-8 text-center text-gray-400"
+														className="py-8 text-center text-[var(--text-3)]"
 													>
 														No vehicles registered yet.
 													</td>
@@ -1085,12 +1085,12 @@ function AdminDashboard() {
 
 					{/* --- TAB 4: SETTINGS --- */}
 					{activeTab === "settings" && (
-						<div className="max-w-2xl bg-white border border-gray-200/90 rounded-2xl p-6 shadow-2xs space-y-6 animate-in fade-in duration-150">
+						<div className="max-w-2xl bg-[var(--bg-card)] border border-[var(--border)]/90 rounded-xl p-6 shadow-none space-y-6 animate-in fade-in duration-150">
 							<div>
-								<h3 className="text-lg font-bold text-gray-900">
+								<h3 className="text-lg font-bold text-[var(--text)]">
 									Organization Configurations
 								</h3>
-								<p className="text-xs text-gray-500 mt-0.5">
+								<p className="text-xs text-[var(--text-3)] mt-0.5">
 									Manage fuel reimbursement rules, corporate commute
 									subsidy, and daily driver limits.
 								</p>
@@ -1101,8 +1101,8 @@ function AdminDashboard() {
 								className="space-y-4"
 							>
 								<div>
-									<label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
-										Fuel Cost per Km (₹)
+									<label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-2)] mb-1.5">
+										Fuel Cost per Km (â‚¹)
 									</label>
 									<input
 										type="number"
@@ -1115,13 +1115,13 @@ function AdminDashboard() {
 											})
 										}
 										placeholder="5.50"
-										className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
+										className="w-full px-4 py-2.5 bg-[var(--bg-hover)] border border-[var(--border)] rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)]"
 									/>
 								</div>
 
 								<div>
-									<label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
-										Travel Cost per Km Subsidy (₹)
+									<label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-2)] mb-1.5">
+										Travel Cost per Km Subsidy (â‚¹)
 									</label>
 									<input
 										type="number"
@@ -1134,12 +1134,12 @@ function AdminDashboard() {
 											})
 										}
 										placeholder="2.00"
-										className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
+										className="w-full px-4 py-2.5 bg-[var(--bg-hover)] border border-[var(--border)] rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)]"
 									/>
 								</div>
 
 								<div>
-									<label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+									<label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-2)] mb-1.5">
 										Max Rides Publishable per Day (Per Driver)
 									</label>
 									<input
@@ -1152,15 +1152,15 @@ function AdminDashboard() {
 											})
 										}
 										placeholder="5"
-										className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
+										className="w-full px-4 py-2.5 bg-[var(--bg-hover)] border border-[var(--border)] rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)]"
 									/>
 								</div>
 
-								<div className="pt-4 border-t border-gray-100 flex justify-end">
+								<div className="pt-4 border-t border-[var(--border)] flex justify-end">
 									<button
 										type="submit"
 										disabled={savingSettings}
-										className="px-6 py-2.5 bg-[#714B67] hover:bg-[#5c3c54] text-white font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-2"
+										className="px-6 py-2.5 bg-[var(--primary)] hover:bg-[var(--primary)] text-white font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-2"
 									>
 										<Save className="w-4 h-4" />
 										{savingSettings
@@ -1177,19 +1177,19 @@ function AdminDashboard() {
 			{/* MODAL 1: ADD EMPLOYEE */}
 			{showAddEmployeeModal && (
 				<div className="fixed inset-0 bg-gray-900/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-					<div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-						<div className="flex items-center justify-between p-5 border-b border-gray-100 bg-gray-50/50">
+					<div className="bg-[var(--bg-card)] rounded-xl shadow-none w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+						<div className="flex items-center justify-between p-5 border-b border-[var(--border)] bg-[var(--bg-hover)]/50">
 							<div className="flex items-center gap-2.5">
-								<div className="w-8 h-8 bg-[#00A09D]/10 rounded-lg flex items-center justify-center text-[#00A09D]">
+								<div className="w-8 h-8 bg-[var(--accent)]/10 rounded-lg flex items-center justify-center text-[var(--accent)]">
 									<Users className="w-4 h-4" />
 								</div>
-								<h3 className="text-base font-bold text-gray-900">
+								<h3 className="text-base font-bold text-[var(--text)]">
 									Add Employee
 								</h3>
 							</div>
 							<button
 								onClick={() => setShowAddEmployeeModal(false)}
-								className="text-gray-400 hover:text-gray-600 cursor-pointer"
+								className="text-[var(--text-3)] hover:text-[var(--text-2)] cursor-pointer"
 							>
 								<X className="w-5 h-5" />
 							</button>
@@ -1200,7 +1200,7 @@ function AdminDashboard() {
 							className="p-5 space-y-3.5"
 						>
 							<div>
-								<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+								<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 									Full Name
 								</label>
 								<input
@@ -1211,12 +1211,12 @@ function AdminDashboard() {
 										setNewEmp({ ...newEmp, name: e.target.value })
 									}
 									placeholder="e.g. Raj Patel"
-									className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#00A09D]/20 focus:border-[#00A09D]"
+									className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-transparent/20 focus:border-[var(--border-focus)]"
 								/>
 							</div>
 
 							<div>
-								<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+								<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 									Corporate Email
 								</label>
 								<input
@@ -1227,13 +1227,13 @@ function AdminDashboard() {
 										setNewEmp({ ...newEmp, email: e.target.value })
 									}
 									placeholder="raj.patel@co.com"
-									className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#00A09D]/20 focus:border-[#00A09D]"
+									className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-transparent/20 focus:border-[var(--border-focus)]"
 								/>
 							</div>
 
 							<div className="grid grid-cols-2 gap-3">
 								<div>
-									<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+									<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 										Department
 									</label>
 									<select
@@ -1244,7 +1244,7 @@ function AdminDashboard() {
 												department: e.target.value,
 											})
 										}
-										className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#00A09D]/20 focus:border-[#00A09D]"
+										className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-transparent/20 focus:border-[var(--border-focus)]"
 									>
 										<option value="Engineering">Engineering</option>
 										<option value="Sales">Sales</option>
@@ -1255,7 +1255,7 @@ function AdminDashboard() {
 								</div>
 
 								<div>
-									<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+									<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 										Manager
 									</label>
 									<input
@@ -1268,13 +1268,13 @@ function AdminDashboard() {
 											})
 										}
 										placeholder="e.g. A. Shah"
-										className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#00A09D]/20 focus:border-[#00A09D]"
+										className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-transparent/20 focus:border-[var(--border-focus)]"
 									/>
 								</div>
 							</div>
 
 							<div>
-								<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+								<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 									Location
 								</label>
 								<input
@@ -1284,7 +1284,7 @@ function AdminDashboard() {
 										setNewEmp({ ...newEmp, location: e.target.value })
 									}
 									placeholder="Ahmedabad"
-									className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#00A09D]/20 focus:border-[#00A09D]"
+									className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-transparent/20 focus:border-[var(--border-focus)]"
 								/>
 							</div>
 
@@ -1292,13 +1292,13 @@ function AdminDashboard() {
 								<button
 									type="button"
 									onClick={() => setShowAddEmployeeModal(false)}
-									className="flex-1 py-2 text-xs font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors cursor-pointer"
+									className="flex-1 py-2 text-xs font-bold text-[var(--text-2)] bg-[var(--bg-hover)] hover:bg-[var(--bg-hover)] rounded-xl transition-colors cursor-pointer"
 								>
 									Cancel
 								</button>
 								<button
 									type="submit"
-									className="flex-1 py-2 text-xs font-bold text-white bg-[#00A09D] hover:bg-[#008f8c] rounded-xl transition-colors cursor-pointer shadow-xs"
+									className="flex-1 py-2 text-xs font-bold text-white bg-[var(--accent)] hover:bg-[var(--accent)] rounded-xl transition-colors cursor-pointer shadow-xs"
 								>
 									Add Employee
 								</button>
@@ -1311,19 +1311,19 @@ function AdminDashboard() {
 			{/* MODAL 2: ADD VEHICLE */}
 			{showAddVehicleModal && (
 				<div className="fixed inset-0 bg-gray-900/40 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-					<div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-						<div className="flex items-center justify-between p-5 border-b border-gray-100 bg-gray-50/50">
+					<div className="bg-[var(--bg-card)] rounded-xl shadow-none w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+						<div className="flex items-center justify-between p-5 border-b border-[var(--border)] bg-[var(--bg-hover)]/50">
 							<div className="flex items-center gap-2.5">
-								<div className="w-8 h-8 bg-[#714B67]/10 rounded-lg flex items-center justify-center text-[#714B67]">
+								<div className="w-8 h-8 bg-[var(--primary)]/10 rounded-lg flex items-center justify-center text-[var(--primary)]">
 									<Car className="w-4 h-4" />
 								</div>
-								<h3 className="text-base font-bold text-gray-900">
+								<h3 className="text-base font-bold text-[var(--text)]">
 									Add Vehicle
 								</h3>
 							</div>
 							<button
 								onClick={() => setShowAddVehicleModal(false)}
-								className="text-gray-400 hover:text-gray-600 cursor-pointer"
+								className="text-[var(--text-3)] hover:text-[var(--text-2)] cursor-pointer"
 							>
 								<X className="w-5 h-5" />
 							</button>
@@ -1331,7 +1331,7 @@ function AdminDashboard() {
 
 						<form onSubmit={handleAddVehicle} className="p-5 space-y-3.5">
 							<div>
-								<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+								<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 									Assign to Employee
 								</label>
 								<select
@@ -1340,7 +1340,7 @@ function AdminDashboard() {
 									onChange={(e) =>
 										setNewVeh({ ...newVeh, emp_id: e.target.value })
 									}
-									className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
+									className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)]"
 								>
 									<option value="" disabled>
 										Select an employee
@@ -1354,7 +1354,7 @@ function AdminDashboard() {
 							</div>
 
 							<div>
-								<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+								<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 									Vehicle Model
 								</label>
 								<select
@@ -1366,7 +1366,7 @@ function AdminDashboard() {
 											vehicle_model: e.target.value,
 										})
 									}
-									className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
+									className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)]"
 								>
 									{carModels.map((m) => (
 										<option key={m} value={m}>
@@ -1377,7 +1377,7 @@ function AdminDashboard() {
 							</div>
 
 							<div>
-								<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+								<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 									Registration Number
 								</label>
 								<input
@@ -1391,13 +1391,13 @@ function AdminDashboard() {
 										})
 									}
 									placeholder="GJ01AB1234"
-									className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs uppercase focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
+									className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs uppercase focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)]"
 								/>
 							</div>
 
 							<div className="grid grid-cols-2 gap-3">
 								<div>
-									<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+									<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 										Seating Capacity
 									</label>
 									<input
@@ -1412,12 +1412,12 @@ function AdminDashboard() {
 												seating_capacity: e.target.value,
 											})
 										}
-										className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
+										className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)]"
 									/>
 								</div>
 
 								<div>
-									<label className="block text-xs font-bold uppercase text-gray-600 mb-1">
+									<label className="block text-xs font-bold uppercase text-[var(--text-2)] mb-1">
 										Mileage (km/L)
 									</label>
 									<input
@@ -1431,7 +1431,7 @@ function AdminDashboard() {
 												fuel_consumption_ratio: e.target.value,
 											})
 										}
-										className="w-full px-3.5 py-2 border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67]"
+										className="w-full px-3.5 py-2 border border-[var(--border)] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)]"
 									/>
 								</div>
 							</div>
@@ -1440,13 +1440,13 @@ function AdminDashboard() {
 								<button
 									type="button"
 									onClick={() => setShowAddVehicleModal(false)}
-									className="flex-1 py-2 text-xs font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors cursor-pointer"
+									className="flex-1 py-2 text-xs font-bold text-[var(--text-2)] bg-[var(--bg-hover)] hover:bg-[var(--bg-hover)] rounded-xl transition-colors cursor-pointer"
 								>
 									Cancel
 								</button>
 								<button
 									type="submit"
-									className="flex-1 py-2 text-xs font-bold text-white bg-[#714B67] hover:bg-[#5c3c54] rounded-xl transition-colors cursor-pointer shadow-xs"
+									className="flex-1 py-2 text-xs font-bold text-white bg-[var(--primary)] hover:bg-[var(--primary)] rounded-xl transition-colors cursor-pointer shadow-xs"
 								>
 									Add Vehicle
 								</button>

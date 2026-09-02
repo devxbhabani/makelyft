@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import {
 	X,
 	MapPin,
@@ -229,20 +229,20 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 
 	return (
 		<div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
-			<div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]">
+			<div className="bg-[var(--bg-card)] rounded-xl shadow-none w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]">
 				{/* Header */}
-				<div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50/50 shrink-0">
+				<div className="flex items-center justify-between p-6 border-b border-[var(--border)] bg-[var(--bg-hover)]/50 shrink-0">
 					<div className="flex items-center gap-3">
-						<div className="w-10 h-10 bg-[#714B67]/10 rounded-full flex items-center justify-center text-[#714B67]">
+						<div className="w-10 h-10 bg-[var(--primary)]/10 rounded-full flex items-center justify-center text-[var(--primary)]">
 							<Compass className="w-5 h-5" />
 						</div>
-						<h2 className="text-xl font-bold text-gray-900">
+						<h2 className="text-xl font-bold text-[var(--text)]">
 							Publish a Ride
 						</h2>
 					</div>
 					<button
 						onClick={onClose}
-						className="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+						className="text-[var(--text-3)] hover:text-[var(--text-2)] transition-colors cursor-pointer"
 					>
 						<X className="w-6 h-6" />
 					</button>
@@ -259,7 +259,7 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 					<form onSubmit={handleSubmit} className="space-y-4">
 						{/* Origin Input */}
 						<div className="space-y-1.5 relative" ref={originRef}>
-							<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-1.5">
+							<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider flex items-center gap-1.5">
 								<MapPin className="w-3.5 h-3.5 text-emerald-600" />
 								Origin Address
 							</label>
@@ -273,18 +273,18 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 										if (originData) setOriginData(null);
 									}}
 									placeholder="Search departure location..."
-									className="w-full pl-4 pr-10 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+									className="w-full pl-4 pr-10 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all"
 								/>
 								{loadingOrigin && (
 									<div className="absolute right-3.5 top-3.5">
-										<Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+										<Loader2 className="w-4 h-4 animate-spin text-[var(--text-3)]" />
 									</div>
 								)}
 							</div>
 
 							{/* Origin Suggestions Dropdown */}
 							{showOriginDropdown && originSuggestions.length > 0 && (
-								<div className="absolute left-0 right-0 mt-1 bg-white border border-gray-100 rounded-xl shadow-lg max-h-52 overflow-y-auto z-50 py-1">
+								<div className="absolute left-0 right-0 mt-1 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl shadow-none max-h-52 overflow-y-auto z-50 py-1">
 									{originSuggestions.map((item, idx) => (
 										<button
 											key={idx}
@@ -298,15 +298,15 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 												});
 												setShowOriginDropdown(false);
 											}}
-											className="w-full text-left px-4 py-2.5 hover:bg-gray-50 flex items-start gap-2.5 transition-colors border-b border-gray-50 last:border-b-0 cursor-pointer"
+											className="w-full text-left px-4 py-2.5 hover:bg-[var(--bg-hover)] flex items-start gap-2.5 transition-colors border-b border-gray-50 last:border-b-0 cursor-pointer"
 										>
-											<MapPin className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
+											<MapPin className="w-4 h-4 text-[var(--text-3)] shrink-0 mt-0.5" />
 											<div>
-												<p className="text-sm font-semibold text-gray-800">
+												<p className="text-sm font-semibold text-[var(--text)]">
 													{item.title}
 												</p>
 												{item.subtitle && (
-													<p className="text-xs text-gray-400 mt-0.5">
+													<p className="text-xs text-[var(--text-3)] mt-0.5">
 														{item.subtitle}
 													</p>
 												)}
@@ -319,7 +319,7 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 
 						{/* Destination Input */}
 						<div className="space-y-1.5 relative" ref={destRef}>
-							<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-1.5">
+							<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider flex items-center gap-1.5">
 								<MapPin className="w-3.5 h-3.5 text-rose-600" />
 								Destination Address
 							</label>
@@ -333,18 +333,18 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 										if (destData) setDestData(null);
 									}}
 									placeholder="Search drop-off location..."
-									className="w-full pl-4 pr-10 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+									className="w-full pl-4 pr-10 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all"
 								/>
 								{loadingDest && (
 									<div className="absolute right-3.5 top-3.5">
-										<Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+										<Loader2 className="w-4 h-4 animate-spin text-[var(--text-3)]" />
 									</div>
 								)}
 							</div>
 
 							{/* Destination Suggestions Dropdown */}
 							{showDestDropdown && destSuggestions.length > 0 && (
-								<div className="absolute left-0 right-0 mt-1 bg-white border border-gray-100 rounded-xl shadow-lg max-h-52 overflow-y-auto z-50 py-1">
+								<div className="absolute left-0 right-0 mt-1 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl shadow-none max-h-52 overflow-y-auto z-50 py-1">
 									{destSuggestions.map((item, idx) => (
 										<button
 											key={idx}
@@ -358,15 +358,15 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 												});
 												setShowDestDropdown(false);
 											}}
-											className="w-full text-left px-4 py-2.5 hover:bg-gray-50 flex items-start gap-2.5 transition-colors border-b border-gray-50 last:border-b-0 cursor-pointer"
+											className="w-full text-left px-4 py-2.5 hover:bg-[var(--bg-hover)] flex items-start gap-2.5 transition-colors border-b border-gray-50 last:border-b-0 cursor-pointer"
 										>
-											<MapPin className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
+											<MapPin className="w-4 h-4 text-[var(--text-3)] shrink-0 mt-0.5" />
 											<div>
-												<p className="text-sm font-semibold text-gray-800">
+												<p className="text-sm font-semibold text-[var(--text)]">
 													{item.title}
 												</p>
 												{item.subtitle && (
-													<p className="text-xs text-gray-400 mt-0.5">
+													<p className="text-xs text-[var(--text-3)] mt-0.5">
 														{item.subtitle}
 													</p>
 												)}
@@ -379,8 +379,8 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 
 						{/* Departure Time */}
 						<div className="space-y-1.5">
-							<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-1.5">
-								<Calendar className="w-3.5 h-3.5 text-gray-500" />
+							<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider flex items-center gap-1.5">
+								<Calendar className="w-3.5 h-3.5 text-[var(--text-3)]" />
 								Departure Time
 							</label>
 							<input
@@ -388,15 +388,15 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 								type="datetime-local"
 								value={departureTime}
 								onChange={(e) => setDepartureTime(e.target.value)}
-								className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+								className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all"
 							/>
 						</div>
 
 						<div className="grid grid-cols-2 gap-4">
 							{/* Seats */}
 							<div className="space-y-1.5">
-								<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-1.5">
-									<Users className="w-3.5 h-3.5 text-gray-500" />
+								<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider flex items-center gap-1.5">
+									<Users className="w-3.5 h-3.5 text-[var(--text-3)]" />
 									Available Seats
 								</label>
 								<input
@@ -406,15 +406,15 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 									max="8"
 									value={seats}
 									onChange={(e) => setSeats(e.target.value)}
-									className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+									className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all"
 								/>
 							</div>
 
 							{/* Fare Per Seat */}
 							<div className="space-y-1.5">
-								<label className="text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center gap-1.5">
-									<DollarSign className="w-3.5 h-3.5 text-gray-500" />
-									Fare Per Seat (₹)
+								<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider flex items-center gap-1.5">
+									<DollarSign className="w-3.5 h-3.5 text-[var(--text-3)]" />
+									Fare Per Seat (â‚¹)
 								</label>
 								<input
 									required
@@ -424,7 +424,7 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 									value={fare}
 									onChange={(e) => setFare(e.target.value)}
 									placeholder="e.g. 150"
-									className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[#714B67] transition-all"
+									className="w-full px-4 py-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#714B67]/20 focus:border-[var(--border-focus)] transition-all"
 								/>
 							</div>
 						</div>
@@ -434,7 +434,7 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 							<button
 								type="submit"
 								disabled={submitting}
-								className="w-full py-3 px-4 bg-[#714B67] hover:bg-[#5c3c54] text-white font-semibold rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
+								className="w-full py-3 px-4 bg-[var(--primary)] hover:bg-[var(--primary)] text-white font-semibold rounded-xl transition-all shadow-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
 							>
 								{submitting ? (
 									<>

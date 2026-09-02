@@ -16,37 +16,57 @@ export default function AlertModal() {
 
 	const { message, title, type } = alertConfig;
 
-	const getIcon = () => {
-		switch (type) {
-			case "success":
-				return <CheckCircle2 className="w-8 h-8 text-emerald-500" />;
-			case "error":
-				return <AlertCircle className="w-8 h-8 text-rose-500" />;
-			default:
-				return <Info className="w-8 h-8 text-[#00A09D]" />;
-		}
-	};
+	const iconColor = type === "success" ? "var(--accent)" : type === "error" ? "var(--danger)" : "var(--text-2)";
+	const Icon = type === "success" ? CheckCircle2 : type === "error" ? AlertCircle : Info;
 
 	return (
-		<div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xl animate-in fade-in duration-300">
-			<div className="bg-white w-full max-w-sm rounded-3xl shadow-2xl flex flex-col transform transition-all relative overflow-hidden border border-gray-100 p-6 text-center">
-				{/* Top Decorative Bar */}
-				<div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#714B67] to-[#00A09D]"></div>
-
-				<div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-4 mt-2 shadow-inner border border-gray-100">
-					{getIcon()}
+		<div
+			style={{
+				position: "fixed", inset: 0, zIndex: 200,
+				display: "flex", alignItems: "center", justifyContent: "center",
+				padding: 16,
+				background: "rgba(0,0,0,0.65)",
+				backdropFilter: "blur(4px)",
+				animation: "fadeIn 0.2s ease both",
+			}}
+		>
+			<div
+				className="card animate-fade-up"
+				style={{
+					width: "100%", maxWidth: 360,
+					padding: 24, textAlign: "center",
+				}}
+			>
+				<div
+					style={{
+						width: 44, height: 44, borderRadius: 10,
+						background: "var(--bg-hover)",
+						border: "1px solid var(--border)",
+						display: "flex", alignItems: "center", justifyContent: "center",
+						margin: "0 auto 16px",
+					}}
+				>
+					<Icon style={{ width: 20, height: 20, color: iconColor }} />
 				</div>
 
-				<h3 className="text-lg font-extrabold text-gray-900 mb-2 leading-tight">
+				<h3 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--text)", margin: "0 0 6px" }}>
 					{title || "Notice"}
 				</h3>
-				<p className="text-xs font-medium text-gray-600 mb-6 leading-relaxed">
+				<p style={{ fontSize: "0.82rem", color: "var(--text-2)", margin: "0 0 20px", lineHeight: 1.6 }}>
 					{message}
 				</p>
 
 				<button
 					onClick={() => setAlertConfig(null)}
-					className="w-full bg-[#714B67] hover:bg-[#5c3c54] text-white font-bold py-3 rounded-xl shadow-lg shadow-[#714B67]/20 transition-all cursor-pointer text-sm"
+					style={{
+						width: "100%", padding: "9px", borderRadius: 7,
+						background: "var(--bg-hover)", border: "1px solid var(--border-focus)",
+						color: "var(--text)", fontWeight: 500, fontSize: "0.85rem",
+						cursor: "pointer", fontFamily: "inherit",
+						transition: "background 0.15s",
+					}}
+					onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.08)"}
+					onMouseLeave={(e) => e.currentTarget.style.background = "var(--bg-hover)"}
 				>
 					Dismiss
 				</button>

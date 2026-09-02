@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { showAlert } from "../../utils/alertService";
 import {
 	Car,
@@ -351,7 +351,7 @@ export default function ActiveTripPanel({
 			if (data.success) {
 				setPaymentStatus("paid_pending_confirmation");
 				showAlert(
-					`Payment of ₹${fareAmount} completed via MakeLyft Wallet! Awaiting driver confirmation.`,
+					`Payment of â‚¹${fareAmount} completed via MakeLyft Wallet! Awaiting driver confirmation.`,
 					"Payment Successful", "success"
 				);
 				fetchWalletBalance();
@@ -468,7 +468,7 @@ export default function ActiveTripPanel({
 						if (payData.success) {
 							setPaymentStatus("paid_pending_confirmation");
 							showAlert(
-								`Payment of ₹${fareAmount} completed via Razorpay! Awaiting driver confirmation.`,
+								`Payment of â‚¹${fareAmount} completed via Razorpay! Awaiting driver confirmation.`,
 								"Payment Successful", "success"
 							);
 							if (onRefreshPassenger) onRefreshPassenger();
@@ -618,7 +618,7 @@ export default function ActiveTripPanel({
 			});
 			const data = await res.json();
 			if (data.success) {
-				showAlert(`Trip finished! Total earnings processed: ₹${data.earnings}`, "Trip Complete", "success");
+				showAlert(`Trip finished! Total earnings processed: â‚¹${data.earnings}`, "Trip Complete", "success");
 				onTripEnded();
 			} else {
 				showAlert(data.message || "Error finishing trip", "Trip Error", "error");
@@ -641,10 +641,10 @@ export default function ActiveTripPanel({
 
 	if (isDriver) {
 		headerTheme = {
-			bg: "bg-teal-50/80 border-teal-100",
+			bg: "bg-[var(--bg-hover)]/80 border-[var(--border)]",
 			title: "Driver Dashboard",
-			titleColor: "text-teal-950",
-			chipBg: "bg-teal-100 text-teal-800 border-teal-200",
+			titleColor: "text-[var(--text)]",
+			chipBg: "bg-[var(--bg-hover)] text-[var(--accent)] border-[var(--border)]",
 			chipLabel: "Active Route Scheduled",
 		};
 	} else if (passengerStatus === "confirmed") {
@@ -674,18 +674,18 @@ export default function ActiveTripPanel({
 			};
 		} else if (paymentStatus === "paid_pending_confirmation") {
 			headerTheme = {
-				bg: "bg-blue-50/80 border-blue-100",
+				bg: "bg-[var(--bg-hover)]/80 border-[var(--border)]",
 				title: "Payment Submitted",
 				titleColor: "text-blue-950",
-				chipBg: "bg-blue-100 text-blue-800 border-blue-200",
+				chipBg: "bg-[var(--bg-hover)] text-blue-800 border-blue-200",
 				chipLabel: "Awaiting Driver Confirmation",
 			};
 		} else {
 			headerTheme = {
-				bg: "bg-purple-50/80 border-purple-100",
+				bg: "bg-[var(--bg-hover)]/80 border-[var(--border)]",
 				title: "Arrived at Dropoff!",
 				titleColor: "text-purple-950",
-				chipBg: "bg-purple-100 text-purple-800 border-purple-200",
+				chipBg: "bg-[var(--bg-hover)] text-[var(--primary)] border-[var(--border)]",
 				chipLabel: "Payment Pending",
 			};
 		}
@@ -695,7 +695,7 @@ export default function ActiveTripPanel({
 		walletBalance !== null && walletBalance < fareAmount;
 
 	return (
-		<div className="flex flex-col h-full bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden text-left">
+		<div className="flex flex-col h-full bg-[var(--bg-card)] rounded-xl shadow-none border border-[var(--border)] overflow-hidden text-left">
 			{/* Top Header */}
 			<div
 				className={`p-4 border-b flex items-center justify-between transition-colors duration-300 ${headerTheme.bg}`}
@@ -713,7 +713,7 @@ export default function ActiveTripPanel({
 							{headerTheme.chipLabel}
 						</span>
 					</div>
-					<p className="text-xs text-gray-600 mt-0.5">
+					<p className="text-xs text-[var(--text-2)] mt-0.5">
 						{phase}{" "}
 						{liveLocation
 							? `(GPS: ${liveLocation[0].toFixed(3)}, ${liveLocation[1].toFixed(3)})`
@@ -722,9 +722,9 @@ export default function ActiveTripPanel({
 				</div>
 				<button
 					onClick={onTripEnded}
-					className="flex items-center gap-1 text-xs font-bold text-gray-700 hover:text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 px-3 py-1.5 rounded-xl shadow-2xs transition-all cursor-pointer"
+					className="flex items-center gap-1 text-xs font-bold text-[var(--text-2)] hover:text-[var(--text)] bg-[var(--bg-card)] border border-[var(--border)] hover:bg-[var(--bg-hover)] px-3 py-1.5 rounded-xl shadow-none transition-all cursor-pointer"
 				>
-					<ArrowLeft className="w-3.5 h-3.5 text-[#714B67]" />
+					<ArrowLeft className="w-3.5 h-3.5 text-[var(--primary)]" />
 					<span>Exit</span>
 				</button>
 			</div>
@@ -732,45 +732,45 @@ export default function ActiveTripPanel({
 			{/* Scrollable Body Container */}
 			<div className="flex-1 overflow-y-auto p-4 space-y-4">
 				{/* Ride Details Card */}
-				<div className="p-4 rounded-xl border border-gray-200 bg-gray-50/70 relative">
+				<div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--bg-hover)]/70 relative">
 					<button
 						onClick={() => setIsChatOpen(true)}
-						className="absolute top-3.5 right-3.5 bg-white border border-gray-200 hover:border-[#714B67] hover:text-[#714B67] text-gray-700 px-2.5 py-1.5 rounded-lg shadow-2xs flex items-center gap-1.5 text-xs font-bold transition-all cursor-pointer"
+						className="absolute top-3.5 right-3.5 bg-[var(--bg-card)] border border-[var(--border)] hover:border-[var(--border-focus)] hover:text-[var(--primary)] text-[var(--text-2)] px-2.5 py-1.5 rounded-lg shadow-none flex items-center gap-1.5 text-xs font-bold transition-all cursor-pointer"
 					>
-						<MessageSquare className="w-3.5 h-3.5 text-[#00A09D]" />
+						<MessageSquare className="w-3.5 h-3.5 text-[var(--accent)]" />
 						<span>Chat</span>
 					</button>
 
 					<div className="flex items-center gap-3 mb-3 pr-20">
-						<div className="w-10 h-10 rounded-xl bg-[#714B67]/10 text-[#714B67] flex items-center justify-center font-bold text-base shrink-0 border border-[#714B67]/20">
+						<div className="w-10 h-10 rounded-xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center font-bold text-base shrink-0 border border-[var(--border-focus)]/20">
 							<Car className="w-5 h-5" />
 						</div>
 						<div className="min-w-0">
-							<p className="text-sm font-bold text-gray-900 truncate">
+							<p className="text-sm font-bold text-[var(--text)] truncate">
 								{isDriver
 									? "Your Published Route"
 									: `Driver: ${activeTrip.ride?.driver_name || "Rahul M."}`}
 							</p>
-							<p className="text-xs text-gray-500 truncate">
-								{activeTrip.ride?.vehicle_model || "Swift Dzire"} •{" "}
+							<p className="text-xs text-[var(--text-3)] truncate">
+								{activeTrip.ride?.vehicle_model || "Swift Dzire"} â€¢{" "}
 								{activeTrip.ride?.veh_no || "WB 02 AB 1234"}
 							</p>
 							<div className="flex items-center gap-2 mt-1">
 								{!isDriver && (
-									<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-teal-50 border border-teal-200 text-[#00A09D] text-[10px] font-extrabold">
-										💺 {activeTrip.seat_no || "Seat #1"}
+									<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[var(--bg-hover)] border border-[var(--border)] text-[var(--accent)] text-[10px] font-extrabold">
+										ðŸ’º {activeTrip.seat_no || "Seat #1"}
 									</span>
 								)}
-								<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-purple-50 border border-purple-200 text-[#714B67] text-[10px] font-extrabold">
-									Fare: ₹{fareAmount}
+								<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[var(--bg-hover)] border border-[var(--border)] text-[var(--primary)] text-[10px] font-extrabold">
+									Fare: â‚¹{fareAmount}
 								</span>
 							</div>
 						</div>
 					</div>
 
-					<div className="space-y-2 text-xs text-gray-700 pt-2 border-t border-gray-200/80">
+					<div className="space-y-2 text-xs text-[var(--text-2)] pt-2 border-t border-[var(--border)]/80">
 						<div className="flex items-start gap-2">
-							<MapPin className="w-3.5 h-3.5 text-[#00A09D] shrink-0 mt-0.5" />
+							<MapPin className="w-3.5 h-3.5 text-[var(--accent)] shrink-0 mt-0.5" />
 							<span className="font-semibold truncate">
 								Pickup:{" "}
 								{typeof activeTrip.ride?.origin === "string"
@@ -795,7 +795,7 @@ export default function ActiveTripPanel({
 				</div>
 
 				{/* Rich Time Slot Info */}
-				<div className="p-3.5 rounded-xl border border-indigo-100 bg-gradient-to-r from-indigo-50/60 via-purple-50/40 to-pink-50/30 flex items-center justify-between">
+				<div className="p-3.5 rounded-xl border border-indigo-100 bg-[var(--bg-hover)] from-indigo-50/60 via-purple-50/40 to-pink-50/30 flex items-center justify-between">
 					<div className="flex items-center gap-2.5">
 						<div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-600 shrink-0">
 							<Clock className="w-4 h-4" />
@@ -804,14 +804,14 @@ export default function ActiveTripPanel({
 							<p className="text-[10px] font-extrabold text-indigo-950 uppercase tracking-wider">
 								Departure Time Slot
 							</p>
-							<p className="text-xs font-bold text-gray-800 flex items-center gap-1 mt-0.5">
+							<p className="text-xs font-bold text-[var(--text)] flex items-center gap-1 mt-0.5">
 								<Calendar className="w-3 h-3 text-indigo-500" />
 								{activeTrip.ride?.departure_time || "Today, 9:30 AM"}
 							</p>
 						</div>
 					</div>
 					<span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-100 text-indigo-700 border border-indigo-200">
-						Fare: ₹{fareAmount}
+						Fare: â‚¹{fareAmount}
 					</span>
 				</div>
 
@@ -825,25 +825,25 @@ export default function ActiveTripPanel({
 								<div
 									className={`rounded-xl p-4 text-center space-y-1.5 border-2 border-dashed ${
 										passengerStatus === "confirmed"
-											? "bg-teal-50/90 border-teal-300"
+											? "bg-[var(--bg-hover)]/90 border-teal-300"
 											: "bg-amber-50/90 border-amber-300"
 									}`}
 								>
 									<p
 										className={`text-[10px] font-extrabold uppercase tracking-widest ${
 											passengerStatus === "confirmed"
-												? "text-teal-800"
+												? "text-[var(--accent)]"
 												: "text-amber-800"
 										}`}
 									>
 										{passengerStatus === "confirmed"
-											? "✅ Booking Confirmed — Share OTP with Driver"
-											: "⏳ Awaiting Driver Confirmation — Your Pickup OTP"}
+											? "âœ… Booking Confirmed â€” Share OTP with Driver"
+											: "â³ Awaiting Driver Confirmation â€” Your Pickup OTP"}
 									</p>
 									<div
 										className={`text-3xl font-mono font-black tracking-widest ${
 											passengerStatus === "confirmed"
-												? "text-[#00A09D]"
+												? "text-[var(--accent)]"
 												: "text-amber-600"
 										}`}
 									>
@@ -852,7 +852,7 @@ export default function ActiveTripPanel({
 									<p
 										className={`text-[11px] ${
 											passengerStatus === "confirmed"
-												? "text-teal-700"
+												? "text-[var(--accent)]"
 												: "text-amber-700"
 										}`}
 									>
@@ -865,31 +865,31 @@ export default function ActiveTripPanel({
 
 						{/* PASSENGER PAYMENT SECTION (Triggered on Drop-off / Completion) */}
 						{passengerStatus === "completed" && (
-							<div className="p-4 rounded-xl border border-purple-200 bg-gradient-to-br from-purple-50/80 via-white to-pink-50/40 shadow-sm space-y-3.5">
+							<div className="p-4 rounded-xl border border-[var(--border)] bg-gradient-to-br from-purple-50/80  to-pink-50/40 shadow-none space-y-3.5">
 								<div className="flex items-center justify-between">
 									<div className="flex items-center gap-2">
-										<div className="w-8 h-8 rounded-lg bg-[#714B67] text-white flex items-center justify-center font-bold">
+										<div className="w-8 h-8 rounded-lg bg-[var(--primary)] text-white flex items-center justify-center font-bold">
 											<CreditCard className="w-4 h-4" />
 										</div>
 										<div>
-											<h4 className="text-xs font-bold text-gray-900">
+											<h4 className="text-xs font-bold text-[var(--text)]">
 												Trip Payment
 											</h4>
-											<p className="text-[10px] text-gray-500">
+											<p className="text-[10px] text-[var(--text-3)]">
 												Select preferred payment method
 											</p>
 										</div>
 									</div>
 									<div className="text-right">
-										<span className="text-base font-extrabold text-[#714B67]">
-											₹{fareAmount}
+										<span className="text-base font-extrabold text-[var(--primary)]">
+											â‚¹{fareAmount}
 										</span>
 										{walletBalance !== null && (
-											<p className="text-[10px] text-gray-500 flex items-center gap-1 justify-end">
-												<Wallet className="w-3 h-3 text-[#00A09D]" />
+											<p className="text-[10px] text-[var(--text-3)] flex items-center gap-1 justify-end">
+												<Wallet className="w-3 h-3 text-[var(--accent)]" />
 												Wallet:{" "}
-												<span className="font-semibold text-gray-700">
-													₹{walletBalance.toFixed(2)}
+												<span className="font-semibold text-[var(--text-2)]">
+													â‚¹{walletBalance.toFixed(2)}
 												</span>
 											</p>
 										)}
@@ -905,18 +905,18 @@ export default function ActiveTripPanel({
 												Payment Confirmed by Driver!
 											</p>
 											<p className="text-[10px] text-emerald-700">
-												₹{fareAmount} settled successfully.
+												â‚¹{fareAmount} settled successfully.
 											</p>
 										</div>
 									</div>
 								) : paymentStatus === "paid_pending_confirmation" ? (
-									<div className="p-3 bg-blue-50 rounded-xl border border-blue-200 flex items-center gap-2.5">
-										<Loader2 className="w-5 h-5 text-blue-600 animate-spin shrink-0" />
+									<div className="p-3 bg-[var(--bg-hover)] rounded-xl border border-blue-200 flex items-center gap-2.5">
+										<Loader2 className="w-5 h-5 text-[var(--primary)] animate-spin shrink-0" />
 										<div>
 											<p className="text-xs font-bold text-blue-900">
-												Payment Submitted (₹{fareAmount})
+												Payment Submitted (â‚¹{fareAmount})
 											</p>
-											<p className="text-[10px] text-blue-700">
+											<p className="text-[10px] text-[var(--primary)]">
 												Waiting for driver to confirm receipt on
 												their dashboard.
 											</p>
@@ -937,12 +937,12 @@ export default function ActiveTripPanel({
 													<p className="text-[11px] text-amber-800 mt-0.5">
 														Your wallet has{" "}
 														<b>
-															₹
+															â‚¹
 															{walletBalance !== null
 																? walletBalance.toFixed(2)
 																: "0.00"}
 														</b>
-														, but the fare is <b>₹{fareAmount}</b>
+														, but the fare is <b>â‚¹{fareAmount}</b>
 														. Please pay using Razorpay / UPI
 														below.
 													</p>
@@ -950,7 +950,7 @@ export default function ActiveTripPanel({
 											</div>
 										)}
 
-										<p className="text-[11px] text-gray-600">
+										<p className="text-[11px] text-[var(--text-2)]">
 											You have reached your destination. Choose your
 											payment method below:
 										</p>
@@ -959,10 +959,10 @@ export default function ActiveTripPanel({
 										<button
 											onClick={handlePassengerPayWithWallet}
 											disabled={loading}
-											className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs shadow-sm transition-all flex items-center justify-between gap-2 border cursor-pointer ${
+											className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs shadow-none transition-all flex items-center justify-between gap-2 border cursor-pointer ${
 												hasInsufficientWallet
-													? "bg-gray-100 hover:bg-gray-200/80 text-gray-600 border-gray-200"
-													: "bg-teal-600 hover:bg-teal-700 text-white border-teal-700"
+													? "bg-[var(--bg-hover)] hover:bg-[var(--bg-hover)]/80 text-[var(--text-2)] border-[var(--border)]"
+													: "bg-[var(--accent)] hover:bg-[var(--accent)] text-white border-teal-700"
 											}`}
 										>
 											<div className="flex items-center gap-2">
@@ -972,9 +972,9 @@ export default function ActiveTripPanel({
 											<span className="text-[11px] font-semibold opacity-90">
 												{walletBalance !== null
 													? hasInsufficientWallet
-														? `(Low: ₹${walletBalance.toFixed(2)})`
-														: `(Bal: ₹${walletBalance.toFixed(2)})`
-													: `₹${fareAmount}`}
+														? `(Low: â‚¹${walletBalance.toFixed(2)})`
+														: `(Bal: â‚¹${walletBalance.toFixed(2)})`
+													: `â‚¹${fareAmount}`}
 											</span>
 										</button>
 
@@ -982,14 +982,14 @@ export default function ActiveTripPanel({
 										<button
 											onClick={handlePassengerPayWithRazorpay}
 											disabled={loading}
-											className="w-full bg-[#714B67] hover:bg-[#5c3c54] text-white py-2.5 px-4 rounded-xl font-bold text-xs shadow-sm transition-all flex items-center justify-between gap-2 border border-[#5c3c54] cursor-pointer"
+											className="w-full bg-[var(--primary)] hover:bg-[var(--primary)] text-white py-2.5 px-4 rounded-xl font-bold text-xs shadow-none transition-all flex items-center justify-between gap-2 border border-[#5c3c54] cursor-pointer"
 										>
 											<div className="flex items-center gap-2">
 												<CreditCard className="w-4 h-4 text-pink-200" />
 												<span>Pay via Razorpay / UPI / Cards</span>
 											</div>
-											<span className="text-[11px] font-extrabold bg-white/20 px-2 py-0.5 rounded-md">
-												₹{fareAmount}
+											<span className="text-[11px] font-extrabold bg-[var(--bg-card)]/20 px-2 py-0.5 rounded-md">
+												â‚¹{fareAmount}
 											</span>
 										</button>
 									</div>
@@ -998,12 +998,12 @@ export default function ActiveTripPanel({
 						)}
 
 						{/* Live Trip Status Stepper */}
-						<div className="p-4 border border-gray-200 rounded-xl bg-white shadow-2xs">
-							<h3 className="font-bold text-xs uppercase tracking-wider text-gray-700 mb-3.5 flex items-center gap-1.5">
-								<MapPin className="w-3.5 h-3.5 text-[#00A09D]" />
+						<div className="p-4 border border-[var(--border)] rounded-xl bg-[var(--bg-card)] shadow-none">
+							<h3 className="font-bold text-xs uppercase tracking-wider text-[var(--text-2)] mb-3.5 flex items-center gap-1.5">
+								<MapPin className="w-3.5 h-3.5 text-[var(--accent)]" />
 								Live Trip Progress
 							</h3>
-							<div className="space-y-3 relative before:absolute before:inset-0 before:ml-[11px] before:-translate-x-px before:h-full before:w-0.5 before:bg-gray-100">
+							<div className="space-y-3 relative before:absolute before:inset-0 before:ml-[11px] before:-translate-x-px before:h-full before:w-0.5 before:bg-[var(--bg-hover)]">
 								{[
 									{
 										label: "Ride Booked",
@@ -1055,25 +1055,25 @@ export default function ActiveTripPanel({
 										className="relative flex items-start gap-3"
 									>
 										<div
-											className={`z-10 w-5 h-5 rounded-full border-2 flex items-center justify-center text-[10px] font-extrabold transition-all duration-300 shrink-0 mt-0.5 shadow-2xs ${
+											className={`z-10 w-5 h-5 rounded-full border-2 flex items-center justify-center text-[10px] font-extrabold transition-all duration-300 shrink-0 mt-0.5 shadow-none ${
 												step.active
-													? "bg-[#00A09D] border-[#00A09D] text-white"
-													: "bg-white border-gray-200 text-gray-400"
+													? "bg-[var(--accent)] border-[var(--border-focus)] text-white"
+													: "bg-[var(--bg-card)] border-[var(--border)] text-[var(--text-3)]"
 											}`}
 										>
-											{step.active ? "✓" : idx + 1}
+											{step.active ? "âœ“" : idx + 1}
 										</div>
 										<div className="min-w-0">
 											<p
 												className={`text-xs font-bold transition-all duration-300 ${
 													step.active
-														? "text-gray-900"
-														: "text-gray-400"
+														? "text-[var(--text)]"
+														: "text-[var(--text-3)]"
 												}`}
 											>
 												{step.label}
 											</p>
-											<p className="text-[10px] text-gray-500">
+											<p className="text-[10px] text-[var(--text-3)]">
 												{step.sub}
 											</p>
 										</div>
@@ -1088,10 +1088,10 @@ export default function ActiveTripPanel({
 				{isDriver && (
 					<div className="space-y-3">
 						<div className="flex items-center justify-between">
-							<h3 className="text-xs font-bold uppercase tracking-wider text-gray-700">
+							<h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-2)]">
 								Passenger Requests ({bookings.length})
 							</h3>
-							<span className="text-[11px] text-[#00A09D] font-bold">
+							<span className="text-[11px] text-[var(--accent)] font-bold">
 								{
 									bookings.filter(
 										(b) =>
@@ -1105,7 +1105,7 @@ export default function ActiveTripPanel({
 						</div>
 
 						{bookings.length === 0 && (
-							<div className="p-4 text-center text-xs text-gray-500 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+							<div className="p-4 text-center text-xs text-[var(--text-3)] bg-[var(--bg-hover)] rounded-xl border border-dashed border-[var(--border)]">
 								Waiting for colleagues to book seats on your route...
 							</div>
 						)}
@@ -1115,10 +1115,10 @@ export default function ActiveTripPanel({
 							return (
 								<div
 									key={booking.booking_id}
-									className="p-3.5 rounded-xl border border-gray-200 bg-white shadow-2xs space-y-2.5"
+									className="p-3.5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] shadow-none space-y-2.5"
 								>
 									<div className="flex items-center justify-between">
-										<div className="font-bold text-gray-900 text-xs">
+										<div className="font-bold text-[var(--text)] text-xs">
 											{booking.passenger_name ||
 												"Colleague Passenger"}
 										</div>
@@ -1136,8 +1136,8 @@ export default function ActiveTripPanel({
 																? "bg-emerald-50 text-emerald-700 border border-emerald-200"
 																: booking.payment_status ===
 																	  "paid_pending_confirmation"
-																	? "bg-blue-50 text-blue-700 border border-blue-200 animate-pulse"
-																	: "bg-purple-50 text-purple-700 border border-purple-200"
+																	? "bg-[var(--bg-hover)] text-[var(--primary)] border border-blue-200 animate-pulse"
+																	: "bg-[var(--bg-hover)] text-[var(--primary)] border border-[var(--border)]"
 															: "bg-amber-50 text-amber-700 border border-amber-200"
 											}`}
 										>
@@ -1152,9 +1152,9 @@ export default function ActiveTripPanel({
 										</span>
 									</div>
 
-									<div className="text-[11px] text-gray-600 space-y-1">
+									<div className="text-[11px] text-[var(--text-2)] space-y-1">
 										<p className="truncate">
-											<span className="font-semibold text-gray-400">
+											<span className="font-semibold text-[var(--text-3)]">
 												Pickup:
 											</span>{" "}
 											{typeof booking.pickup_location === "string"
@@ -1164,7 +1164,7 @@ export default function ActiveTripPanel({
 													"Pickup Location"}
 										</p>
 										<p className="truncate">
-											<span className="font-semibold text-gray-400">
+											<span className="font-semibold text-[var(--text-3)]">
 												Dropoff:
 											</span>{" "}
 											{typeof booking.dropoff_location === "string"
@@ -1177,18 +1177,18 @@ export default function ActiveTripPanel({
 
 									{/* Driver Actions based on Passenger Status */}
 									{booking.booking_status === "pending" && (
-										<div className="flex gap-2 pt-2 border-t border-gray-100">
+										<div className="flex gap-2 pt-2 border-t border-[var(--border)]">
 											<button
 												onClick={() =>
 													handleAcceptBooking(booking.booking_id)
 												}
 												disabled={loading}
-												className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-bold text-xs shadow-2xs transition-all py-1.5 cursor-pointer"
+												className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-bold text-xs shadow-none transition-all py-1.5 cursor-pointer"
 											>
 												{loading ? (
 													<Loader2 className="w-3.5 h-3.5 animate-spin mx-auto" />
 												) : (
-													"✓ Accept"
+													"âœ“ Accept"
 												)}
 											</button>
 											<button
@@ -1196,19 +1196,19 @@ export default function ActiveTripPanel({
 													handleDeclineBooking(booking.booking_id)
 												}
 												disabled={loading}
-												className="flex-1 bg-rose-500 hover:bg-rose-600 text-white rounded-lg font-bold text-xs shadow-2xs transition-all py-1.5 cursor-pointer"
+												className="flex-1 bg-rose-500 hover:bg-rose-600 text-white rounded-lg font-bold text-xs shadow-none transition-all py-1.5 cursor-pointer"
 											>
 												{loading ? (
 													<Loader2 className="w-3.5 h-3.5 animate-spin mx-auto" />
 												) : (
-													"✕ Decline"
+													"âœ• Decline"
 												)}
 											</button>
 										</div>
 									)}
 
 									{booking.booking_status === "confirmed" && (
-										<div className="flex gap-2 pt-2 border-t border-gray-100">
+										<div className="flex gap-2 pt-2 border-t border-[var(--border)]">
 											<input
 												type="text"
 												placeholder="4-digit OTP"
@@ -1220,7 +1220,7 @@ export default function ActiveTripPanel({
 													}))
 												}
 												maxLength={4}
-												className="w-24 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1.5 text-center text-xs font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-[#00A09D]/20 focus:border-[#00A09D]"
+												className="w-24 bg-[var(--bg-hover)] border border-[var(--border)] rounded-lg px-2 py-1.5 text-center text-xs font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-transparent/20 focus:border-[var(--border-focus)]"
 											/>
 											<button
 												onClick={() =>
@@ -1231,7 +1231,7 @@ export default function ActiveTripPanel({
 													(otpInputs[booking.booking_id]?.length ||
 														0) < 4
 												}
-												className="flex-1 bg-[#00A09D] hover:bg-[#008f8c] disabled:bg-[#00A09D]/50 text-white rounded-lg font-bold text-xs shadow-2xs transition-all py-1.5 cursor-pointer"
+												className="flex-1 bg-[var(--accent)] hover:bg-[var(--accent)] disabled:bg-[var(--accent)]/50 text-white rounded-lg font-bold text-xs shadow-none transition-all py-1.5 cursor-pointer"
 											>
 												{loading ? (
 													<Loader2 className="w-3.5 h-3.5 animate-spin mx-auto" />
@@ -1243,13 +1243,13 @@ export default function ActiveTripPanel({
 									)}
 
 									{booking.booking_status === "in_progress" && (
-										<div className="pt-2 border-t border-gray-100">
+										<div className="pt-2 border-t border-[var(--border)]">
 											<button
 												onClick={() =>
 													handleDropOff(booking.booking_id)
 												}
 												disabled={loading}
-												className="w-full bg-amber-500 hover:bg-amber-600 text-white py-1.5 rounded-lg font-bold text-xs shadow-2xs transition-all flex justify-center items-center gap-1.5 cursor-pointer"
+												className="w-full bg-amber-500 hover:bg-amber-600 text-white py-1.5 rounded-lg font-bold text-xs shadow-none transition-all flex justify-center items-center gap-1.5 cursor-pointer"
 											>
 												{loading ? (
 													<Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -1262,7 +1262,7 @@ export default function ActiveTripPanel({
 
 									{/* PAYMENT CONFIRMATION FOR DRIVER */}
 									{booking.booking_status === "completed" && (
-										<div className="pt-2 border-t border-gray-100">
+										<div className="pt-2 border-t border-[var(--border)]">
 											{booking.payment_status === "completed" ? (
 												<div className="p-2 bg-emerald-50 rounded-lg border border-emerald-200 flex items-center justify-between text-xs text-emerald-800 font-bold">
 													<span className="flex items-center gap-1.5">
@@ -1270,18 +1270,18 @@ export default function ActiveTripPanel({
 														Payment Confirmed
 													</span>
 													<span className="font-extrabold text-emerald-950">
-														+₹{bookingFare}
+														+â‚¹{bookingFare}
 													</span>
 												</div>
 											) : booking.payment_status ===
 											  "paid_pending_confirmation" ? (
 												<div className="space-y-2">
-													<div className="p-2 bg-blue-50 rounded-lg border border-blue-200 flex items-center justify-between text-xs text-blue-800">
+													<div className="p-2 bg-[var(--bg-hover)] rounded-lg border border-blue-200 flex items-center justify-between text-xs text-blue-800">
 														<span className="font-semibold">
 															Passenger Paid:
 														</span>
 														<span className="font-extrabold text-blue-950">
-															₹{bookingFare}
+															â‚¹{bookingFare}
 														</span>
 													</div>
 													<button
@@ -1291,22 +1291,22 @@ export default function ActiveTripPanel({
 															)
 														}
 														disabled={loading}
-														className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded-lg font-bold text-xs shadow-2xs transition-all flex items-center justify-center gap-1.5 cursor-pointer animate-pulse"
+														className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded-lg font-bold text-xs shadow-none transition-all flex items-center justify-center gap-1.5 cursor-pointer animate-pulse"
 													>
 														{loading ? (
 															<Loader2 className="w-3.5 h-3.5 animate-spin" />
 														) : (
 															<>
 																<Check className="w-4 h-4" />
-																Confirm Payment (₹{bookingFare})
+																Confirm Payment (â‚¹{bookingFare})
 															</>
 														)}
 													</button>
 												</div>
 											) : (
-												<div className="p-2 bg-gray-50 rounded-lg border border-gray-200 text-center text-[11px] text-gray-500 font-medium">
-													Dropped off • Waiting for passenger to
-													complete payment (₹{bookingFare})
+												<div className="p-2 bg-[var(--bg-hover)] rounded-lg border border-[var(--border)] text-center text-[11px] text-[var(--text-3)] font-medium">
+													Dropped off â€¢ Waiting for passenger to
+													complete payment (â‚¹{bookingFare})
 												</div>
 											)}
 										</div>
@@ -1315,11 +1315,11 @@ export default function ActiveTripPanel({
 							);
 						})}
 
-						<div className="pt-3 border-t border-gray-200">
+						<div className="pt-3 border-t border-[var(--border)]">
 							<button
 								onClick={handleFinishTrip}
 								disabled={loading}
-								className="w-full bg-[#714B67] hover:bg-[#5c3c54] text-white py-2.5 rounded-xl font-bold text-xs shadow-2xs transition-all flex justify-center items-center gap-1.5 cursor-pointer"
+								className="w-full bg-[var(--primary)] hover:bg-[var(--primary)] text-white py-2.5 rounded-xl font-bold text-xs shadow-none transition-all flex justify-center items-center gap-1.5 cursor-pointer"
 							>
 								{loading ? (
 									<Loader2 className="w-4 h-4 animate-spin" />

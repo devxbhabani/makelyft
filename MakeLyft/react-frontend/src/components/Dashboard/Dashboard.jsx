@@ -255,7 +255,7 @@ function Dashboard() {
 	};
 
 	return (
-		<div className="min-h-screen bg-gray-50 flex flex-col w-full text-left">
+		<div className="min-h-screen flex flex-col w-full text-left" style={{ background: "var(--bg)" }}>
 			<Header
 				socket={socket}
 				onOpenVehicleModal={() => setShowVehicleModal(true)}
@@ -271,11 +271,26 @@ function Dashboard() {
 
 			{/* Main Content Area */}
 			<main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 md:p-8">
-				<div className="relative flex flex-col lg:flex-row gap-6 items-stretch transition-all duration-500 ease-in-out">
+				
+				{/* Welcome Banner */}
+				<div className="mb-6 animate-fade-up">
+					<h1 style={{ fontSize: "1.75rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", margin: 0 }}>
+						Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening'}, {user?.name ? user.name.split(' ')[0] : 'there'}
+					</h1>
+					<div style={{ display: "flex", gap: "24px", marginTop: "8px", fontSize: "0.85rem", color: "var(--text-2)" }}>
+						<span>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+						<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+							<div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+							Ready for your commute
+						</span>
+					</div>
+				</div>
+
+				<div className="relative flex flex-col lg:flex-row gap-8 items-stretch transition-all duration-500 ease-in-out">
 					{viewMode === "browse" ? (
 						<>
 							{/* BROWSE MODE: Available Rides on Left */}
-							<div className="w-full lg:w-[48%] h-[680px] transition-all duration-500 ease-in-out animate-in fade-in slide-in-from-left-6">
+							<div className="w-full lg:w-[48%] min-h-[calc(100vh-220px)] transition-all duration-500 ease-in-out animate-in fade-in slide-in-from-left-6">
 								<BrowseRidesPanel
 									rides={nearbyRides}
 									loading={loadingNearby}
@@ -292,7 +307,7 @@ function Dashboard() {
 							</div>
 
 							{/* BROWSE MODE: Panel on Left */}
-							<div className="w-full lg:w-[48%] h-[680px] flex flex-col slide-in-panel page-transition">
+							<div className="w-full lg:w-[48%] min-h-[calc(100vh-220px)] flex flex-col slide-in-panel page-transition">
 								<MapPlaceholder
 									pickupCoords={pickupCoords}
 									dropoffCoords={dropoffCoords}
@@ -309,7 +324,7 @@ function Dashboard() {
 					) : (
 						<>
 							{/* DEFAULT MODE: Map on Left */}
-							<div className="w-full lg:w-2/3 h-[680px] transition-all duration-500 ease-in-out">
+							<div className="w-full lg:w-[62%] min-h-[calc(100vh-220px)] transition-all duration-500 ease-in-out">
 								<MapPlaceholder
 									pickupCoords={pickupCoords}
 									dropoffCoords={dropoffCoords}
@@ -321,7 +336,7 @@ function Dashboard() {
 							</div>
 
 							{/* DEFAULT MODE: Search / Ride Actions / Active Trip on Right */}
-							<div className="w-full lg:w-1/3 flex flex-col h-[680px] max-h-[680px] overflow-hidden slide-in-panel">
+							<div className="w-full lg:w-[38%] flex flex-col min-h-[calc(100vh-220px)] slide-in-panel">
 								{activeTrip && showActiveTrip ? (
 									<ActiveTripPanel
 										activeTrip={activeTrip}
