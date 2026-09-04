@@ -79,12 +79,15 @@ function Header({ socket, onOpenVehicleModal, onOpenChat, onOpenVoiceCall, onOpe
     <>
       <header
         style={{
-          background: "var(--bg)",
+          background: "rgba(255,255,255,0.95)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
           borderBottom: "1px solid var(--border)",
           padding: "0 24px",
           height: 56,
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          position: "sticky", top: 0, zIndex: 50,
+          position: "sticky", top: 0, zIndex: 100,
+          boxShadow: "0 1px 0 rgba(0,0,0,0.06)",
         }}
       >
         {/* Brand */}

@@ -255,7 +255,7 @@ function Dashboard() {
 	};
 
 	return (
-		<div className="h-screen flex flex-col w-full text-left overflow-hidden" style={{ background: "var(--bg)" }}>
+		<div className="min-h-screen flex flex-col w-full text-left" style={{ background: "var(--bg)" }}>
 			<Header
 				socket={socket}
 				onOpenVehicleModal={() => setShowVehicleModal(true)}
@@ -270,85 +270,105 @@ function Dashboard() {
 			/>
 
 			{/* Main Content Area */}
-			<main className="relative flex-1 w-full flex overflow-hidden bg-[var(--bg-hover)]">
-				
-				{/* Full Screen Background Map */}
-				<MapPlaceholder
-					pickupCoords={pickupCoords}
-					dropoffCoords={dropoffCoords}
-					routePolyline={routePolyline}
-					userLocation={userLocation}
-					viewMode={viewMode}
-					nearbyRides={viewMode === "browse" ? nearbyRides : []}
-					selectedRide={selectedRide}
-					onSelectRide={setSelectedRide}
-					activeTrip={showActiveTrip ? activeTrip : null}
-				/>
+			<main className="flex-1 w-full">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-6">
 
-				{/* Floating Overlays Container */}
-				<div className="absolute inset-0 z-10 pointer-events-none flex flex-col p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full">
-					
-				{/* Welcome Banner (Floating Top Left) */}
-					<div className="mb-5 animate-slide-in-top pointer-events-auto w-fit glass-panel px-5 py-4">
-						<h1 style={{ fontSize: "1.75rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", margin: 0 }}>
-							Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening'}, {user?.name ? user.name.split(' ')[0] : 'there'}
+					{/* Welcome Banner */}
+					<div className="mb-6 animate-fade-up">
+						<h1 style={{ fontSize: "1.6rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", margin: 0 }}>
+							Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening'}, {user?.name ? user.name.split(' ')[0] : 'there'} 👋
 						</h1>
-						<div style={{ display: "flex", gap: "24px", marginTop: "8px", fontSize: "0.85rem", color: "var(--text-2)" }}>
+						<div style={{ display: "flex", gap: "20px", marginTop: "6px", fontSize: "0.85rem", color: "var(--text-2)", flexWrap: "wrap" }}>
 							<span>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
 							<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-								<div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+								<div style={{ width: 7, height: 7, borderRadius: "50%", background: "#22c55e" }} />
 								Ready for your commute
 							</span>
 						</div>
 					</div>
 
-					{/* Floating Panels (Left Side or Bottom) */}
-					<div className="flex-1 flex flex-col lg:flex-row gap-6 items-start justify-start w-full pointer-events-none">
-						
+					{/* Split Layout: Map + Controls */}
+					<div className="flex flex-col lg:flex-row gap-6 items-stretch">
+
 						{viewMode === "browse" ? (
-							<div className="w-full lg:w-[400px] pointer-events-auto animate-slide-in-left glass-panel overflow-hidden flex flex-col max-h-[calc(100vh-180px)]">
-								<BrowseRidesPanel
-									rides={nearbyRides}
-									loading={loadingNearby}
-									selectedRide={selectedRide}
-									onSelectRide={setSelectedRide}
-									onBack={handleBackToSearch}
-									userLocation={userLocation}
-									activeTrip={activeTrip}
-									onRideBooked={(bookingData) => {
-										setViewMode("default");
-										handleRideBooked(bookingData);
-									}}
-								/>
-							</div>
-						) : (
-							<div className="w-full lg:w-[400px] pointer-events-auto animate-slide-in-bottom glass-panel overflow-hidden flex flex-col max-h-[calc(100vh-180px)]">
-								{activeTrip && showActiveTrip ? (
-									<ActiveTripPanel
+							<>
+								{/* BROWSE MODE: Rides list on left */}
+								<div className="w-full lg:w-[420px] flex-shrink-0 animate-slide-in-left" style={{ height: 640 }}>
+									<BrowseRidesPanel
+										rides={nearbyRides}
+										loading={loadingNearby}
+										selectedRide={selectedRide}
+										onSelectRide={setSelectedRide}
+										onBack={handleBackToSearch}
+										userLocation={userLocation}
 										activeTrip={activeTrip}
-										socket={socket}
-										onTripEnded={handleTripEnded}
-										onHideActiveTrip={handleHideActiveTrip}
-										onRefreshPassenger={fetchPassengerActiveRide}
+										onRideBooked={(bookingData) => {
+											setViewMode("default");
+											handleRideBooked(bookingData);
+										}}
 									/>
-								) : (
-									<RideActions
-										activeTrip={activeTrip}
-										onViewActiveTrip={() => setShowActiveTrip(true)}
-										onPublishRide={handlePublishRide}
-										onLocationUpdate={handleLocationUpdate}
+								</div>
+								{/* BROWSE MODE: Map on right */}
+								<div className="flex-1 rounded-2xl overflow-hidden border border-[var(--border)] shadow-sm" style={{ height: 640, minHeight: 400 }}>
+									<MapPlaceholder
 										pickupCoords={pickupCoords}
 										dropoffCoords={dropoffCoords}
+										routePolyline={routePolyline}
 										userLocation={userLocation}
-										onSearchRoute={setRoutePolyline}
-										onBrowseRides={handleBrowseRides}
+										viewMode={viewMode}
+										nearbyRides={nearbyRides}
+										selectedRide={selectedRide}
+										onSelectRide={setSelectedRide}
+										activeTrip={showActiveTrip ? activeTrip : null}
 									/>
-								)}
-							</div>
+								</div>
+							</>
+						) : (
+							<>
+								{/* DEFAULT MODE: Map on left */}
+								<div className="flex-1 rounded-2xl overflow-hidden border border-[var(--border)] shadow-sm" style={{ height: 640, minHeight: 400 }}>
+									<MapPlaceholder
+										pickupCoords={pickupCoords}
+										dropoffCoords={dropoffCoords}
+										routePolyline={routePolyline}
+										userLocation={userLocation}
+										viewMode={viewMode}
+										activeTrip={showActiveTrip ? activeTrip : null}
+									/>
+								</div>
+								{/* DEFAULT MODE: Controls on right */}
+								<div className="w-full lg:w-[400px] flex-shrink-0 flex flex-col animate-slide-in-bottom" style={{ height: 640 }}>
+									{activeTrip && showActiveTrip ? (
+										<ActiveTripPanel
+											activeTrip={activeTrip}
+											socket={socket}
+											onTripEnded={handleTripEnded}
+											onHideActiveTrip={handleHideActiveTrip}
+											onRefreshPassenger={fetchPassengerActiveRide}
+										/>
+									) : (
+										<div className="card h-full overflow-hidden flex flex-col">
+											<RideActions
+												activeTrip={activeTrip}
+												onViewActiveTrip={() => setShowActiveTrip(true)}
+												onPublishRide={handlePublishRide}
+												onLocationUpdate={handleLocationUpdate}
+												pickupCoords={pickupCoords}
+												dropoffCoords={dropoffCoords}
+												userLocation={userLocation}
+												onSearchRoute={setRoutePolyline}
+												onBrowseRides={handleBrowseRides}
+											/>
+										</div>
+									)}
+								</div>
+							</>
 						)}
 					</div>
 				</div>
 			</main>
+
+			<Footer />
 
 			{/* Modals */}
 			{showVehicleModal && (

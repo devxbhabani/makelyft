@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	MapContainer,
 	TileLayer,
@@ -7,6 +7,7 @@ import {
 	Polyline,
 	Circle,
 	useMap,
+	ZoomControl,
 } from "react-leaflet";
 import L from "leaflet";
 
@@ -412,12 +413,14 @@ export default function Map({
 				center={initialCenter}
 				zoom={viewMode === "browse" ? 12 : 13}
 				scrollWheelZoom={true}
+				zoomControl={false}
 				className="h-full w-full"
 			>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
+				<ZoomControl position="bottomright" />
 
 				<MapUpdater
 					pickupCoords={pickupCoords}
