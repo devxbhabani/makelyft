@@ -119,14 +119,45 @@ body {
 }
 
 /* ─── Utility ────────────────────────────────────────────────────────────────── */
-.animate-fade-up   { animation: fadeUp  0.4s cubic-bezier(0.16,1,0.3,1) both; }
-.animate-fade-in   { animation: fadeIn  0.35s ease both; }
-.animate-spin      { animation: spin    0.7s linear infinite; }
-.animate-slide-car { animation: slideCar 6.5s cubic-bezier(0.4,0,0.2,1) forwards; }
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInBottom {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInTop {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.animate-fade-up        { animation: fadeUp       0.4s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-fade-in        { animation: fadeIn       0.35s ease both; }
+.animate-spin           { animation: spin         0.7s linear infinite; }
+.animate-slide-car      { animation: slideCar     6.5s cubic-bezier(0.4,0,0.2,1) forwards; }
+.animate-slide-in-left  { animation: slideInLeft  0.45s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-slide-in-bottom{ animation: slideInBottom 0.45s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-slide-in-top   { animation: slideInTop   0.4s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-float          { animation: floatBob     3s ease-in-out infinite; }
 
 .page-transition { animation: fadeUp 0.4s cubic-bezier(0.16,1,0.3,1) both; }
 .modal-pop       { animation: fadeUp 0.3s cubic-bezier(0.16,1,0.3,1) both; }
 .slide-in-panel  { animation: fadeUp 0.35s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* ─── Glassmorphism Floating Panel ───────────────────────────────────────── */
+.glass-panel {
+  background: rgba(255,255,255,0.90);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(228,228,231,0.8);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.05);
+}
 
 /* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
@@ -134,8 +165,8 @@ body {
 ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.2); }
 
-/* ─── Leaflet (Light) ────────────────────────────────────────────────────────── */
-.leaflet-container { background: #f4f4f5 !important; border-radius: 12px; }
+/* ─── Leaflet (Light) ────────────────────────────────────────────────────── */
+.leaflet-container { background: #f4f4f5 !important; border-radius: 0; }
 .leaflet-tile { filter: brightness(1) saturate(1); }
 
 .leaflet-control-zoom {

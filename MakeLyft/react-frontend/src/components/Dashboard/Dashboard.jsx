@@ -255,7 +255,7 @@ function Dashboard() {
 	};
 
 	return (
-		<div className="min-h-screen flex flex-col w-full text-left" style={{ background: "var(--bg)" }}>
+		<div className="h-screen flex flex-col w-full text-left overflow-hidden" style={{ background: "var(--bg)" }}>
 			<Header
 				socket={socket}
 				onOpenVehicleModal={() => setShowVehicleModal(true)}
@@ -270,27 +270,43 @@ function Dashboard() {
 			/>
 
 			{/* Main Content Area */}
-			<main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 md:p-8">
+			<main className="relative flex-1 w-full flex overflow-hidden bg-[var(--bg-hover)]">
 				
-				{/* Welcome Banner */}
-				<div className="mb-6 animate-fade-up">
-					<h1 style={{ fontSize: "1.75rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", margin: 0 }}>
-						Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening'}, {user?.name ? user.name.split(' ')[0] : 'there'}
-					</h1>
-					<div style={{ display: "flex", gap: "24px", marginTop: "8px", fontSize: "0.85rem", color: "var(--text-2)" }}>
-						<span>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
-						<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-							<div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
-							Ready for your commute
-						</span>
-					</div>
-				</div>
+				{/* Full Screen Background Map */}
+				<MapPlaceholder
+					pickupCoords={pickupCoords}
+					dropoffCoords={dropoffCoords}
+					routePolyline={routePolyline}
+					userLocation={userLocation}
+					viewMode={viewMode}
+					nearbyRides={viewMode === "browse" ? nearbyRides : []}
+					selectedRide={selectedRide}
+					onSelectRide={setSelectedRide}
+					activeTrip={showActiveTrip ? activeTrip : null}
+				/>
 
-				<div className="relative flex flex-col lg:flex-row gap-8 items-stretch transition-all duration-500 ease-in-out">
-					{viewMode === "browse" ? (
-						<>
-							{/* BROWSE MODE: Available Rides on Left */}
-							<div className="w-full lg:w-[48%] min-h-[calc(100vh-220px)] transition-all duration-500 ease-in-out animate-in fade-in slide-in-from-left-6">
+				{/* Floating Overlays Container */}
+				<div className="absolute inset-0 z-10 pointer-events-none flex flex-col p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full">
+					
+				{/* Welcome Banner (Floating Top Left) */}
+					<div className="mb-5 animate-slide-in-top pointer-events-auto w-fit glass-panel px-5 py-4">
+						<h1 style={{ fontSize: "1.75rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", margin: 0 }}>
+							Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening'}, {user?.name ? user.name.split(' ')[0] : 'there'}
+						</h1>
+						<div style={{ display: "flex", gap: "24px", marginTop: "8px", fontSize: "0.85rem", color: "var(--text-2)" }}>
+							<span>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+							<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+								<div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+								Ready for your commute
+							</span>
+						</div>
+					</div>
+
+					{/* Floating Panels (Left Side or Bottom) */}
+					<div className="flex-1 flex flex-col lg:flex-row gap-6 items-start justify-start w-full pointer-events-none">
+						
+						{viewMode === "browse" ? (
+							<div className="w-full lg:w-[400px] pointer-events-auto animate-slide-in-left glass-panel overflow-hidden flex flex-col max-h-[calc(100vh-180px)]">
 								<BrowseRidesPanel
 									rides={nearbyRides}
 									loading={loadingNearby}
@@ -305,38 +321,8 @@ function Dashboard() {
 									}}
 								/>
 							</div>
-
-							{/* BROWSE MODE: Panel on Left */}
-							<div className="w-full lg:w-[48%] min-h-[calc(100vh-220px)] flex flex-col slide-in-panel page-transition">
-								<MapPlaceholder
-									pickupCoords={pickupCoords}
-									dropoffCoords={dropoffCoords}
-									routePolyline={routePolyline}
-									userLocation={userLocation}
-									viewMode={viewMode}
-									nearbyRides={nearbyRides}
-									selectedRide={selectedRide}
-									onSelectRide={setSelectedRide}
-									activeTrip={showActiveTrip ? activeTrip : null}
-								/>
-							</div>
-						</>
-					) : (
-						<>
-							{/* DEFAULT MODE: Map on Left */}
-							<div className="w-full lg:w-[62%] min-h-[calc(100vh-220px)] transition-all duration-500 ease-in-out">
-								<MapPlaceholder
-									pickupCoords={pickupCoords}
-									dropoffCoords={dropoffCoords}
-									routePolyline={routePolyline}
-									userLocation={userLocation}
-									viewMode={viewMode}
-									activeTrip={showActiveTrip ? activeTrip : null}
-								/>
-							</div>
-
-							{/* DEFAULT MODE: Search / Ride Actions / Active Trip on Right */}
-							<div className="w-full lg:w-[38%] flex flex-col min-h-[calc(100vh-220px)] slide-in-panel">
+						) : (
+							<div className="w-full lg:w-[400px] pointer-events-auto animate-slide-in-bottom glass-panel overflow-hidden flex flex-col max-h-[calc(100vh-180px)]">
 								{activeTrip && showActiveTrip ? (
 									<ActiveTripPanel
 										activeTrip={activeTrip}
@@ -359,13 +345,10 @@ function Dashboard() {
 									/>
 								)}
 							</div>
-						</>
-					)}
+						)}
+					</div>
 				</div>
 			</main>
-
-			{/* Footer */}
-			<Footer />
 
 			{/* Modals */}
 			{showVehicleModal && (
