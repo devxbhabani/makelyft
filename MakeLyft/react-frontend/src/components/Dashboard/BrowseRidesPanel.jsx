@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { showAlert } from "../../utils/alertService";
 import {
 	ArrowLeft,
@@ -19,12 +19,12 @@ export default function BrowseRidesPanel({
 	selectedRide = null,
 	onSelectRide,
 	onBack,
-	// userLocation,
+	userLocation,
 	onRideBooked,
 	activeTrip,
 }) {
 	const [searchTerm, setSearchTerm] = useState("");
-	const [filterType, setFilterType] = useState("all"); // 'all' | 'under5km' | 'seats' | 'fare'
+	const [filterType, setFilterType] = useState("all"); // 'all' | 'under5km' | 'seats' | 'fare' | 'route'
 	const [bookingModalRide, setBookingModalRide] = useState(null);
 	const [selectedSeatPref, setSelectedSeatPref] = useState("Seat 1 (Front Window)");
 	const [bookingLoading, setBookingLoading] = useState(false);
@@ -48,10 +48,13 @@ export default function BrowseRidesPanel({
 			if (!matchesSearch) return false;
 
 			if (filterType === "under5km") {
-				return (ride.distance_km || 0) <= 5.0;
+				return (ride.distance_km ?? 99) <= 5.0;
 			}
 			if (filterType === "seats") {
 				return (ride.available_seats || 0) >= 3;
+			}
+			if (filterType === "route") {
+				return ride.route_match === true;
 			}
 			return true;
 		})
@@ -59,7 +62,7 @@ export default function BrowseRidesPanel({
 			if (filterType === "fare") {
 				return (a.fare_per_seat || 0) - (b.fare_per_seat || 0);
 			}
-			return (a.distance_km || 0) - (b.distance_km || 0);
+			return (a.distance_km ?? 99) - (b.distance_km ?? 99);
 		});
 
 	const handleBookRide = async (ride) => {
@@ -186,7 +189,18 @@ export default function BrowseRidesPanel({
 									: "bg-[var(--bg-hover)] text-[var(--text-2)] hover:bg-[var(--bg-hover)]"
 							}`}
 						>
-							âš¡ Under 5 km
+							Under 5 km
+						</button>
+
+						<button
+							onClick={() => setFilterType("route")}
+							className={`px-3 py-1 rounded-lg font-bold whitespace-nowrap transition-all cursor-pointer ${
+								filterType === "route"
+									? "bg-[var(--accent)] text-white shadow-xs"
+									: "bg-[var(--bg-hover)] text-[var(--text-2)] hover:bg-[var(--bg-hover)]"
+							}`}
+						>
+							On My Route
 						</button>
 
 						<button
@@ -197,7 +211,7 @@ export default function BrowseRidesPanel({
 									: "bg-[var(--bg-hover)] text-[var(--text-2)] hover:bg-[var(--bg-hover)]"
 							}`}
 						>
-							ðŸ‘¥ 3+ Seats
+							3+ Seats
 						</button>
 
 						<button
@@ -208,7 +222,7 @@ export default function BrowseRidesPanel({
 									: "bg-[var(--bg-hover)] text-[var(--text-2)] hover:bg-[var(--bg-hover)]"
 							}`}
 						>
-							â‚¹ Lowest Fare
+							Lowest Fare
 						</button>
 					</div>
 				</div>
@@ -277,7 +291,7 @@ export default function BrowseRidesPanel({
 
 									<div className="text-right">
 										<div className="text-base font-extrabold text-[var(--accent)] tracking-tight">
-											â‚¹{ride.fare_per_seat || 45}
+											₹{ride.fare_per_seat || 45}
 										</div>
 										<span className="text-[10px] text-[var(--text-3)] uppercase font-semibold">
 											per seat
@@ -468,7 +482,7 @@ export default function BrowseRidesPanel({
 									</div>
 									<div className="text-right">
 										<span className="text-base font-extrabold text-[var(--accent)]">
-											â‚¹{bookingModalRide.fare_per_seat || 45}
+											₹{bookingModalRide.fare_per_seat || 45}
 										</span>
 										<span className="block text-[10px] text-[var(--text-3)] font-medium">
 											from MakeLyft Wallet
@@ -556,7 +570,7 @@ export default function BrowseRidesPanel({
 								Booking ID: {bookingSuccess.booking_id}
 							</span>
 							<div className="mt-2 inline-block px-3 py-1 bg-[var(--bg-hover)] border border-[var(--border)] text-[var(--accent)] text-xs font-extrabold rounded-lg">
-								ðŸ’º {bookingSuccess.seat_no || "Seat #2 (Front Left)"}
+								📍’º {bookingSuccess.seat_no || "Seat #2 (Front Left)"}
 							</div>
 						</div>
 
@@ -566,7 +580,7 @@ export default function BrowseRidesPanel({
 								<Wallet className="w-3.5 h-3.5 text-[var(--primary)]" /> MakeLyft Wallet
 							</span>
 							<span className="font-bold text-[var(--primary)]">
-								-â‚¹{bookingSuccess.fare || 45}.00 Deducted
+								-₹{bookingSuccess.fare || 45}.00 Deducted
 							</span>
 						</div>
 

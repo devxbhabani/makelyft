@@ -45,33 +45,43 @@ function Dashboard() {
 
 	const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-	// Get user's current location on mount
+	// Get user's current location on mount — fast first, then watch for accuracy
 	useEffect(() => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				(pos) => {
-					const coords = [pos.coords.latitude, pos.coords.longitude];
-					setUserLocation(coords);
-					setPickupCoords(coords); // Default pickup to current location
-				},
-				(err) => {
-					console.warn(
-						"Geolocation permission denied or unavailable:",
-						err.message,
-					);
-					// Default fallback coordinates: Kolkata
-					const defaultCoords = [22.5726, 88.3639];
-					setUserLocation(defaultCoords);
-					setPickupCoords(defaultCoords);
-				},
-				{ enableHighAccuracy: true, timeout: 10000 },
-			);
-		} else {
+		const geoOpts = {
+			enableHighAccuracy: true,
+			timeout: 15000,
+			maximumAge: 30000,
+		};
+		const fallback = () => {
 			const defaultCoords = [22.5726, 88.3639];
-			//eslint-disable-next-line
 			setUserLocation(defaultCoords);
 			setPickupCoords(defaultCoords);
+		};
+		const onSuccess = (pos) => {
+			const coords = [pos.coords.latitude, pos.coords.longitude];
+			setUserLocation(coords);
+			setPickupCoords((prev) => (prev ? prev : coords)); // Only override pickup if not already set
+		};
+
+		if (!navigator.geolocation) {
+			fallback();
+			return;
 		}
+
+		// Quick low-accuracy position first
+		navigator.geolocation.getCurrentPosition(onSuccess, fallback, {
+			enableHighAccuracy: false,
+			timeout: 5000,
+			maximumAge: 60000,
+		});
+
+		// Then watch for a more accurate position
+		const watchId = navigator.geolocation.watchPosition(
+			onSuccess,
+			() => {},
+			geoOpts,
+		);
+		return () => navigator.geolocation.clearWatch(watchId);
 	}, []);
 
 	// Fetch Driver's Active Ride
@@ -216,13 +226,88 @@ function Dashboard() {
 			const token = localStorage.getItem("token");
 			const lat = userLocation ? userLocation[0] : 22.5726;
 			const lng = userLocation ? userLocation[1] : 88.3639;
-			const res = await fetch(`/rides`, {
+
+			const res = await fetch(`/rides?lat=${lat}&lng=${lng}&radius=10`, {
 				headers: token ? { Authorization: `Bearer ${token}` } : {},
 			});
 			const data = await res.json();
 			if (data.success && data.rides) {
-				setNearbyRides(data.rides);
-				// Do not auto-select the first ride so the map stays focused on the user's searched route
+				// Haversine distance helper
+				const toRad = (d) => (d * Math.PI) / 180;
+				const haversine = (a, b) => {
+					const R = 6371;
+					const dLat = toRad(b[0] - a[0]);
+					const dLon = toRad(b[1] - a[1]);
+					const h =
+						Math.sin(dLat / 2) ** 2 +
+						Math.cos(toRad(a[0])) *
+							Math.cos(toRad(b[0])) *
+							Math.sin(dLon / 2) ** 2;
+					return R * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+				};
+
+				// Parse origin/destination coords from a ride field
+				const parseCoords = (field) => {
+					if (!field) return null;
+					let o = field;
+					if (typeof o === "string") {
+						try {
+							o = JSON.parse(o);
+							//eslint-disable-next-line
+						} catch (_) {
+							return null;
+						}
+					}
+					if (o.lat != null && o.lng != null)
+						return [parseFloat(o.lat), parseFloat(o.lng)];
+					return null;
+				};
+
+				const userCoords = [lat, lng];
+
+				// Enrich rides with distance and filter to 10km
+				const enriched = data.rides
+					.map((ride) => {
+						const originCoords = parseCoords(ride.origin);
+						const destCoords = parseCoords(ride.destination);
+						const distFromUser = originCoords
+							? haversine(userCoords, originCoords)
+							: null;
+
+						// Route relevance: is this ride going through user's pickup/dropoff?
+						let routeMatch = false;
+						if (pickupCoords && originCoords) {
+							routeMatch = haversine(pickupCoords, originCoords) <= 3;
+						}
+						if (!routeMatch && dropoffCoords && destCoords) {
+							routeMatch = haversine(dropoffCoords, destCoords) <= 3;
+						}
+
+						return {
+							...ride,
+							origin:
+								typeof ride.origin === "string"
+									? JSON.parse(ride.origin)
+									: ride.origin,
+							destination:
+								typeof ride.destination === "string"
+									? JSON.parse(ride.destination)
+									: ride.destination,
+							distance_km:
+								distFromUser != null
+									? parseFloat(distFromUser.toFixed(1))
+									: null,
+							route_match: routeMatch,
+						};
+					})
+					.filter((ride) => {
+						// Keep only rides within 10km of user
+						if (ride.distance_km === null) return true;
+						return ride.distance_km <= 10;
+					})
+					.sort((a, b) => (a.distance_km ?? 99) - (b.distance_km ?? 99));
+
+				setNearbyRides(enriched);
 			}
 		} catch (err) {
 			console.error("Failed to fetch nearby rides:", err);
@@ -255,7 +340,10 @@ function Dashboard() {
 	};
 
 	return (
-		<div className="min-h-screen flex flex-col w-full text-left" style={{ background: "var(--bg)" }}>
+		<div
+			className="min-h-screen flex flex-col w-full text-left"
+			style={{ background: "var(--bg)" }}
+		>
 			<Header
 				socket={socket}
 				onOpenVehicleModal={() => setShowVehicleModal(true)}
@@ -272,16 +360,57 @@ function Dashboard() {
 			{/* Main Content Area */}
 			<main className="flex-1 w-full">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-6">
-
 					{/* Welcome Banner */}
 					<div className="mb-6 animate-fade-up">
-						<h1 style={{ fontSize: "1.6rem", fontWeight: 700, letterSpacing: "-0.02em", color: "var(--text)", margin: 0 }}>
-							Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening'}, {user?.name ? user.name.split(' ')[0] : 'there'} 👋
+						<h1
+							style={{
+								fontSize: "1.6rem",
+								fontWeight: 700,
+								letterSpacing: "-0.02em",
+								color: "var(--text)",
+								margin: 0,
+							}}
+						>
+							Good{" "}
+							{new Date().getHours() < 12
+								? "morning"
+								: new Date().getHours() < 18
+									? "afternoon"
+									: "evening"}
+							, {user?.name ? user.name.split(" ")[0] : "there"} 👋
 						</h1>
-						<div style={{ display: "flex", gap: "20px", marginTop: "6px", fontSize: "0.85rem", color: "var(--text-2)", flexWrap: "wrap" }}>
-							<span>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
-							<span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-								<div style={{ width: 7, height: 7, borderRadius: "50%", background: "#22c55e" }} />
+						<div
+							style={{
+								display: "flex",
+								gap: "20px",
+								marginTop: "6px",
+								fontSize: "0.85rem",
+								color: "var(--text-2)",
+								flexWrap: "wrap",
+							}}
+						>
+							<span>
+								{new Date().toLocaleDateString("en-US", {
+									weekday: "long",
+									month: "long",
+									day: "numeric",
+								})}
+							</span>
+							<span
+								style={{
+									display: "flex",
+									alignItems: "center",
+									gap: "6px",
+								}}
+							>
+								<div
+									style={{
+										width: 7,
+										height: 7,
+										borderRadius: "50%",
+										background: "#22c55e",
+									}}
+								/>
 								Ready for your commute
 							</span>
 						</div>
@@ -289,11 +418,13 @@ function Dashboard() {
 
 					{/* Split Layout: Map + Controls */}
 					<div className="flex flex-col lg:flex-row gap-6 items-stretch">
-
 						{viewMode === "browse" ? (
 							<>
 								{/* BROWSE MODE: Rides list on left */}
-								<div className="w-full lg:w-[420px] flex-shrink-0 animate-slide-in-left" style={{ height: 640 }}>
+								<div
+									className="w-full lg:w-105 shrink-0 animate-slide-in-left"
+									style={{ height: 640 }}
+								>
 									<BrowseRidesPanel
 										rides={nearbyRides}
 										loading={loadingNearby}
@@ -309,7 +440,10 @@ function Dashboard() {
 									/>
 								</div>
 								{/* BROWSE MODE: Map on right */}
-								<div className="flex-1 rounded-2xl overflow-hidden border border-[var(--border)] shadow-sm" style={{ height: 640, minHeight: 400 }}>
+								<div
+									className="flex-1 rounded-2xl overflow-hidden border border-[var(--border)] shadow-sm"
+									style={{ height: 640, minHeight: 400 }}
+								>
 									<MapPlaceholder
 										pickupCoords={pickupCoords}
 										dropoffCoords={dropoffCoords}
@@ -326,7 +460,10 @@ function Dashboard() {
 						) : (
 							<>
 								{/* DEFAULT MODE: Map on left */}
-								<div className="flex-1 rounded-2xl overflow-hidden border border-[var(--border)] shadow-sm" style={{ height: 640, minHeight: 400 }}>
+								<div
+									className="flex-1 rounded-2xl overflow-hidden border border-[var(--border)] shadow-sm"
+									style={{ height: 640, minHeight: 400 }}
+								>
 									<MapPlaceholder
 										pickupCoords={pickupCoords}
 										dropoffCoords={dropoffCoords}
@@ -337,7 +474,10 @@ function Dashboard() {
 									/>
 								</div>
 								{/* DEFAULT MODE: Controls on right */}
-								<div className="w-full lg:w-[400px] flex-shrink-0 flex flex-col animate-slide-in-bottom" style={{ height: 640 }}>
+								<div
+									className="w-full lg:w-[400px] flex-shrink-0 flex flex-col animate-slide-in-bottom"
+									style={{ height: 640 }}
+								>
 									{activeTrip && showActiveTrip ? (
 										<ActiveTripPanel
 											activeTrip={activeTrip}
@@ -350,7 +490,9 @@ function Dashboard() {
 										<div className="card h-full overflow-hidden flex flex-col">
 											<RideActions
 												activeTrip={activeTrip}
-												onViewActiveTrip={() => setShowActiveTrip(true)}
+												onViewActiveTrip={() =>
+													setShowActiveTrip(true)
+												}
 												onPublishRide={handlePublishRide}
 												onLocationUpdate={handleLocationUpdate}
 												pickupCoords={pickupCoords}

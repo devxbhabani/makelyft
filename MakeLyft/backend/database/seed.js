@@ -104,8 +104,8 @@ const seedDatabase = async () => {
                 [
                     randomVehicle.emp_id,
                     randomVehicle.veh_no,
-                    JSON.stringify({ lat: 23.0 + Math.random()*0.1, lng: 72.5 + Math.random()*0.1, address: "Random Origin" }),
-                    JSON.stringify({ lat: 23.1 + Math.random()*0.1, lng: 72.6 + Math.random()*0.1, address: "Random Destination" }),
+                    JSON.stringify({ lat: 22.52 + Math.random()*0.15, lng: 88.30 + Math.random()*0.15, address: "Kolkata Origin" }),
+                    JSON.stringify({ lat: 22.55 + Math.random()*0.15, lng: 88.32 + Math.random()*0.15, address: "Kolkata Destination" }),
                     new Date(Date.now() + (Math.random() * 7 - 2) * 24 * 60 * 60 * 1000), // Random time between -2 days to +5 days
                     4,
                     Math.floor(Math.random() * 4),

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import AuthPortal from "./components/AuthPortal";
 import Dashboard from "./components/Dashboard/Dashboard";
 import AdminDashboard from "./components/AdminDashboard";

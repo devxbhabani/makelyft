@@ -351,7 +351,7 @@ export default function ActiveTripPanel({
 			if (data.success) {
 				setPaymentStatus("paid_pending_confirmation");
 				showAlert(
-					`Payment of â‚¹${fareAmount} completed via MakeLyft Wallet! Awaiting driver confirmation.`,
+					`Payment of ₹${fareAmount} completed via MakeLyft Wallet! Awaiting driver confirmation.`,
 					"Payment Successful", "success"
 				);
 				fetchWalletBalance();
@@ -468,7 +468,7 @@ export default function ActiveTripPanel({
 						if (payData.success) {
 							setPaymentStatus("paid_pending_confirmation");
 							showAlert(
-								`Payment of â‚¹${fareAmount} completed via Razorpay! Awaiting driver confirmation.`,
+								`Payment of ₹${fareAmount} completed via Razorpay! Awaiting driver confirmation.`,
 								"Payment Successful", "success"
 							);
 							if (onRefreshPassenger) onRefreshPassenger();
@@ -618,7 +618,7 @@ export default function ActiveTripPanel({
 			});
 			const data = await res.json();
 			if (data.success) {
-				showAlert(`Trip finished! Total earnings processed: â‚¹${data.earnings}`, "Trip Complete", "success");
+				showAlert(`Trip finished! Total earnings processed: ₹${data.earnings}`, "Trip Complete", "success");
 				onTripEnded();
 			} else {
 				showAlert(data.message || "Error finishing trip", "Trip Error", "error");
@@ -758,11 +758,11 @@ export default function ActiveTripPanel({
 							<div className="flex items-center gap-2 mt-1">
 								{!isDriver && (
 									<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[var(--bg-hover)] border border-[var(--border)] text-[var(--accent)] text-[10px] font-extrabold">
-										ðŸ’º {activeTrip.seat_no || "Seat #1"}
+										📍’º {activeTrip.seat_no || "Seat #1"}
 									</span>
 								)}
 								<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[var(--bg-hover)] border border-[var(--border)] text-[var(--primary)] text-[10px] font-extrabold">
-									Fare: â‚¹{fareAmount}
+									Fare: ₹{fareAmount}
 								</span>
 							</div>
 						</div>
@@ -811,7 +811,7 @@ export default function ActiveTripPanel({
 						</div>
 					</div>
 					<span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-100 text-indigo-700 border border-indigo-200">
-						Fare: â‚¹{fareAmount}
+						Fare: ₹{fareAmount}
 					</span>
 				</div>
 
@@ -882,14 +882,14 @@ export default function ActiveTripPanel({
 									</div>
 									<div className="text-right">
 										<span className="text-base font-extrabold text-[var(--primary)]">
-											â‚¹{fareAmount}
+											₹{fareAmount}
 										</span>
 										{walletBalance !== null && (
 											<p className="text-[10px] text-[var(--text-3)] flex items-center gap-1 justify-end">
 												<Wallet className="w-3 h-3 text-[var(--accent)]" />
 												Wallet:{" "}
 												<span className="font-semibold text-[var(--text-2)]">
-													â‚¹{walletBalance.toFixed(2)}
+													₹{walletBalance.toFixed(2)}
 												</span>
 											</p>
 										)}
@@ -905,7 +905,7 @@ export default function ActiveTripPanel({
 												Payment Confirmed by Driver!
 											</p>
 											<p className="text-[10px] text-emerald-700">
-												â‚¹{fareAmount} settled successfully.
+												₹{fareAmount} settled successfully.
 											</p>
 										</div>
 									</div>
@@ -914,7 +914,7 @@ export default function ActiveTripPanel({
 										<Loader2 className="w-5 h-5 text-[var(--primary)] animate-spin shrink-0" />
 										<div>
 											<p className="text-xs font-bold text-blue-900">
-												Payment Submitted (â‚¹{fareAmount})
+												Payment Submitted (₹{fareAmount})
 											</p>
 											<p className="text-[10px] text-[var(--primary)]">
 												Waiting for driver to confirm receipt on
@@ -937,12 +937,12 @@ export default function ActiveTripPanel({
 													<p className="text-[11px] text-amber-800 mt-0.5">
 														Your wallet has{" "}
 														<b>
-															â‚¹
+															₹
 															{walletBalance !== null
 																? walletBalance.toFixed(2)
 																: "0.00"}
 														</b>
-														, but the fare is <b>â‚¹{fareAmount}</b>
+														, but the fare is <b>₹{fareAmount}</b>
 														. Please pay using Razorpay / UPI
 														below.
 													</p>
@@ -972,9 +972,9 @@ export default function ActiveTripPanel({
 											<span className="text-[11px] font-semibold opacity-90">
 												{walletBalance !== null
 													? hasInsufficientWallet
-														? `(Low: â‚¹${walletBalance.toFixed(2)})`
-														: `(Bal: â‚¹${walletBalance.toFixed(2)})`
-													: `â‚¹${fareAmount}`}
+														? `(Low: ₹${walletBalance.toFixed(2)})`
+														: `(Bal: ₹${walletBalance.toFixed(2)})`
+													: `₹${fareAmount}`}
 											</span>
 										</button>
 
@@ -989,7 +989,7 @@ export default function ActiveTripPanel({
 												<span>Pay via Razorpay / UPI / Cards</span>
 											</div>
 											<span className="text-[11px] font-extrabold bg-[var(--bg-card)]/20 px-2 py-0.5 rounded-md">
-												â‚¹{fareAmount}
+												₹{fareAmount}
 											</span>
 										</button>
 									</div>
@@ -1270,7 +1270,7 @@ export default function ActiveTripPanel({
 														Payment Confirmed
 													</span>
 													<span className="font-extrabold text-emerald-950">
-														+â‚¹{bookingFare}
+														+₹{bookingFare}
 													</span>
 												</div>
 											) : booking.payment_status ===
@@ -1281,7 +1281,7 @@ export default function ActiveTripPanel({
 															Passenger Paid:
 														</span>
 														<span className="font-extrabold text-blue-950">
-															â‚¹{bookingFare}
+															₹{bookingFare}
 														</span>
 													</div>
 													<button
@@ -1298,7 +1298,7 @@ export default function ActiveTripPanel({
 														) : (
 															<>
 																<Check className="w-4 h-4" />
-																Confirm Payment (â‚¹{bookingFare})
+																Confirm Payment (₹{bookingFare})
 															</>
 														)}
 													</button>
@@ -1306,7 +1306,7 @@ export default function ActiveTripPanel({
 											) : (
 												<div className="p-2 bg-[var(--bg-hover)] rounded-lg border border-[var(--border)] text-center text-[11px] text-[var(--text-3)] font-medium">
 													Dropped off â€¢ Waiting for passenger to
-													complete payment (â‚¹{bookingFare})
+													complete payment (₹{bookingFare})
 												</div>
 											)}
 										</div>

@@ -165,7 +165,7 @@ export default function HistoryModal({ isOpen, onClose }) {
 												Fare
 											</span>
 											<span className="font-black text-[var(--primary)]">
-												â‚¹{item.fare || "45.00"}
+												₹{item.fare || "45.00"}
 											</span>
 										</div>
 										<button className="w-8 h-8 rounded-full bg-[var(--bg-hover)] flex items-center justify-center text-[var(--text-3)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors border border-[var(--border)] cursor-pointer">

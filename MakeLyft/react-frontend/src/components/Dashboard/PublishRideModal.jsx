@@ -414,7 +414,7 @@ function PublishRideModal({ onClose, onPublish, userLocation }) {
 							<div className="space-y-1.5">
 								<label className="text-xs font-semibold text-[var(--text-2)] uppercase tracking-wider flex items-center gap-1.5">
 									<DollarSign className="w-3.5 h-3.5 text-[var(--text-3)]" />
-									Fare Per Seat (â‚¹)
+									Fare Per Seat (₹)
 								</label>
 								<input
 									required

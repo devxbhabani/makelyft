@@ -106,7 +106,7 @@ export default function WalletModal({ isOpen, onClose }) {
 		e?.preventDefault();
 		const amountNum = parseFloat(addAmount);
 		if (isNaN(amountNum) || amountNum <= 0) {
-			setErrorMsg("Please enter a valid amount (minimum â‚¹10).");
+			setErrorMsg("Please enter a valid amount (minimum ₹10).");
 			return;
 		}
 
@@ -125,7 +125,7 @@ export default function WalletModal({ isOpen, onClose }) {
 				setWallet(updated);
 			}
 			setSuccessMsg(
-				`Initiated transaction of â‚¹${amountNum.toLocaleString("en-IN")}. Complete it in the gateway!`,
+				`Initiated transaction of ₹${amountNum.toLocaleString("en-IN")}. Complete it in the gateway!`,
 			);
 			setAddAmount("");
 			setActiveTab("overview");
@@ -267,7 +267,7 @@ export default function WalletModal({ isOpen, onClose }) {
 											</span>
 											<div className="flex items-baseline gap-1 mt-1">
 												<span className="text-2xl font-bold text-teal-300">
-													â‚¹
+													₹
 												</span>
 												<span className="text-4xl font-extrabold tracking-tight text-white">
 													{(wallet?.balance || 0).toLocaleString(
@@ -388,7 +388,7 @@ export default function WalletModal({ isOpen, onClose }) {
 																: "text-[var(--text)]"
 														}`}
 													>
-														{tx.type === "credit" ? "+" : "-"}â‚¹
+														{tx.type === "credit" ? "+" : "-"}₹
 														{tx.amount.toFixed(2)}
 													</p>
 													<span className="text-[10px] text-[var(--text-3)] font-mono">
@@ -419,7 +419,7 @@ export default function WalletModal({ isOpen, onClose }) {
 									Current Wallet Balance:
 								</span>
 								<span className="text-sm font-extrabold text-[var(--primary)]">
-									â‚¹
+									₹
 									{(wallet?.balance || 0).toLocaleString("en-IN", {
 										minimumFractionDigits: 2,
 										maximumFractionDigits: 2,
@@ -430,11 +430,11 @@ export default function WalletModal({ isOpen, onClose }) {
 							{/* Amount Input */}
 							<div>
 								<label className="block text-xs font-bold text-[var(--text-2)] uppercase tracking-wider mb-2">
-									Enter Amount to Add (â‚¹)
+									Enter Amount to Add (₹)
 								</label>
 								<div className="relative">
 									<span className="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-bold text-[var(--text-3)]">
-										â‚¹
+										₹
 									</span>
 									<input
 										type="number"
@@ -462,7 +462,7 @@ export default function WalletModal({ isOpen, onClose }) {
 													: "bg-[var(--bg-hover)] text-[var(--text-2)] border-[var(--border)] hover:bg-[var(--bg-hover)]"
 											}`}
 										>
-											+â‚¹{amt.toLocaleString("en-IN")}
+											+₹{amt.toLocaleString("en-IN")}
 										</button>
 									))}
 								</div>
@@ -552,7 +552,7 @@ export default function WalletModal({ isOpen, onClose }) {
 										<>
 											<Plus className="w-4 h-4" />
 											<span>
-												Add â‚¹
+												Add ₹
 												{addAmount
 													? parseFloat(addAmount).toLocaleString(
 															"en-IN",
@@ -653,7 +653,7 @@ export default function WalletModal({ isOpen, onClose }) {
 															: "text-[var(--text)]"
 													}`}
 												>
-													{tx.type === "credit" ? "+" : "-"}â‚¹
+													{tx.type === "credit" ? "+" : "-"}₹
 													{tx.amount.toFixed(2)}
 												</p>
 												<span className="inline-block text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
