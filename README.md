@@ -20,29 +20,6 @@ _A modern, intelligent, and secure ride-sharing ecosystem designed for corporate
 
 ---
 
-## Table of Contents
-
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [System Architecture](#-system-architecture)
-- [Tech Stack](#-tech-stack)
-- [Project Directory Structure](#-project-directory-structure)
-- [Database Schema](#-database-schema)
-- [Prerequisites](#-prerequisites)
-- [Environment Configuration](#-environment-configuration)
-- [Getting Started](#-getting-started)
-   - [1. Clone Repository](#1-clone-repository)
-   - [2. Backend Setup](#2-backend-setup)
-   - [3. Database Initialization & Seeding](#3-database-initialization--seeding)
-   - [4. Frontend Setup](#4-frontend-setup)
-   - [5. AI Assistant Setup (Optional)](#5-ai-assistant-setup-optional)
-- [Key User Workflows](#-key-user-workflows)
-- [API Route Overview](#-api-route-overview)
-- [Contributing](#-contributing)
-- [License](#-license)
-
----
-
 ## Overview
 
 **MakeLyft** is an enterprise-grade carpooling application engineered to solve intra-organization commuting friction. Unlike public ride-hailing services, MakeLyft connects verified colleagues traveling along intersecting commute routes within an enterprise network.
@@ -57,61 +34,61 @@ The platform provides:
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🏢 Corporate-Verified Profiles & Roles
+### Corporate-Verified Profiles & Roles
 
 - Employee onboarding gated by corporate email OTP verification, employee ID, and designated organization affiliation.
 - Role-based permissions across standard **Employees**, verified **Drivers**, and **System Administrators**.
 
-### 🚙 Driver & Vehicle Onboarding Workflow
+### Driver & Vehicle Onboarding Workflow
 
 - Transparent driver verification process: submission of Driving License (DL), Insurance policy, vehicle model, and seating capacity.
 - Administrative review lifecycle (`Unregistered` $\rightarrow$ `Pending Review` $\rightarrow$ `Approved`).
 
-### 🗺️ Intelligent Route & Proximity Discovery
+### Intelligent Route & Proximity Discovery
 
 - **Proximity Filter**: Instant dynamic detection of available carpools within a 10 km radius of the passenger's current GPS location.
 - **Route Interception ("On My Route")**: Matches passenger pickup and drop-off points against published driver corridors within a 3 km tolerance window.
 - Integrated Leaflet / OpenStreetMap mapping with customized route polyline rendering and distinct pickup/drop-off pins.
 
-### ⚡ Live Booking & Secure Boarding Handshake
+### Live Booking & Secure Boarding Handshake
 
 - Real-time booking requests sent directly to the driver via Socket.io.
 - Driver accept/decline controls with immediate passenger notifications.
 - **Cryptographic OTP Handshake**: A 4-digit boarding code generated per booking that the driver must verify before trip commencement.
 
-### 🛰️ Real-Time GPS Tracking & Trip Telemetry
+### Real-Time GPS Tracking & Trip Telemetry
 
 - Driver and passenger live location updates synchronized over persistent Socket.io rooms (`ride_{id}`).
 - Visual tracking states for both pickup approach and journey-to-destination phases.
 
-### 💳 MakeLyft In-App Wallet System
+### MakeLyft In-App Wallet System
 
 - Cashless, seamless cost-sharing: fares are calculated according to organization fuel and travel cost coefficients (`org_settings`).
 - Automated fare transfer from passenger wallet to driver wallet upon verified trip completion.
 
-### 💬 In-Ride Communication & Calling
+### In-Ride Communication & Calling
 
 - **Encrypted In-App Chat**: Live messaging room scoped per active ride with input sanitization.
 - **WebRTC Voice Calling**: Driver-passenger peer-to-peer signaling for quick audio contact without exchanging private telephone numbers.
 
-### 🤖 Local AI Travel Assistant
+### Local AI Travel Assistant
 
 - Built-in AI trip companion powered locally via [Ollama](https://ollama.com/) running `gemma2:2b`.
 - Provides concise, technical commute planning, travel time estimations, and itinerary recommendations without cloud API reliance.
 
-### 📊 Enterprise Administration Portal
+### Enterprise Administration Portal
 
 - Dedicated admin control center to oversee organization fuel pricing per kilometer, review and approve vehicle applications, monitor active rides, and inspect platform analytics.
 
-### ⭐ Dual-Sided Reputation System
+### Dual-Sided Reputation System
 
 - Independent tracking and aggregation of both `passenger_rating` and `driving_rating` to foster a secure, courteous corporate community.
 
 ---
 
-## 🏛 System Architecture
+## System Architecture
 
 ```
                                   +---------------------------------------+
