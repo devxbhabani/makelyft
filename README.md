@@ -115,7 +115,7 @@ The platform provides:
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -143,7 +143,7 @@ The platform provides:
 
 ---
 
-## 📂 Project Directory Structure
+## Project Directory Structure
 
 ```plaintext
 MakeLyft/
@@ -217,7 +217,7 @@ The core domain model is structured in PostgreSQL as follows:
 
 ---
 
-## ⚙️ Prerequisites
+## Prerequisites
 
 Before running MakeLyft locally, ensure you have the following installed:
 
@@ -228,7 +228,7 @@ Before running MakeLyft locally, ensure you have the following installed:
 
 ---
 
-## 🔐 Environment Configuration
+## Environment Configuration
 
 Create a `.env` file in `MakeLyft/MakeLyft/backend/.env`:
 
@@ -253,7 +253,7 @@ OLLAMA_HOST=http://127.0.0.1:11434
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone Repository
 
