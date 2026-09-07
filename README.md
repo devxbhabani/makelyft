@@ -325,7 +325,7 @@ Once running, the in-dashboard assistant will connect to Ollama automatically.
 
 ---
 
-## 🔄 Key User Workflows
+## Key User Workflows
 
 ```mermaid
 sequenceDiagram
@@ -356,7 +356,7 @@ sequenceDiagram
 
 ---
 
-## 📡 API Route Overview
+## API Route Overview
 
 | Method | Endpoint                  | Access   | Purpose                                        |
 | ------ | ------------------------- | -------- | ---------------------------------------------- |
@@ -375,7 +375,7 @@ sequenceDiagram
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions to MakeLyft are welcome! Please follow these steps:
 
@@ -387,7 +387,7 @@ Contributions to MakeLyft are welcome! Please follow these steps:
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the ISC License. See the [package.json](file:///d:/MakeLyft/MakeLyft/backend/package.json) file for details.
 
